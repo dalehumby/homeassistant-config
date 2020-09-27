@@ -9,6 +9,7 @@ homeassistant:
   latitude: !secret home_lat
   longitude: !secret home_long
   elevation: 0
+  internal_url: "http://10.0.0.10:8123"
   auth_providers:
   - type: homeassistant
   - type: trusted_networks
@@ -16,6 +17,18 @@ homeassistant:
       - 10.0.0.0/24
 
 frontend:
+
+zone:
+  - name: Home
+    latitude: !secret home_lat
+    longitude: !secret home_long
+    radius: 200
+    icon: mdi:home
+  - name: Work
+    latitude: !secret work_lat
+    longitude: !secret work_long
+    radius: 1000
+    icon: mdi:briefcase
 
 mqtt:
   broker: 10.0.0.10
@@ -90,9 +103,13 @@ sensor:
               {% endif %}
           {% endfor %}
 
-# Text to speech
 tts:
   - platform: google_translate
+
+updater:
+  include_used_components: true
+
+system_health:
 
 #group: !include groups.yaml
 #automation: !include automations.yaml
