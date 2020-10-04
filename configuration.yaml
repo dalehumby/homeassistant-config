@@ -18,6 +18,8 @@ homeassistant:
 
 frontend:
 
+mobile_app:
+
 zone:
   - name: Home
     latitude: !secret home_lat
