@@ -105,6 +105,15 @@ sensor:
               {% endif %}
           {% endfor %}
 
+  # Google Maps travel time
+  - platform: google_travel_time
+    api_key: !secret google_maps_api_key
+    name: Work by car
+    origin: zone.home
+    destination: zone.work
+    options:
+      mode: driving
+
 tts:
   - platform: google_translate
 
@@ -113,7 +122,9 @@ updater:
 
 system_health:
 
+automation: !include automations.yaml
+binary_sensor: !include binary_sensor.yaml
+
 #group: !include groups.yaml
-#automation: !include automations.yaml
 #script: !include scripts.yaml
 #scene: !include scenes.yaml
