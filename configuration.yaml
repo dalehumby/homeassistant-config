@@ -37,6 +37,8 @@ mqtt:
   port: 1883
   discovery: true
   client_id: homeassistant
+  username: !secret mqtt_username
+  password: !secret mqtt_password
 
 sensor:
   # Power meter sensor
