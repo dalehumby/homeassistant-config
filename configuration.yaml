@@ -127,6 +127,8 @@ updater:
 
 system_health:
 
+history:
+
 automation: !include automations.yaml
 binary_sensor: !include binary_sensor.yaml
 
