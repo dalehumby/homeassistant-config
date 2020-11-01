@@ -20,6 +20,8 @@ frontend:
 
 mobile_app:
 
+owntracks:
+
 zone:
   - name: Home
     latitude: !secret home_lat
