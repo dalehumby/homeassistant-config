@@ -9,24 +9,26 @@ homeassistant:
   latitude: !secret home_lat
   longitude: !secret home_long
   elevation: 0
-  internal_url: "http://10.0.0.10:8123"
+  internal_url: !secret homeassistant_url
+  external_url: !secret homeassistant_url
   auth_providers:
   - type: homeassistant
-  - type: trusted_networks
-    trusted_networks:
-      - 10.0.0.0/24
+  customize:
+    zone.home:
+      beacon:
+        uuid: !secret home_ibeacon
+        major: 0
+        minor: 0
 
 frontend:
 
 mobile_app:
 
-owntracks:
-
 zone:
   - name: Home
     latitude: !secret home_lat
     longitude: !secret home_long
-    radius: 200
+    radius: 50
     icon: mdi:home
   - name: Work
     latitude: !secret work_lat
@@ -128,6 +130,10 @@ updater:
 system_health:
 
 history:
+
+owntracks:
+
+sun:
 
 automation: !include automations.yaml
 binary_sensor: !include binary_sensor.yaml
