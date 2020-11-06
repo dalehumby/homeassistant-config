@@ -20,10 +20,6 @@ homeassistant:
         major: 0
         minor: 0
 
-frontend:
-
-mobile_app:
-
 zone:
   - name: Home
     latitude: !secret home_lat
@@ -120,6 +116,22 @@ sensor:
     options:
       mode: driving
     scan_interval: 1800  # Only update travel time every 30 min outside of commute time
+
+frontend:
+
+mobile_app:
+
+google_assistant:
+  project_id: !secret google_project_id
+  service_account: !include HASSGoogAssist.json
+  report_state: true
+  exposed_domains:
+    - switch
+    - light
+
+homekit:
+
+apple_tv:
 
 tts:
   - platform: google_translate
