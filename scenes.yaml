@@ -1,0 +1,4 @@
+  - name: Evening
+    entities:
+      switch.shelf_light: on
+      switch.desk_light: on

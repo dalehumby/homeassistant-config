@@ -20,6 +20,8 @@ homeassistant:
         major: 0
         minor: 0
 
+person:
+
 zone:
   - name: Home
     latitude: !secret home_lat
@@ -152,4 +154,4 @@ binary_sensor: !include binary_sensor.yaml
 
 #group: !include groups.yaml
 #script: !include scripts.yaml
-#scene: !include scenes.yaml
+scene: !include scenes.yaml

@@ -27,3 +27,13 @@
     data:
       message: "Welcome home"
 
+- id: sunset
+  alias: "Turn on lights at dusk"
+  trigger:
+    platform: numeric_state
+    entity_id: sun.sun
+    value_template: "{{ state_attr('sun.sun', 'elevation') }}"
+    below: 5
+  action:
+    service: scene.turn_on
+    entity_id: scene.evening
