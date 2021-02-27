@@ -66,6 +66,7 @@ sensor:
     unique_id: "loadshedding.stage"
     name: "Loadshedding stage"
     state_topic: "loadshedding/stage"
+    value_template: "{{ value | int }}"
     expire_after: 1800
     device_class: energy
 
