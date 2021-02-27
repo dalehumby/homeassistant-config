@@ -61,6 +61,14 @@ sensor:
     expire_after: 600
     device_class: energy
 
+  # Eskom loadshedding
+  - platform: mqtt
+    unique_id: "loadshedding.stage"
+    name: "Loadshedding stage"
+    state_topic: "loadshedding/stage"
+    expire_after: 1800
+    device_class: energy
+
   # Luftdaten Particulate
   - platform: rest
     name: Air Sensor
