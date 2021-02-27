@@ -64,7 +64,7 @@ sensor:
   # Luftdaten Particulate
   - platform: rest
     name: Air Sensor
-    resource: http://10.0.0.125/data.json
+    resource: http://10.0.0.11/data.json
     method: GET
     value_template: '{{ value_json.age }}'
     json_attributes: sensordatavalues
