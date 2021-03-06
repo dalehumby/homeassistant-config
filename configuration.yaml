@@ -161,6 +161,7 @@ sun:
 automation: !include automations.yaml
 binary_sensor: !include binary_sensor.yaml
 
-#group: !include groups.yaml
+group: !include groups.yaml
+light: !include lights.yaml
 #script: !include scripts.yaml
 scene: !include scenes.yaml

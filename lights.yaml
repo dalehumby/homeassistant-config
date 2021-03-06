@@ -1,0 +1,11 @@
+- platform: group
+  name: Dining room lights
+  entities:
+    - light.diningbulb1
+    - light.diningbulb2
+- platform: group
+  name: Lounge lights
+  entities:
+    - light.loungebulb1
+    - light.loungebulb2
+    - light.loungebulb3
