@@ -35,7 +35,7 @@ zone:
     icon: mdi:briefcase
 
 mqtt:
-  broker: 10.0.0.10
+  broker: home.humby.co.za
   port: 1883
   discovery: true
   client_id: homeassistant
