@@ -1,4 +1,62 @@
-  - name: Evening
-    entities:
-      switch.shelf_light: on
-      switch.desk_light: on
+- name: Evening
+  icon: mdi:weather-sunset-down
+  entities:
+    switch.shelf_light: on
+    switch.desk_light: on
+
+- name: Working
+  icon: mdi:lightbulb-on-outline
+  entities:
+    switch.shelf_light: on
+    switch.desk_light: on
+    light.lounge_lights:
+      state: on
+      brightness_pct: 60
+      color_temp: 153
+    light.dining_room_lights:
+      state: on
+      white_value: 153
+    light.stairbulb1:
+      state: on
+      white_value: 153
+    light.stairbulb2:
+      state: on
+      white_value: 255
+
+- name: Movie
+  icon: mdi:movie
+  entities:
+    switch.shelf_light: on
+    switch.desk_light: off
+    light.lounge_lights:
+      state: on
+      brightness_pct: 10
+      color_temp: 153
+    light.dining_room_lights:
+      state: on
+      white_value: 26
+    light.stairbulb1:
+      state: on
+      white_value: 26
+    light.stairbulb2:
+      state: on
+      white_value: 26
+
+- name: Goodnight
+  icon: mdi:sleep
+  entities:
+    switch.shelf_light: off
+    switch.desk_light: off
+    light.lounge_lights: off
+    light.dining_room_lights: off
+    light.stairbulb1:
+      state: on
+      brightness_pct: 15
+      color_name: red
+    light.stairbulb2:
+      state: on
+      brightness_pct: 15
+      color_name: red
+    switch.bedside_light: on
+
+
