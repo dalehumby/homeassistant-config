@@ -82,6 +82,7 @@ sensor:
       air_quality_pm10:
         friendly_name: 'PM10'
         unit_of_measurement: 'µg/m³'
+        icon_template: mdi:waves
         value_template: >-
           {% for i in states.sensor.air_sensor.attributes.sensordatavalues %}
               {% if i.value_type == 'SDS_P1' %}
@@ -91,6 +92,7 @@ sensor:
       air_quality_pm25:
         friendly_name: 'PM2.5'
         unit_of_measurement: 'µg/m³'
+        icon_template: mdi:waves
         value_template: >-
           {% for i in states.sensor.air_sensor.attributes.sensordatavalues %}
               {% if i.value_type == 'SDS_P2' %}
