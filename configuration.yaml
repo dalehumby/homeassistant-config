@@ -118,6 +118,32 @@ sensor:
               {% endif %}
           {% endfor %}
 
+  # Windguru Blouberg
+  - platform: mqtt
+    unique_id: "windguru.blouberg.wind_avg"
+    name: "Windguru Blouberg Speed"
+    state_topic: "windguru/blouberg"
+    value_template: "{{ (value_json.wind_avg * 1.852) | round(1) }}"
+    unit_of_measurement: "km/h"
+    icon: mdi:weather-windy
+    expire_after: 600
+  - platform: mqtt
+    unique_id: "windguru.blouberg.wind_direction"
+    name: "Windguru Blouberg Direction"
+    state_topic: "windguru/blouberg"
+    value_template: "{{ value_json.wind_direction }}"
+    unit_of_measurement: "°"
+    icon: mdi:arrow-top-right
+    expire_after: 600
+  - platform: mqtt
+    unique_id: "windguru.blouberg.temperature"
+    name: "Windguru Blouberg Temperature"
+    state_topic: "windguru/blouberg"
+    value_template: "{{ value_json.temperature }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    expire_after: 600
+
   # Google Maps travel time
   - platform: google_travel_time
     api_key: !secret google_maps_api_key
