@@ -69,6 +69,7 @@ sensor:
     value_template: "{{ value | int }}"
     expire_after: 1800
     device_class: energy
+    unit_of_measurement: stage
 
   # Luftdaten Particulate
   - platform: rest
