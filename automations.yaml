@@ -37,3 +37,25 @@
   action:
     service: scene.turn_on
     entity_id: scene.evening
+
+- id: loadshedding_update_home_schedule
+  alias: "Update loadshedding schedule"
+  trigger:
+    platform: mqtt
+    topic: "loadshedding/home/next"
+  action:
+    service: input_datetime.set_datetime
+    entity_id: input_datetime.loadshedding_home_next
+    data:
+      datetime: "{{ trigger.payload_json.next }}"
+
+- id: loadshedding_warning
+  alias: "Loadshedding 15 min warning"
+  trigger:
+    platform: template
+    value_template: "{{ ((as_timestamp(states('sensor.date_time').replace(',', '')) | int) + 15*60) == (state_attr('input_datetime.loadshedding_home_next', 'timestamp') | int)  }}"
+  action:
+    service: notify.mobile_app_dales_iphone_xs
+    data:
+      message: "Loadshedding in 15 min"
+
