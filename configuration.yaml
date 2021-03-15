@@ -164,6 +164,32 @@ sensor:
     device_class: temperature
     expire_after: 600
 
+  # Tides
+  - platform: mqtt
+    unique_id: "tides.capetown"
+    name: "Cape Town tide"
+    state_topic: "tides/capetown"
+    value_template: "{{ value_json.next_tide.timestamp }}"
+    json_attributes_topic: "tides/capetown"
+    json_attributes_template: "{{ value }}"
+    icon: mdi:waves
+    device_class: timestamp
+    expire_after: 1800
+  - platform: template
+    sensors:
+      tides_capetown_next:
+        unique_id: tides.capetown_next
+        value_template: >
+          {{ states.sensor.cape_town_tide.attributes.next_tide.timestamp }}
+        friendly_name_template: >
+          Next {% if states.sensor.cape_town_tide.attributes.next_tide.high %}high{% else %}low{% endif %} tide
+        icon_template: >
+          {% if states.sensor.cape_town_tide.attributes.next_tide.high %}mdi:arrow-expand-up{% else %}mdi:arrow-collapse-down{% endif %}
+        device_class: timestamp
+        attribute_templates:
+          height: >
+            {{ states.sensor.cape_town_tide.attributes.next_tide.height_cm | float / 100 }} m
+
   # Sun rise and set times
   - platform: template
     sensors:
