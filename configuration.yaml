@@ -190,6 +190,7 @@ sensor:
           height: >
             {{ states.sensor.cape_town_tide.attributes.next_tide.height_cm | float / 100 }} m
 
+
   # Sun rise and set times
   - platform: template
     sensors:
@@ -215,6 +216,49 @@ sensor:
     options:
       mode: driving
     scan_interval: 1800  # Only update travel time every 30 min outside of commute time
+
+  # Exchange rates
+  - platform: mqtt
+    unique_id: "currency.zargbp"
+    name: "Currency GBP"
+    icon: mdi:currency-gbp
+    state_topic: "currency/zargbp"
+    value_template: "{{ value_json.rate }}"
+    expire_after: 21600
+    unit_of_measurement: "R"
+    json_attributes_topic: "currency/zargbp"
+    json_attributes_template: "{{ value }}"
+  - platform: mqtt
+    unique_id: "currency.zareur"
+    name: "Currency EUR"
+    icon: mdi:currency-eur
+    state_topic: "currency/zareur"
+    value_template: "{{ value_json.rate }}"
+    expire_after: 21600
+    unit_of_measurement: "R"
+    json_attributes_topic: "currency/zareur"
+    json_attributes_template: "{{ value }}"
+  - platform: mqtt
+    unique_id: "currency.zarusd"
+    name: "Currency USD"
+    icon: mdi:currency-usd
+    state_topic: "currency/zarusd"
+    value_template: "{{ value_json.rate }}"
+    expire_after: 21600
+    unit_of_measurement: "R"
+    json_attributes_topic: "currency/zarusd"
+    json_attributes_template: "{{ value }}"
+  - platform: mqtt
+    unique_id: "currency.zarbtc"
+    name: "Currency BTC"
+    icon: mdi:currency-btc
+    state_topic: "currency/zarbtc"
+    value_template: "{{ value_json.rate }}"
+    expire_after: 21600
+    unit_of_measurement: "R"
+    json_attributes_topic: "currency/zarbtc"
+    json_attributes_template: "{{ value }}"
+
 
 input_datetime:
   loadshedding_home_next:
