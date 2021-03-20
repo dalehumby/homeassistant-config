@@ -35,7 +35,7 @@ zone:
     icon: mdi:briefcase
 
 mqtt:
-  broker: home.humby.co.za
+  broker: !secret mqtt_broker
   port: 1883
   discovery: true
   client_id: homeassistant
@@ -52,6 +52,9 @@ sensor:
       - 'date_time_utc'
       - 'date_time_iso'
       - 'time_utc'
+
+  # Moon sensor
+  - platform: moon
 
   # Power meter sensor
   - platform: mqtt
@@ -163,6 +166,52 @@ sensor:
     unit_of_measurement: "°C"
     device_class: temperature
     expire_after: 600
+
+  # Xiaomi MiJia BLE Temperature and Humidity sensors
+  - platform: mqtt
+    unique_id: "mijia.bedroom"
+    name: "Mijia Bedroom"
+    state_topic: "mijia/bfd27b"
+    value_template: "{{ value_json.battery_pct }}"
+    unit_of_measurement: "%"
+    device_class: battery
+    json_attributes_topic: "mijia/bfd27b"
+    json_attributes_template: "{{ value }}"
+    expire_after: 300
+  - platform: template
+    sensors:
+      bedroom_temperature:
+        friendly_name: "Bedroom Temperature"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        value_template: "{{ state_attr('sensor.mijia_bedroom', 'temperature_C') }}"
+      bedroom_humidity:
+        friendly_name: "Bedroom Humidity"
+        device_class: humidity
+        unit_of_measurement: "%"
+        value_template: "{{ state_attr('sensor.mijia_bedroom', 'humidity_pct') }}"
+  - platform: mqtt
+    unique_id: "mijia.balcony"
+    name: "Mijia Balcony"
+    state_topic: "mijia/8fdcbd"
+    value_template: "{{ value_json.battery_pct }}"
+    unit_of_measurement: "%"
+    device_class: battery
+    json_attributes_topic: "mijia/8fdcbd"
+    json_attributes_template: "{{ value }}"
+    expire_after: 300
+  - platform: template
+    sensors:
+      balcony_temperature:
+        friendly_name: "Balcony Temperature"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        value_template: "{{ state_attr('sensor.mijia_balcony', 'temperature_C') }}"
+      balcony_humidity:
+        friendly_name: "Balcony Humidity"
+        device_class: humidity
+        unit_of_measurement: "%"
+        value_template: "{{ state_attr('sensor.mijia_balcony', 'humidity_pct') }}"
 
   # Tides
   - platform: mqtt
