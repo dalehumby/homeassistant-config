@@ -65,6 +65,10 @@
   trigger:
     platform: template
     value_template: "{{ ((as_timestamp(states('sensor.date_time').replace(',', '')) | int) + 15*60) == (state_attr('input_datetime.loadshedding_home_next', 'timestamp') | int)  }}"
+  condition:
+    condition: numeric_state
+    entity_id: sensor.loadshedding_stage
+    above: 0
   action:
     service: notify.mobile_app_dales_iphone_xs
     data:
