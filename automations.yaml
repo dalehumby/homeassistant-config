@@ -74,3 +74,35 @@
     data:
       message: "Loadshedding in 15 min"
 
+- id: business_time
+  alias: "Business Time"
+  trigger:
+    - platform: state
+      entity_id:
+        - person.dale
+      to: home
+  action:
+    - service: media_player.select_source
+      entity_id: media_player.spotify_dale
+      data:
+        source: "Living Room"
+    - service: media_player.play_media
+      entity_id: media_player.spotify_dale
+      data:
+        media_content_id: "spotify:track:39l1UORIhuHvUWfxG53tRZ"
+        media_content_type: music
+
+- id: goodnight_turns_off_tv
+  alias: "Turn off Apple TV and Samsung when activate Goodnight scene"
+  trigger:
+    platform: event
+    event_type: call_service
+    event_data:
+      service_data:
+        entity_id: scene.goodnight
+      domain: scene
+      service: turn_on
+  action:
+    service: script.turn_on
+    target:
+      entity_id: script.apple_tv_sleep

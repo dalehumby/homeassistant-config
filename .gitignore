@@ -1,4 +1,7 @@
 secrets.yaml
 .HA_VERSION
 .storage/
+tts/
 *.log
+*.db*
+HASSGoogAssist.json

@@ -308,7 +308,6 @@ sensor:
     json_attributes_topic: "currency/zarbtc"
     json_attributes_template: "{{ value }}"
 
-
 input_datetime:
   loadshedding_home_next:
     name: Next scheduled loadshed time
@@ -327,6 +326,10 @@ google_assistant:
     - switch
     - light
     - scene
+
+spotify:
+  client_id: !secret spotify_client_id
+  client_secret: !secret spotify_client_secret
 
 homekit:
 
@@ -351,5 +354,5 @@ binary_sensor: !include binary_sensor.yaml
 
 group: !include groups.yaml
 light: !include lights.yaml
-#script: !include scripts.yaml
+script: !include scripts.yaml
 scene: !include scenes.yaml

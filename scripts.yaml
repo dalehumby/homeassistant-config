@@ -1,0 +1,32 @@
+apple_tv_spotify:
+  alias: "Launch Spotify on Apple TV"
+  sequence:
+    service: remote.send_command
+    target:
+      entity_id: remote.apple_tv
+    data:
+      delay_secs: 1
+      command:
+        - top_menu
+        - home
+        - right
+        - right
+        - right
+        - select
+
+apple_tv_sleep:
+  alias: "Turn off Apple TV and Samsung"
+  sequence:
+    - service: remote.send_command
+      target:
+        entity_id: remote.apple_tv
+      data:
+        delay_secs: 1
+        command:
+          - home_hold
+          - select
+    - service: media_player.turn_off
+      target:
+        entity_id:
+          - media_player.apple_tv
+          - media_player.spotify_dale
