@@ -336,7 +336,11 @@ homekit:
 apple_tv:
 
 tts:
-  - platform: google_translate
+  - platform: google_cloud
+    key_file: HASSGoogAssist.json
+    voice: en-GB-Wavenet-B
+    profiles:
+      - large-home-entertainment-class-device
 
 updater:
   include_used_components: true
