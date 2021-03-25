@@ -70,9 +70,13 @@
     entity_id: sensor.loadshedding_stage
     above: 0
   action:
-    service: notify.mobile_app_dales_iphone_xs
-    data:
-      message: "Loadshedding in 15 min"
+    - service: notify.mobile_app_dales_iphone_xs
+      data:
+        message: "Loadshedding in 15 min"
+    - service: tts.google_cloud_say
+      entity_id: media_player.apple_tv
+      data:
+        message: "Alert... Loadshedding starts in 15 minutes. Time to put on the kettle."
 
 - id: business_time
   alias: "Business Time"
