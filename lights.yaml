@@ -3,9 +3,24 @@
   entities:
     - light.diningbulb1
     - light.diningbulb2
+
 - platform: group
   name: Lounge lights
   entities:
     - light.loungebulb1
     - light.loungebulb2
     - light.loungebulb3
+
+- platform: group
+  name: Kitchen lights
+  entities:
+    - light.kitchenbulb1
+    - light.kitchenbulb2
+    - light.kitchenbulb3
+
+- platform: group
+  name: Bedroom overhead lights
+  entities:
+    - light.bedroombulb1
+    - light.bedroombulb2
+    - light.bedroombulb3
