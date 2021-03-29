@@ -27,6 +27,29 @@
       state: on
       white_value: 255
 
+- name: Relax
+  icon: mdi:glass-cocktail
+  entities:
+    switch.shelf_light: on
+    switch.desk_light: on
+    light.kitchen_lights:
+      state: on
+      brightness_pct: 10
+      color_temp: 153
+    light.lounge_lights:
+      state: on
+      brightness_pct: 10
+      color_temp: 153
+    light.dining_room_lights:
+      state: on
+      white_value: 26
+    light.stairbulb1:
+      state: on
+      white_value: 26
+    light.stairbulb2:
+      state: on
+      white_value: 26
+
 - name: Movie
   icon: mdi:movie
   entities:
