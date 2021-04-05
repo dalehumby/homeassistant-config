@@ -24,3 +24,10 @@
     - light.bedroombulb1
     - light.bedroombulb2
     - light.bedroombulb3
+
+- platform: group
+  name: Study overhead lights
+  entities:
+    - light.studybulb1
+    - light.studybulb2
+    - light.studybulb3
