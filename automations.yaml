@@ -19,9 +19,8 @@
   alias: "Arrive Home"
   trigger:
     - platform: state
-      entity_id:
-        - person.dale
-      to: home
+      entity_id: person.dale
+      to: "home"
   action:
     service: notify.mobile_app_dales_iphone_xs
     data:
@@ -84,7 +83,7 @@
     - platform: state
       entity_id:
         - person.dale
-      to: home
+      to: "home"
   action:
     - service: media_player.select_source
       entity_id: media_player.spotify_dale
@@ -110,3 +109,57 @@
     service: script.turn_on
     target:
       entity_id: script.apple_tv_sleep
+
+- id: internet_down
+  alias: "Internet down"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.google_ping
+      to: "off"
+  action:
+    service: notify.mobile_app_dales_iphone_xs
+    data:
+      message: "Internet is down"
+
+- id: internet_up
+  alias: "Internet up"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.google_ping
+      to: "on"
+  action:
+    service: notify.mobile_app_dales_iphone_xs
+    data:
+      message: "Internet is up"
+
+- id: enter_bedroom_when_dark
+  alias: "Turn on bedroom light on entry after dark"
+  trigger:
+    - platform: state
+      entity_id: sensor.dale_apple_watch_presence
+      to: "bedroom"
+  condition: "{{ state_attr('sun.sun', 'elevation') < -5 }}"
+  action:
+    service: switch.turn_on
+    entity_id: switch.bedside_light
+
+- id: enter_lounge_when_dark
+  alias: "Turn on lounge lights on entry when dark"
+  trigger:
+    - platform: state
+      entity_id: sensor.dale_apple_watch_presence
+      to: "lounge"
+  condition:
+    - condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sun.sun
+          attribute: elevation
+          below: -5
+        - condition: state
+          entity_id: switch.shelf_light
+          state: "off"
+  action:
+    service: switch.turn_on
+    entity_id: switch.shelf_light
+
