@@ -13,6 +13,7 @@
       state: on
       brightness_pct: 100
       color_temp: 153
+      white_value: 255
     light.lounge_lights:
       state: on
       brightness_pct: 60
@@ -36,6 +37,7 @@
       state: on
       brightness_pct: 10
       color_temp: 153
+      white_value: 26
     light.lounge_lights:
       state: on
       brightness_pct: 10
@@ -60,6 +62,7 @@
       state: on
       brightness_pct: 10
       color_temp: 153
+      white_value: 26
     light.dining_room_lights:
       state: on
       white_value: 26
@@ -86,6 +89,5 @@
       state: on
       brightness_pct: 15
       color_name: red
-    switch.bedside_light: on
 
 

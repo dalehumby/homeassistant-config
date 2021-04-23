@@ -17,6 +17,8 @@
     - light.kitchenbulb1
     - light.kitchenbulb2
     - light.kitchenbulb3
+    - light.stairbulb2
+    - light.diningbulb1
 
 - platform: group
   name: Bedroom overhead lights
