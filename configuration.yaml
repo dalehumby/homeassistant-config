@@ -83,6 +83,7 @@ sensor:
     expire_after: 1800
     device_class: energy
     unit_of_measurement: stage
+    icon: mdi:flash-off
   - platform: mqtt
     unique_id: "loadshedding.home_next"
     name: "Next loadshedding time"

@@ -86,7 +86,8 @@
       to: "home"
   action:
     - service: media_player.select_source
-      entity_id: media_player.spotify_dale
+      target:
+        entity_id: media_player.spotify_dale
       data:
         source: "Living Room"
     - service: media_player.play_media
@@ -96,7 +97,7 @@
         media_content_type: music
 
 - id: goodnight_turns_off_tv
-  alias: "Turn off Apple TV and Samsung when activate Goodnight scene"
+  alias: "Turn off Apple TV and Samsung TV when activate Goodnight scene"
   trigger:
     platform: event
     event_type: call_service
@@ -108,7 +109,7 @@
   action:
     service: script.turn_on
     target:
-      entity_id: script.apple_tv_sleep
+      entity_id: script.tv_sleep
 
 - id: internet_down
   alias: "Internet down"
@@ -163,3 +164,12 @@
     service: switch.turn_on
     entity_id: switch.shelf_light
 
+- id: location_change_debug
+  alias: Push notification when room location changes
+  trigger:
+    - platform: state
+      entity_id: sensor.dale_apple_watch_presence
+  action:
+    service: notify.mobile_app_dales_iphone_xs
+    data:
+      message: "Room {{ states('sensor.dale_apple_watch_presence') }}"

@@ -1,5 +1,6 @@
-apple_tv_spotify:
-  alias: "Launch Spotify on Apple TV"
+apple_tv_spotify_launch:
+  alias: Launch Spotify on Apple TV
+  mode: restart
   sequence:
     service: remote.send_command
     target:
@@ -14,8 +15,27 @@ apple_tv_spotify:
         - right
         - select
 
-apple_tv_sleep:
-  alias: "Turn off Apple TV and Samsung"
+apple_tv_spotify_nowplaying:
+  alias: Show Spotify Now Playing on Apple TV
+  mode: restart
+  sequence:
+    service: remote.send_command
+    target:
+      entity_id: remote.apple_tv
+    data:
+      delay_secs: 1
+      command:
+        - down
+        - menu
+        - right
+        - right
+        - right
+        - right
+        - select
+
+tv_sleep:
+  alias: Turn off Apple TV and Samsung TV
+  mode: restart
   sequence:
     - service: remote.send_command
       target:
@@ -30,3 +50,58 @@ apple_tv_sleep:
         entity_id:
           - media_player.apple_tv
           - media_player.spotify_dale
+    - service: switch.turn_off
+      target:
+        entity_id: switch.samsung_tv
+
+tv_wake:
+  alias: Turn on Apple TV and Samsung TV
+  mode: restart
+  sequence:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.samsung_tv
+    - service: media_player.turn_on
+      target:
+        entity_id:
+          - media_player.apple_tv
+          - media_player.spotify_dale
+    - service: remote.turn_on
+      target:
+        entity_id: remote.apple_tv
+    - wait_template: "{{ is_state('media_player.apple_tv', 'idle') }}"
+      continue_on_timeout: true
+      timeout: 5
+    - wait_template: "{{ is_state('remote.apple_tv', 'on') }}"
+      continue_on_timeout: true
+      timeout: 5
+    - service: remote.send_command
+      target:
+        entity_id: remote.apple_tv
+      data:
+        delay_secs: 1
+        command:
+          - wakeup
+          - home
+
+apple_tv_spotify_play:
+  alias: Play Spotify Daily Mix 6
+  mode: restart
+  sequence:
+    - service: script.tv_wake
+    - service: script.apple_tv_spotify_launch
+    - delay: 2
+    - service: media_player.select_source
+      target:
+        entity_id: media_player.spotify_dale
+      data:
+        source: Living Room
+    - delay: 2
+    - service: media_player.play_media
+      target:
+        entity_id: media_player.spotify_dale
+      data:
+        media_content_id: "https://open.spotify.com/playlist/37i9dQZF1E35TbkiCN416a?si=f0e348f27e804ec2"
+        media_content_type: playlist
+    - delay: 2
+    - service: script.apple_tv_spotify_nowplaying
