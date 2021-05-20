@@ -283,16 +283,6 @@ sensor:
           {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%H:%M") }}
         icon_template: mdi:weather-sunset-down
 
-  # Google Maps travel time
-  - platform: google_travel_time
-    api_key: !secret google_maps_api_key
-    name: Work by car
-    origin: zone.home
-    destination: zone.work
-    options:
-      mode: driving
-    scan_interval: 1800  # Only update travel time every 30 min outside of commute time
-
   # Exchange rates
   - platform: mqtt
     unique_id: "currency.zargbp"
@@ -370,7 +360,6 @@ tts:
       - large-home-entertainment-class-device
 
 updater:
-  include_used_components: true
 
 system_health:
 
