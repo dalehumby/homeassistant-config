@@ -168,6 +168,32 @@ sensor:
     device_class: temperature
     expire_after: 600
 
+  # Wunderground Blouberg
+  - platform: mqtt
+    unique_id: "wunderground.iblouberg6.precipitation24"
+    name: "Blouberg 24 hour rainfall"
+    state_topic: "wunderground/iblouberg6"
+    value_template: "{{ (value_json.observations[0].metric.precipTotal) | round(1) }}"
+    unit_of_measurement: "mm"
+    icon: mdi:weather-pouring
+    expire_after: 600
+  - platform: mqtt
+    unique_id: "wunderground.iblouberg6.precipitation"
+    name: "Blouberg rainfall"
+    state_topic: "wunderground/iblouberg6"
+    value_template: "{{ (value_json.observations[0].metric.precipRate) | round(1) }}"
+    unit_of_measurement: "mm/hr"
+    icon: mdi:weather-pouring
+    expire_after: 600
+  - platform: mqtt
+    unique_id: "wunderground.iblouberg6.pressure"
+    name: "Blouberg Pressure"
+    state_topic: "wunderground/iblouberg6"
+    value_template: "{{ (value_json.observations[0].metric.pressure) | round(0) }}"
+    unit_of_measurement: "hPa"
+    icon: mdi:speedometer
+    expire_after: 600
+
   # Xiaomi MiJia BLE Temperature and Humidity sensors
   - platform: mqtt
     unique_id: "mijia.bedroom"
