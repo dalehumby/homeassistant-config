@@ -1,5 +1,5 @@
 - id: update_morning_commute_sensor
-  alias: Commute - Update morning commute sensor
+  alias: Update morning commute time
   trigger:
   - platform: time_pattern
     minutes: /5
@@ -27,7 +27,7 @@
       message: "Welcome home"
 
 - id: sunset
-  alias: "Turn on lights at dusk"
+  alias: "Turn on lounge lights at dusk"
   trigger:
     platform: numeric_state
     entity_id: sun.sun
@@ -38,7 +38,7 @@
     entity_id: scene.evening
 
 - id: sunrise
-  alias: "Turn off lights at dawn"
+  alias: "Turn off all lights at dawn"
   trigger:
     platform: numeric_state
     entity_id: sun.sun
@@ -139,7 +139,7 @@
     - platform: state
       entity_id: sensor.dale_apple_watch_presence
       to: "bedroom"
-  condition: "{{ state_attr('sun.sun', 'elevation') < -5 }}"
+  condition: "{{ state_attr('sun.sun', 'elevation') < 0 }}"
   action:
     service: switch.turn_on
     entity_id: switch.bedside_light
@@ -151,15 +151,13 @@
       entity_id: sensor.dale_apple_watch_presence
       to: "lounge"
   condition:
-    - condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sun.sun
-          attribute: elevation
-          below: -5
-        - condition: state
-          entity_id: switch.shelf_light
-          state: "off"
+    - condition: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: 0
+    - condition: state
+      entity_id: switch.shelf_light
+      state: "off"
   action:
     service: switch.turn_on
     entity_id: switch.shelf_light
@@ -173,3 +171,24 @@
     service: notify.mobile_app_dales_iphone_xs
     data:
       message: "Room {{ states('sensor.dale_apple_watch_presence') }}"
+
+- id: easy_wakeup_gym
+  alias: Turn on bedroom lights gym alarm
+  trigger:
+    - platform: time
+      at: "06:00:00"
+  condition:
+    - condition: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: 0
+    - condition: time
+      weekday:
+        - tue
+        - thu
+    - condition: state
+      entity_id: "binary_sensor.workday_sensor"
+      state: "on"
+  action:
+    service: switch.turn_on
+    entity_id: switch.bedside_light
