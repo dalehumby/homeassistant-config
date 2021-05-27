@@ -18,7 +18,10 @@
       state: on
       brightness_pct: 60
       color_temp: 153
-    light.dining_room_lights:
+    light.diningbulb1:
+      state: on
+      white_value: 255
+    light.diningbulb2:
       state: on
       white_value: 153
     light.stairbulb1:
@@ -42,7 +45,10 @@
       state: on
       brightness_pct: 10
       color_temp: 153
-    light.dining_room_lights:
+    light.diningbulb1:
+      state: on
+      white_value: 26
+    light.diningbulb2:
       state: on
       white_value: 26
     light.stairbulb1:
@@ -63,7 +69,10 @@
       brightness_pct: 10
       color_temp: 153
       white_value: 26
-    light.dining_room_lights:
+    light.diningbulb1:
+      state: on
+      white_value: 26
+    light.diningbulb2:
       state: on
       white_value: 26
     light.stairbulb1:
