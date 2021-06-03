@@ -90,13 +90,5 @@
     light.kitchen_lights: off
     light.lounge_lights: off
     light.dining_room_lights: off
-    light.stairbulb1:
-      state: on
-      brightness_pct: 15
-      color_name: red
-    light.stairbulb2:
-      state: on
-      brightness_pct: 15
-      color_name: red
-
-
+    light.stairbulb1: off
+    light.stairbulb2: off
