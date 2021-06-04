@@ -63,7 +63,7 @@
   alias: "Loadshedding 15 min warning"
   trigger:
     platform: template
-    value_template: "{{ ((as_timestamp(states('sensor.date_time').replace(',', '')) | int) + 15*60) == (state_attr('input_datetime.loadshedding_home_next', 'timestamp') | int)  }}"
+    value_template: "{{ (as_timestamp(states('sensor.date_time').replace(',', '')) - 2*60*60 + 15*60) == (state_attr('input_datetime.loadshedding_home_next', 'timestamp') | int)  }}"
   condition:
     condition: numeric_state
     entity_id: sensor.loadshedding_stage
@@ -150,6 +150,10 @@
     - platform: state
       entity_id: sensor.dale_apple_watch_presence
       to: "lounge"
+    - platform: state
+      entity_id: binary_sensor.pir_stairs_occupancy
+      from: "off"
+      to: "on"
   condition:
     - condition: numeric_state
       entity_id: sun.sun
@@ -192,3 +196,39 @@
   action:
     service: switch.turn_on
     entity_id: switch.bedside_light
+
+- id: brighten_kitchen_lights
+  alias: "Brighten kitchen lights when working in kitchen"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.pir_kitchen_occupancy
+      from: "off"
+      to: "on"
+  condition:
+    - condition: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: 0
+  action:
+    - service: scene.create
+      data:
+        scene_id: kitchen_before
+        snapshot_entities:
+          - light.kitchen_lights
+    - service: light.turn_on
+      entity_id: light.kitchen_lights
+      data:
+        brightness: 255
+        color_temp: 153
+
+- id: restore_kitchen_lights
+  alias: "Restore kitchen lights when done in kitchen"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.pir_kitchen_occupancy
+      from: "on"
+      to: "off"
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.kitchen_before
