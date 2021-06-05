@@ -1,3 +1,19 @@
+- platform: switch
+  name: Bedside Light
+  entity_id: switch.bedside_light
+
+- platform: switch
+  name: Shelf Light
+  entity_id: switch.shelf_light
+
+- platform: switch
+  name: Desk Light
+  entity_id: switch.desk_light
+
+- platform: switch
+  name: Study Light
+  entity_id: switch.study_light
+
 - platform: group
   name: Dining room lights
   entities:

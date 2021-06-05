@@ -141,8 +141,8 @@
       to: "bedroom"
   condition: "{{ state_attr('sun.sun', 'elevation') < 0 }}"
   action:
-    service: switch.turn_on
-    entity_id: switch.bedside_light
+    service: light.turn_on
+    entity_id: light.bedside_light
 
 - id: enter_lounge_when_dark
   alias: "Turn on lounge lights on entry when dark"
@@ -160,11 +160,11 @@
       attribute: elevation
       below: 0
     - condition: state
-      entity_id: switch.shelf_light
+      entity_id: light.shelf_light
       state: "off"
   action:
-    service: switch.turn_on
-    entity_id: switch.shelf_light
+    service: light.turn_on
+    entity_id: light.shelf_light
 
 - id: location_change_debug
   alias: Push notification when room location changes
@@ -194,8 +194,8 @@
       entity_id: "binary_sensor.workday_sensor"
       state: "on"
   action:
-    service: switch.turn_on
-    entity_id: switch.bedside_light
+    service: light.turn_on
+    entity_id: light.bedside_light
 
 - id: brighten_kitchen_lights
   alias: "Brighten kitchen lights when working in kitchen"
