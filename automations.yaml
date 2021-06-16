@@ -228,7 +228,33 @@
       entity_id: binary_sensor.pir_kitchen_occupancy
       from: "on"
       to: "off"
+  condition:
+    - condition: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: 0
   action:
     - service: scene.turn_on
       data:
         entity_id: scene.kitchen_before
+
+- id: openuv_update_index
+  alias: "Update OpenUV every 30 minutes while the sun is at least 10 degrees above the horizon"
+  trigger:
+    platform: time_pattern
+    minutes: "/30"
+  condition:
+    condition: numeric_state
+    entity_id: sun.sun
+    value_template: "{{ state.attributes.elevation }}"
+    above: 10
+  action:
+    service: openuv.update_uv_index_data
+
+- id: openuv_update_protection_window
+  alias: "Update OpenUV protection window once a day"
+  trigger:
+    platform: time
+    at: "02:12:00"
+  action:
+    service: openuv.update_protection_data
