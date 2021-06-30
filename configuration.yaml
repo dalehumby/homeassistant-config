@@ -96,56 +96,6 @@ sensor:
     expire_after: 1800
     device_class: timestamp
 
-  # Luftdaten Particulate
-  - platform: rest
-    name: Air Sensor
-    resource: http://10.0.0.11/data.json
-    method: GET
-    value_template: '{{ value_json.age }}'
-    json_attributes: sensordatavalues
-  - platform: template
-    sensors:
-      air_quality_pm10:
-        friendly_name: 'PM10'
-        unit_of_measurement: 'µg/m³'
-        icon_template: mdi:waves
-        value_template: >-
-          {% for i in states.sensor.air_sensor.attributes.sensordatavalues %}
-              {% if i.value_type == 'SDS_P1' %}
-                  {{ i.value }}
-              {% endif %}
-          {% endfor %}
-      air_quality_pm25:
-        friendly_name: 'PM2.5'
-        unit_of_measurement: 'µg/m³'
-        icon_template: mdi:waves
-        value_template: >-
-          {% for i in states.sensor.air_sensor.attributes.sensordatavalues %}
-              {% if i.value_type == 'SDS_P2' %}
-                  {{ i.value }}
-              {% endif %}
-          {% endfor %}
-      indoor_temp:
-        friendly_name: 'Indoor Temperature'
-        device_class: temperature
-        unit_of_measurement: '°C'
-        value_template: >-
-          {% for i in states.sensor.air_sensor.attributes.sensordatavalues %}
-              {% if i.value_type == 'temperature' %}
-                  {{ i.value | round(1) }}
-              {% endif %}
-          {% endfor %}
-      indoor_humidity:
-        friendly_name: 'Indoor Humidity'
-        device_class: humidity
-        unit_of_measurement: '%'
-        value_template: >-
-          {% for i in states.sensor.air_sensor.attributes.sensordatavalues %}
-              {% if i.value_type == 'humidity' %}
-                  {{ i.value | round(0) }}
-              {% endif %}
-          {% endfor %}
-
   # Windguru Blouberg
   - platform: mqtt
     unique_id: "windguru.blouberg.wind_avg"
