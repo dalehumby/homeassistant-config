@@ -47,3 +47,14 @@
     - light.studybulb1
     - light.studybulb2
     - light.studybulb3
+
+- platform: group
+  name: Downstairs lights
+  entities:
+    - light.kitchen_lights
+    - light.dining_room_lights
+    - light.lounge_lights
+    - light.shelf_light
+    - light.desk_light
+    - light.stairbulb1
+    - light.stairbulb2
