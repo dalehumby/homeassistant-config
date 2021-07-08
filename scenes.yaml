@@ -92,3 +92,23 @@
     light.dining_room_lights: off
     light.stairbulb1: off
     light.stairbulb2: off
+
+- name: Gloomy Day
+  icon: mdi:weather-partly-cloudy
+  entities:
+    light.shelf_light: off
+    light.desk_light: off
+    light.kitchen_lights:
+      state: on
+      brightness_pct: 100
+      color_temp: 153
+      white_value: 255
+    light.lounge_lights: off
+    light.diningbulb1:
+      state: on
+      white_value: 255
+    light.diningbulb2: off
+    light.stairbulb1:
+      state: on
+      white_value: 255
+    light.stairbulb2: off
