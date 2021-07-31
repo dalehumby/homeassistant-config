@@ -107,7 +107,9 @@
     light.diningbulb1:
       state: on
       white_value: 255
-    light.diningbulb2: off
+    light.diningbulb2:
+      state: on
+      white_value: 255
     light.stairbulb1:
       state: on
       white_value: 255
