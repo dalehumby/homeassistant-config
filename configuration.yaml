@@ -330,12 +330,26 @@ sensor:
       {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
     json_attributes_topic: zigbee2mqtt/bridge/networkmap/raw
 
-# Weather radar
 camera:
   - platform: mqtt
     topic: weathersa/ct50.gif
     name: Cape Town 50km radar
     unique_id: ct50radar
+  - platform: xiaomi_cloud_map_extractor
+    host: !secret xiaomi_vacuum_host
+    token: !secret xiaomi_vacuum_token
+    username: !secret xiaomi_cloud_username
+    password: !secret xiaomi_cloud_password
+    draw: ['all']
+    attributes:
+      - calibration_points
+    map_transformation:
+      rotate: 180
+      trim:
+        top: 20
+        bottom: 20
+        left: 20
+        right: 20
 
 
 input_datetime:
