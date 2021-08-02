@@ -1,8 +1,0 @@
-lounge_ambient:
-  name: Lounge ambient lights
-  icon: mdi:lightbulb-group
-  entities:
-    - switch.shelf_light
-    - switch.desk_light
-
-
