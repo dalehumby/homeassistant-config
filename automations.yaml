@@ -26,13 +26,30 @@
     data:
       message: "Welcome home"
 
+- id: leave_home_morning_lights_off
+  alias: "Turn off lights when leave home and it's dark"
+  trigger:
+    - platform: state
+      entity_id: person.dale
+      to: "not_home"
+  condition:
+    - condition: time
+      after: "05:00"
+      before: "07:00"
+  action:
+    service: light.turn_off
+    entity_id:
+      - lights.downstairs_lights
+      - lights.bedroom_overhead_lights
+      - lights.bedside_light
+
 - id: sunset
   alias: "Turn on lounge lights at dusk"
   trigger:
-    platform: numeric_state
-    entity_id: sun.sun
-    value_template: "{{ state_attr('sun.sun', 'elevation') }}"
-    below: 5
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: 5
   action:
     service: scene.turn_on
     entity_id: scene.evening
@@ -40,10 +57,10 @@
 - id: sunrise
   alias: "Turn off all lights at dawn"
   trigger:
-    platform: numeric_state
-    entity_id: sun.sun
-    value_template: "{{ state_attr('sun.sun', 'elevation') }}"
-    above: 0
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      above: 0
   action:
     service: light.turn_off
     entity_id: all
@@ -139,7 +156,11 @@
     - platform: state
       entity_id: sensor.dale_apple_watch_presence
       to: "bedroom"
-  condition: "{{ state_attr('sun.sun', 'elevation') < 0 }}"
+  condition:
+    - condition: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: 0
   action:
     service: light.turn_on
     entity_id: light.bedside_light
@@ -165,6 +186,25 @@
   action:
     service: light.turn_on
     entity_id: light.shelf_light
+
+- id: goodnight_lounge
+  alias: "Turn off lounge lights when go to bed"
+  trigger:
+    # Could also trigger if plug phone in to charge
+    - platform: state
+      entity_id: sensor.dale_apple_watch_presence
+      to: "bedroom"
+  condition:
+    - condition: time
+      after: "22:00"
+      before: "04:00"
+    - condition: state
+      entity_id: binary_sensor.pir_bedroom_occupancy
+      state: "on"
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.goodnight
 
 - id: location_change_debug
   alias: Push notification when room location changes
@@ -238,6 +278,34 @@
       data:
         entity_id: scene.kitchen_before
 
+# Fixes issue where you 1) trigger snapshot, 2) change the scene, 3) PIR timer expires 
+# and resets to the old scene instead of new scene
+# Need 5s delay so scene changes before snapshotting
+- id: fix_kitchen_lights_saved_scene
+  alias: "Snapshot new scene for kitchen lights"
+  trigger:
+    - platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: scene.relax
+        domain: scene
+        service: turn_on
+    - platform: event
+      event_type: call_service
+      event_data:
+        service_data:
+          entity_id: scene.goodnight
+        domain: scene
+        service: turn_on
+  action:
+    - delay: 5
+    - service: scene.create
+      data:
+        scene_id: kitchen_before
+        snapshot_entities:
+          - light.kitchen_lights
+
 - id: openuv_update_index
   alias: "Update OpenUV every 30 minutes while the sun is at least 10 degrees above the horizon"
   trigger:
@@ -246,7 +314,7 @@
   condition:
     condition: numeric_state
     entity_id: sun.sun
-    value_template: "{{ state.attributes.elevation }}"
+    attribute: elevation
     above: 10
   action:
     service: openuv.update_uv_index_data
@@ -258,3 +326,7 @@
     at: "02:12:00"
   action:
     service: openuv.update_protection_data
+
+# TODO Other ideas
+# Alert when front door open + PIR -> watch, speakers (firgure out Security on HA)
+# Alert when cat litter, washing is outside, sliding door open and it starts to rain
