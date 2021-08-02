@@ -344,7 +344,7 @@ camera:
     attributes:
       - calibration_points
     map_transformation:
-      rotate: 180
+      rotate: 0
       trim:
         top: 20
         bottom: 20
