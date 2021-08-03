@@ -39,9 +39,9 @@
   action:
     service: light.turn_off
     entity_id:
-      - lights.downstairs_lights
-      - lights.bedroom_overhead_lights
-      - lights.bedside_light
+      - light.downstairs_lights
+      - light.bedroom_overhead_lights
+      - light.bedside_light
 
 - id: sunset
   alias: "Turn on lounge lights at dusk"
