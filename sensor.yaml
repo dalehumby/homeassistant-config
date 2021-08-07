@@ -1,0 +1,283 @@
+# Date and time sensor
+- platform: time_date
+  display_options:
+    - 'time'
+    - 'date'
+    - 'date_time'
+    - 'date_time_utc'
+    - 'date_time_iso'
+    - 'time_utc'
+
+# Moon sensor
+- platform: moon
+
+# Power meter sensor
+- platform: mqtt
+  unique_id: "powermeter.power_remain_kwh"
+  name: "Power remaining"
+  state_topic: "powermeter"
+  unit_of_measurement: "kWh"
+  value_template: "{{ value_json.power_remain_kwh | round(1) }}"
+  expire_after: 600
+  device_class: energy
+- platform: mqtt
+  unique_id: "powermeter.power_watts.avg_1min"
+  name: "Power usage"
+  state_topic: "powermeter"
+  unit_of_measurement: "W"
+  value_template: "{{ value_json.power_watts.avg_1min }}"
+  expire_after: 600
+  device_class: energy
+
+# Eskom loadshedding
+- platform: mqtt
+  unique_id: "loadshedding.stage"
+  name: "Loadshedding stage"
+  state_topic: "loadshedding/stage"
+  value_template: "{{ value | int }}"
+  expire_after: 1800
+  device_class: energy
+  unit_of_measurement: stage
+  icon: mdi:flash-off
+- platform: mqtt
+  unique_id: "loadshedding.home_next"
+  name: "Next loadshedding time"
+  state_topic: "loadshedding/home/next"
+  value_template: "{{ value_json.next }}"
+  expire_after: 1800
+  device_class: timestamp
+
+# Windguru Blouberg
+- platform: mqtt
+  unique_id: "windguru.blouberg.wind_avg"
+  name: "Windguru Blouberg Speed"
+  state_topic: "windguru/blouberg"
+  value_template: "{{ (value_json.wind_avg * 1.852) | round(1) }}"
+  unit_of_measurement: "km/h"
+  icon: mdi:weather-windy
+  expire_after: 600
+- platform: mqtt
+  unique_id: "windguru.blouberg.wind_direction"
+  name: "Windguru Blouberg Direction"
+  state_topic: "windguru/blouberg"
+  value_template: "{{ value_json.wind_direction }}"
+  unit_of_measurement: "°"
+  icon: mdi:arrow-top-right
+  expire_after: 600
+- platform: mqtt
+  unique_id: "windguru.blouberg.temperature"
+  name: "Windguru Blouberg Temperature"
+  state_topic: "windguru/blouberg"
+  value_template: "{{ value_json.temperature }}"
+  unit_of_measurement: "°C"
+  device_class: temperature
+  expire_after: 600
+
+# Wunderground Blouberg
+- platform: mqtt
+  unique_id: "wunderground.iblouberg6.precipitation24"
+  name: "Blouberg 24 hour rainfall"
+  state_topic: "wunderground/iblouberg6"
+  value_template: "{{ (value_json.observations[0].metric.precipTotal) | round(1) }}"
+  unit_of_measurement: "mm"
+  icon: mdi:weather-pouring
+  expire_after: 600
+- platform: mqtt
+  unique_id: "wunderground.iblouberg6.precipitation"
+  name: "Blouberg rainfall"
+  state_topic: "wunderground/iblouberg6"
+  value_template: "{{ (value_json.observations[0].metric.precipRate) | round(1) }}"
+  unit_of_measurement: "mm/hr"
+  icon: mdi:weather-pouring
+  expire_after: 600
+- platform: mqtt
+  unique_id: "wunderground.iblouberg6.pressure"
+  name: "Blouberg Pressure"
+  state_topic: "wunderground/iblouberg6"
+  value_template: "{{ (value_json.observations[0].metric.pressure) | round(0) }}"
+  unit_of_measurement: "hPa"
+  icon: mdi:speedometer
+  expire_after: 600
+
+# Xiaomi MiJia BLE Temperature and Humidity sensors
+- platform: mqtt
+  unique_id: "mijia.bedroom"
+  name: "Mijia Bedroom"
+  state_topic: "mijia/bfd27b"
+  value_template: "{{ value_json.battery_pct }}"
+  unit_of_measurement: "%"
+  device_class: battery
+  json_attributes_topic: "mijia/bfd27b"
+  json_attributes_template: "{{ value }}"
+  expire_after: 300
+- platform: template
+  sensors:
+    bedroom_temperature:
+      friendly_name: "Bedroom Temperature"
+      device_class: temperature
+      unit_of_measurement: "°C"
+      value_template: "{{ state_attr('sensor.mijia_bedroom', 'temperature_C') }}"
+    bedroom_humidity:
+      friendly_name: "Bedroom Humidity"
+      device_class: humidity
+      unit_of_measurement: "%"
+      value_template: "{{ state_attr('sensor.mijia_bedroom', 'humidity_pct') }}"
+- platform: mqtt
+  unique_id: "mijia.balcony"
+  name: "Mijia Balcony"
+  state_topic: "mijia/8fdcbd"
+  value_template: "{{ value_json.battery_pct }}"
+  unit_of_measurement: "%"
+  device_class: battery
+  json_attributes_topic: "mijia/8fdcbd"
+  json_attributes_template: "{{ value }}"
+  expire_after: 300
+- platform: template
+  sensors:
+    balcony_temperature:
+      friendly_name: "Balcony Temperature"
+      device_class: temperature
+      unit_of_measurement: "°C"
+      value_template: "{{ state_attr('sensor.mijia_balcony', 'temperature_C') }}"
+    balcony_humidity:
+      friendly_name: "Balcony Humidity"
+      device_class: humidity
+      unit_of_measurement: "%"
+      value_template: "{{ state_attr('sensor.mijia_balcony', 'humidity_pct') }}"
+- platform: mqtt
+  unique_id: "mijia.fridge"
+  name: "Mijia Fridge"
+  state_topic: "mijia/356c76"
+  value_template: "{{ value_json.battery_pct }}"
+  unit_of_measurement: "%"
+  device_class: battery
+  json_attributes_topic: "mijia/356c76"
+  json_attributes_template: "{{ value }}"
+  expire_after: 300
+- platform: template
+  sensors:
+    fridge_temperature:
+      friendly_name: "Fridge Temperature"
+      device_class: temperature
+      unit_of_measurement: "°C"
+      value_template: "{{ state_attr('sensor.mijia_fridge', 'temperature_C') }}"
+    fridge_humidity:
+      friendly_name: "Fridge Humidity"
+      device_class: humidity
+      unit_of_measurement: "%"
+      value_template: "{{ state_attr('sensor.mijia_fridge', 'humidity_pct') }}"
+- platform: mqtt
+  unique_id: "mijia.study"
+  name: "Mijia Study"
+  state_topic: "mijia/95d928"
+  value_template: "{{ value_json.battery_pct }}"
+  unit_of_measurement: "%"
+  device_class: battery
+  json_attributes_topic: "mijia/95d928"
+  json_attributes_template: "{{ value }}"
+  expire_after: 300
+- platform: template
+  sensors:
+    study_temperature:
+      friendly_name: "Study Temperature"
+      device_class: temperature
+      unit_of_measurement: "°C"
+      value_template: "{{ state_attr('sensor.mijia_study', 'temperature_C') }}"
+    study_humidity:
+      friendly_name: "Study Humidity"
+      device_class: humidity
+      unit_of_measurement: "%"
+      value_template: "{{ state_attr('sensor.mijia_study', 'humidity_pct') }}"
+
+# Tides
+- platform: mqtt
+  unique_id: "tides.capetown"
+  name: "Cape Town tide"
+  state_topic: "tides/capetown"
+  value_template: "{{ value_json.next_tide.timestamp }}"
+  json_attributes_topic: "tides/capetown"
+  json_attributes_template: "{{ value }}"
+  icon: mdi:waves
+  device_class: timestamp
+  expire_after: 1800
+- platform: template
+  sensors:
+    tides_capetown_next:
+      unique_id: tides.capetown_next
+      value_template: >
+        {{ state_attr('sensor.cape_town_tide', 'next_tide').timestamp }}
+      friendly_name_template: >
+        Next {% if state_attr('sensor.cape_town_tide', 'next_tide').high %}high{% else %}low{% endif %} tide
+      icon_template: >
+        {% if state_attr('sensor.cape_town_tide', 'next_tide').high %}mdi:arrow-expand-up{% else %}mdi:arrow-collapse-down{% endif %}
+      device_class: timestamp
+      attribute_templates:
+        height: >
+          {{ state_attr('sensor.cape_town_tide', 'next_tide').height_cm | float / 100 }} m
+
+# Sun rise and set times
+- platform: template
+  sensors:
+    nextsunrise:
+      unique_id: sun.sun_rise
+      friendly_name: "Next Sunrise"
+      value_template: >
+        {{ as_timestamp(state_attr('sun.sun', 'next_rising'))| timestamp_custom("%H:%M") }}
+      icon_template: mdi:weather-sunset-up
+    nextsunset:
+      unique_id: sun.sun_set
+      friendly_name: "Next Sunset"
+      value_template: >
+        {{ as_timestamp(state_attr('sun.sun', 'next_setting')) | timestamp_custom("%H:%M") }}
+      icon_template: mdi:weather-sunset-down
+
+# Exchange rates
+- platform: mqtt
+  unique_id: "currency.zargbp"
+  name: "Currency GBP"
+  icon: mdi:currency-gbp
+  state_topic: "currency/zargbp"
+  value_template: "{{ value_json.rate }}"
+  expire_after: 21600
+  unit_of_measurement: "R"
+  json_attributes_topic: "currency/zargbp"
+  json_attributes_template: "{{ value }}"
+- platform: mqtt
+  unique_id: "currency.zareur"
+  name: "Currency EUR"
+  icon: mdi:currency-eur
+  state_topic: "currency/zareur"
+  value_template: "{{ value_json.rate }}"
+  expire_after: 21600
+  unit_of_measurement: "R"
+  json_attributes_topic: "currency/zareur"
+  json_attributes_template: "{{ value }}"
+- platform: mqtt
+  unique_id: "currency.zarusd"
+  name: "Currency USD"
+  icon: mdi:currency-usd
+  state_topic: "currency/zarusd"
+  value_template: "{{ value_json.rate }}"
+  expire_after: 21600
+  unit_of_measurement: "R"
+  json_attributes_topic: "currency/zarusd"
+  json_attributes_template: "{{ value }}"
+- platform: mqtt
+  unique_id: "currency.zarbtc"
+  name: "Currency BTC"
+  icon: mdi:currency-btc
+  state_topic: "currency/zarbtc"
+  value_template: "{{ value_json.rate }}"
+  expire_after: 21600
+  unit_of_measurement: "R"
+  json_attributes_topic: "currency/zarbtc"
+  json_attributes_template: "{{ value }}"
+
+# Zigbee2MQTT
+- platform: mqtt
+  name: Zigbee2mqtt Networkmap
+  state_topic: zigbee2mqtt/bridge/networkmap/raw
+  value_template: >-
+    {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+  json_attributes_topic: zigbee2mqtt/bridge/networkmap/raw
+

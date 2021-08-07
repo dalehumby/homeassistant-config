@@ -1,0 +1,7 @@
+- sensor:
+  - name: "Average temperature"
+    unit_of_measurement: "°C"
+    state: >
+      {% set bedroom = states('sensor.bedroom_temperature') | float %}
+      {% set study = states('sensor.study_temperature') | float %}
+      {{ ((bedroom + study) / 2) | round(1) }}
