@@ -193,7 +193,7 @@
     # Could also trigger if plug phone in to charge
     - platform: state
       entity_id: sensor.dale_apple_watch_presence
-      to: "bedroom"
+      from: "lounge"
       for: "00:00:30"
   condition:
     - condition: time
@@ -306,6 +306,31 @@
         scene_id: kitchen_before
         snapshot_entities:
           - light.kitchen_lights
+
+- id: netflix_dim_lights
+  alias: "Dim lights when Netflix plays"
+  trigger:
+    - platform: state
+      entity_id: media_player.apple_tv
+      to: "playing"
+      for: "00:00:10"
+  condition:
+    - condition: state
+      entity_id: light.lounge_lights
+      state: "on"
+    - condition: state
+      entity_id: media_player.apple_tv
+      attribute: app_id
+      state: "com.netflix.Netflix"
+    - condition: numeric_state
+      entity_id: media_player.apple_tv
+      attribute: media_position
+      above: 5  # Only transition when playing movie/series, not trailer
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.relax
+        transition: 5
 
 - id: openuv_update_index
   alias: "Update OpenUV every 30 minutes while the sun is at least 10 degrees above the horizon"
