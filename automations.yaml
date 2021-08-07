@@ -194,6 +194,7 @@
     - platform: state
       entity_id: sensor.dale_apple_watch_presence
       to: "bedroom"
+      for: "00:00:30"
   condition:
     - condition: time
       after: "22:00"
