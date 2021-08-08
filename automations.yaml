@@ -27,7 +27,7 @@
       message: "Welcome home"
 
 - id: leave_home_morning_lights_off
-  alias: "Turn off lights when leave home and it's dark"
+  alias: "Turn off lights when leave home in morning"
   trigger:
     - platform: state
       entity_id: person.dale
@@ -46,21 +46,19 @@
 - id: sunset
   alias: "Turn on lounge lights at dusk"
   trigger:
-    - platform: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      below: 5
+    - platform: state
+      entity_id: sensor.illuminance
+      to: "dusk"
   action:
     service: scene.turn_on
     entity_id: scene.evening
 
 - id: sunrise
-  alias: "Turn off all lights at dawn"
+  alias: "Turn off all lights after dawn"
   trigger:
-    - platform: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      above: 0
+    - platform: state
+      entity_id: sensor.illuminance
+      from: "dawn"
   action:
     service: light.turn_off
     entity_id: all
@@ -157,10 +155,11 @@
       entity_id: sensor.dale_apple_watch_presence
       to: "bedroom"
   condition:
-    - condition: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      below: 0
+    - condition: state
+      entity_id: sensor.illuminance
+      state: 
+        - "dusk"
+        - "dark"
   action:
     service: light.turn_on
     entity_id: light.bedside_light
@@ -173,13 +172,11 @@
       to: "lounge"
     - platform: state
       entity_id: binary_sensor.pir_stairs_occupancy
-      from: "off"
       to: "on"
   condition:
-    - condition: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      below: 0
+    - condition: state
+      entity_id: sensor.illuminance
+      state: "dark"
     - condition: state
       entity_id: light.shelf_light
       state: "off"
@@ -218,15 +215,11 @@
       message: "Room {{ states('sensor.dale_apple_watch_presence') }}"
 
 - id: easy_wakeup_gym
-  alias: Turn on bedroom lights gym alarm
+  alias: "Turn on bedroom lights gym alarm"
   trigger:
     - platform: time
       at: "06:00:00"
   condition:
-    - condition: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      below: 0
     - condition: time
       weekday:
         - tue
@@ -246,10 +239,9 @@
       from: "off"
       to: "on"
   condition:
-    - condition: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      below: 0
+    - condition: state
+      entity_id: sensor.illuminance
+      state: "dark"
   action:
     - service: scene.create
       data:
@@ -270,10 +262,9 @@
       from: "on"
       to: "off"
   condition:
-    - condition: numeric_state
-      entity_id: sun.sun
-      attribute: elevation
-      below: 0
+    - condition: state
+      entity_id: sensor.illuminance
+      state: "dark"
   action:
     - service: scene.turn_on
       data:
@@ -330,18 +321,18 @@
     - service: scene.turn_on
       data:
         entity_id: scene.relax
-        transition: 5
 
 - id: openuv_update_index
-  alias: "Update OpenUV every 30 minutes while the sun is at least 10 degrees above the horizon"
+  alias: "Update OpenUV every 30 minutes during day"
   trigger:
     platform: time_pattern
     minutes: "/30"
   condition:
-    condition: numeric_state
-    entity_id: sun.sun
-    attribute: elevation
-    above: 10
+    - condition: state
+      entity_id: sensor.illuminance
+      state: 
+        - "gloomy"
+        - "bright"
   action:
     service: openuv.update_uv_index_data
 
@@ -352,6 +343,61 @@
     at: "02:12:00"
   action:
     service: openuv.update_protection_data
+
+- id: gloomy_day_lights_on
+  alias: "Turn on lights when it's a gloomy day"
+  trigger:
+    - platform: state
+      entity_id: sensor.illuminance
+      to: "gloomy"
+    - platform: state
+      entity_id: sensor.dale_apple_watch_presence
+      to: "lounge"
+  condition:
+    - condition: state
+      entity_id: sensor.illuminance
+      state: "gloomy"
+    - condition: state
+      entity_id: sensor.dale_apple_watch_presence
+      state: "lounge"
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.gloomy_day
+
+- id: bright_day_lights_off
+  alias: "Turn off lights when it's a bright day"
+  trigger:
+    - platform: state
+      entity_id: sensor.illuminance
+      to: "bright"
+      for: "00:30:00"
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.bright_day
+
+- id: night_lights_on
+  alias: "Turn on lights when it's dark"
+  trigger:
+    - platform: state
+      entity_id: sensor.illuminance
+      to: "dark"
+    - platform: state
+      entity_id: sensor.dale_apple_watch_presence
+      to: "lounge"
+  condition:
+    - condition: state
+      entity_id: sensor.illuminance
+      state: "dark"
+    - condition: state
+      entity_id: sensor.dale_apple_watch_presence
+      state: "lounge"
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.working
+
 
 # TODO Other ideas
 # Alert when front door open + PIR -> watch, speakers (firgure out Security on HA)

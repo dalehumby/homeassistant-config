@@ -114,3 +114,15 @@
       state: on
       white_value: 255
     light.stairbulb2: off
+
+- name: Bright Day
+  icon: mdi:weather-sunny
+  entities:
+    light.shelf_light: off
+    light.desk_light: off
+    light.kitchen_lights: off
+    light.lounge_lights: off
+    light.diningbulb1: off
+    light.diningbulb2: off
+    light.stairbulb1: off
+    light.stairbulb2: off
