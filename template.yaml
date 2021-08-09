@@ -9,7 +9,7 @@
   - name: "Illuminance"
     icon: "mdi:theme-light-dark"
     state: >
-      {% if states('sensor.outdoor_illuminance_average') | int < 10 %}
+      {% if 0 <= states('sensor.outdoor_illuminance_average') | int < 10 %}
         dark
       {% elif states('sensor.outdoor_illuminance_average') | int < 500 %}
         {% if state_attr('sun.sun', 'rising') %}
