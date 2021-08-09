@@ -164,6 +164,34 @@
     service: light.turn_on
     entity_id: light.bedside_light
 
+- id: night_lights_on
+  alias: "Turn on lights when it's dark"
+  trigger:
+    - platform: state
+      entity_id: sensor.illuminance
+      to: 
+        - "dusk"
+        - "dark"
+    - platform: state
+      entity_id: sensor.dale_apple_watch_presence
+      to: "lounge"
+  condition:
+    - condition: state
+      entity_id: sensor.illuminance
+      state: 
+        - "dusk"
+        - "dark"
+    - condition: state
+      entity_id: sensor.dale_apple_watch_presence
+      state: "lounge"
+    - condition: state
+      entity_id: light.lounge_lights
+      state: "off"
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.working
+
 - id: enter_lounge_when_dark
   alias: "Turn on lounge lights on entry when dark"
   trigger:
@@ -377,27 +405,19 @@
       data:
         entity_id: scene.bright_day
 
-- id: night_lights_on
-  alias: "Turn on lights when it's dark"
+- id: bring_in_washing
+  alias: Reminder to bring in washing
   trigger:
-    - platform: state
-      entity_id: sensor.illuminance
-      to: "dark"
-    - platform: state
-      entity_id: sensor.dale_apple_watch_presence
-      to: "lounge"
-  condition:
-    - condition: state
-      entity_id: sensor.illuminance
-      state: "dark"
-    - condition: state
-      entity_id: sensor.dale_apple_watch_presence
-      state: "lounge"
+    - platform: time
+      at: "16:30:00"
   action:
-    - service: scene.turn_on
+    - service: notify.mobile_app_dales_iphone_xs
       data:
-        entity_id: scene.working
-
+        message: "Bring in washing"
+    - service: tts.google_cloud_say
+      entity_id: media_player.lounge_display
+      data:
+        message: "Good afternoon. Don't forget to bring in the washing"
 
 # TODO Other ideas
 # Alert when front door open + PIR -> watch, speakers (firgure out Security on HA)
