@@ -5,3 +5,9 @@ tts/
 *.log
 *.db*
 HASSGoogAssist.json
+ip_bans.yaml
+.shopping_list.json
+blueprints/
+custom_components/
+www/community/
+www/pipe.svg
