@@ -187,6 +187,8 @@
     - condition: state
       entity_id: light.lounge_lights
       state: "off"
+    - condition: time
+      after: "16:00"
   action:
     - service: scene.turn_on
       data:
