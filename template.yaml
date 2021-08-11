@@ -9,18 +9,18 @@
   - name: "Illuminance"
     icon: "mdi:theme-light-dark"
     state: >
-      {% if 0 <= states('sensor.outdoor_illuminance_average') | int < 10 %}
-        dark
-      {% elif states('sensor.outdoor_illuminance_average') | int < 500 %}
-        {% if state_attr('sun.sun', 'rising') %}
-          dawn
+      {% if states('sensor.outdoor_illuminance_average') not in ['unknown', 'unavailable'] %}
+        {% if states('sensor.outdoor_illuminance_average') | int < 10 %}
+          dark
+        {% elif states('sensor.outdoor_illuminance_average') | int < 500 %}
+          {% if state_attr('sun.sun', 'rising') %}
+            dawn
+          {% else %}
+            dusk
+          {% endif %}
+        {% elif states('sensor.outdoor_illuminance_average') | int < 12000 %}
+          gloomy
         {% else %}
-          dusk
+          bright
         {% endif %}
-      {% elif states('sensor.outdoor_illuminance_average') | int < 12000 %}
-        gloomy
-      {% else %}
-        bright
       {% endif %}
-
-
