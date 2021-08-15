@@ -421,6 +421,29 @@
       data:
         message: "Good afternoon. Don't forget to bring in the washing"
 
+- id: toggle_bedroom_lights
+  alias: Button toggles bedroom lights
+  trigger:
+    - platform: state
+      entity_id: sensor.bedroom_button_action
+      to: "on"
+  action:
+    - service: light.toggle
+      target:
+        entity_id: light.bedside_light
+
+- id: kitchen_button
+  alias: Button activates working lights
+  trigger:
+  - platform: state
+    entity_id: sensor.kitchen_button_action
+    to: "on"
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.working
+
+
 # TODO Other ideas
 # Alert when front door open + PIR -> watch, speakers (firgure out Security on HA)
 # Alert when cat litter, washing is outside, sliding door open and it starts to rain
