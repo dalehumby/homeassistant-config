@@ -37,9 +37,9 @@
 - platform: group
   name: Bedroom overhead lights
   entities:
-    - light.bedroombulb1
-    - light.bedroombulb2
-    - light.bedroombulb3
+    - light.bedroom_cupboard
+    - light.bedroom_middle
+    - light.bedroom_window
 
 - platform: group
   name: Study overhead lights
