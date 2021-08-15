@@ -18,9 +18,37 @@
           {% else %}
             dusk
           {% endif %}
-        {% elif states('sensor.outdoor_illuminance_average') | int < 12000 %}
+        {% elif states('sensor.outdoor_illuminance_average') | int < 8000 %}
           gloomy
         {% else %}
           bright
         {% endif %}
       {% endif %}
+
+  - name: "Daily playlist"
+    icon: mdi:spotify
+    # ISO weekday is 1 (Mon) .. 7 (Sun)
+    # Mon Discover weekly
+    # Tue Daily mix 1
+    # Wed Daily mix 2
+    # Thr Daily mix 3
+    # Fri Release radar
+    # Sat Daily mix 5
+    # Sun Daily mix 6
+    state: >
+      {% if now().isoweekday == 1 %}
+        https://open.spotify.com/playlist/37i9dQZEVXcBLCgPN4zUED?si=b8e6f7dde3da427d
+      {% elif now().isoweekday == 2 %}
+        https://open.spotify.com/playlist/37i9dQZF1E3500CBHfZVid?si=04389d89d8db42ed
+      {% elif now().isoweekday == 3 %}
+        https://open.spotify.com/playlist/37i9dQZF1E36xhkhhnd6OW?si=4ae2f81701bd43df
+      {% elif now().isoweekday == 4 %}
+        https://open.spotify.com/playlist/37i9dQZF1E36PUMXDr0n6B?si=ec6d9bacc66d46e9
+      {% elif now().isoweekday == 5 %}
+        https://open.spotify.com/playlist/37i9dQZEVXbc0jST94T3I3?si=79d8893fa3fb4a07
+      {% elif now().isoweekday == 6 %}
+        https://open.spotify.com/playlist/37i9dQZF1E36QhxXBTH2RE?si=0995558a2ad9472b
+      {% else %}
+        https://open.spotify.com/playlist/37i9dQZF1E35TbkiCN416a?si=f0e348f27e804ec2
+      {% endif %}
+      

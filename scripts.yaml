@@ -35,6 +35,7 @@ apple_tv_spotify_nowplaying:
 
 tv_sleep:
   alias: Turn off Apple TV and Samsung TV
+  icon: mdi:power-sleep
   mode: restart
   sequence:
     - service: remote.send_command
@@ -56,6 +57,7 @@ tv_sleep:
 
 tv_wake:
   alias: Turn on Apple TV and Samsung TV
+  icon: mdi:power-standby
   mode: restart
   sequence:
     - service: switch.turn_on
@@ -85,12 +87,13 @@ tv_wake:
           - home
 
 apple_tv_spotify_play:
-  alias: Play Spotify Daily Mix 6
+  alias: Play Spotify Daily Mix
+  icon: mdi:spotify
   mode: restart
   sequence:
     - service: script.tv_wake
     - service: script.apple_tv_spotify_launch
-    - delay: 2
+    - delay: 6
     - service: media_player.select_source
       target:
         entity_id: media_player.spotify_dale
@@ -101,7 +104,7 @@ apple_tv_spotify_play:
       target:
         entity_id: media_player.spotify_dale
       data:
-        media_content_id: "https://open.spotify.com/playlist/37i9dQZF1E35TbkiCN416a?si=f0e348f27e804ec2"
+        media_content_id: sensor.daily_playlist
         media_content_type: playlist
     - delay: 2
     - service: script.apple_tv_spotify_nowplaying
