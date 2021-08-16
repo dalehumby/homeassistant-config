@@ -103,8 +103,8 @@ apple_tv_spotify_play:
     - service: media_player.play_media
       target:
         entity_id: media_player.spotify_dale
-      data:
-        media_content_id: sensor.daily_playlist
+      data_template:
+        media_content_id: "{{ states('sensor.daily_playlist') }}"
         media_content_type: playlist
     - delay: 2
     - service: script.apple_tv_spotify_nowplaying
