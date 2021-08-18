@@ -52,3 +52,10 @@
         https://open.spotify.com/playlist/37i9dQZF1E35TbkiCN416a?si=f0e348f27e804ec2
       {% endif %}
       
+- binary_sensor:
+  - name: Front door
+    device_class: door
+    state: >
+      {{ is_state("binary_sensor.front_door_contact", "on") and 
+         is_state("binary_sensor.diningroom_pir_occupancy", "on") 
+      }}
