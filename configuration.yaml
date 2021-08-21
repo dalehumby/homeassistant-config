@@ -10,12 +10,7 @@ homeassistant:
   external_url: !secret homeassistant_url
   auth_providers:
   - type: homeassistant
-  customize:
-    zone.home:
-      beacon:
-        uuid: !secret home_ibeacon
-        major: 0
-        minor: 0
+  customize: !include customize.yaml
 
 http:
   use_x_forwarded_for: true
@@ -110,6 +105,8 @@ system_health:
 history:
 
 sun:
+
+logbook:
 
 sensor: !include sensor.yaml
 binary_sensor: !include binary_sensor.yaml
