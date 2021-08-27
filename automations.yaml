@@ -152,8 +152,8 @@
   alias: "Turn on bedroom light on entry after dark"
   trigger:
     - platform: state
-      entity_id: sensor.dale_apple_watch_presence
-      to: "bedroom"
+      entity_id: binary_sensor.dale_bedroom_presence
+      to: "on"
   condition:
     - condition: state
       entity_id: sensor.illuminance
@@ -173,8 +173,8 @@
         - "dusk"
         - "dark"
     - platform: state
-      entity_id: sensor.dale_apple_watch_presence
-      to: "lounge"
+      entity_id: binary_sensor.dale_lounge_presence
+      to: "on"
   condition:
     - condition: state
       entity_id: sensor.illuminance
@@ -182,8 +182,8 @@
         - "dusk"
         - "dark"
     - condition: state
-      entity_id: sensor.dale_apple_watch_presence
-      state: "lounge"
+      entity_id: binary_sensor.dale_lounge_presence
+      state: "on"
     - condition: state
       entity_id: light.lounge_lights
       state: "off"
@@ -198,8 +198,8 @@
   alias: "Turn on lounge lights on entry when dark"
   trigger:
     - platform: state
-      entity_id: sensor.dale_apple_watch_presence
-      to: "lounge"
+      entity_id: binary_sensor.dale_lounge_presence
+      to: "on"
     - platform: state
       entity_id: binary_sensor.pir_stairs_occupancy
       to: "on"
@@ -219,8 +219,8 @@
   trigger:
     # Could also trigger if plug phone in to charge
     - platform: state
-      entity_id: sensor.dale_apple_watch_presence
-      from: "lounge"
+      entity_id: binary_sensor.dale_lounge_presence
+      from: "on"
       for: "00:00:30"
   condition:
     - condition: time
@@ -381,15 +381,15 @@
       entity_id: sensor.illuminance
       to: "gloomy"
     - platform: state
-      entity_id: sensor.dale_apple_watch_presence
-      to: "lounge"
+      entity_id: binary_sensor.dale_lounge_presence
+      to: "on"
   condition:
     - condition: state
       entity_id: sensor.illuminance
       state: "gloomy"
     - condition: state
-      entity_id: sensor.dale_apple_watch_presence
-      state: "lounge"
+      entity_id: binary_sensor.dale_lounge_presence
+      state: "on"
   action:
     - service: scene.turn_on
       data:
@@ -514,6 +514,29 @@
     - service: scene.turn_on
       data:
         entity_id: scene.working
+
+- id: dale_apple_watch_device_tracker
+  alias: Dale Apple Watch Tracker
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.dale_bedroom_presence
+    - platform: state
+      entity_id: binary_sensor.dale_lounge_presence
+  action:
+    - service: device_tracker.see
+      data:
+        dev_id: dale_apple_watch
+        location_name: >
+          {% if is_state("binary_sensor.dale_bedroom_presence", "on") 
+             or is_state("binary_sensor.dale_lounge_presence", "on") %}
+            home
+          {% elif is_state("binary_sensor.dale_bedroom_presence", "off") 
+             and is_state("binary_sensor.dale_lounge_presence", "off") %}
+            not_home
+          {% else %}
+            unknown
+          {% endif %}
+        source_type: "bluetooth_le"
 
 
 # TODO Other ideas

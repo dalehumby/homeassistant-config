@@ -11,3 +11,4 @@ blueprints/
 custom_components/
 www/community/
 www/pipe.svg
+known_devices.yaml
