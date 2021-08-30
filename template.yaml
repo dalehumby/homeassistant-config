@@ -12,13 +12,13 @@
       {% if states('sensor.outdoor_illuminance_average') not in ['unknown', 'unavailable'] %}
         {% if states('sensor.outdoor_illuminance_average') | int < 10 %}
           dark
-        {% elif states('sensor.outdoor_illuminance_average') | int < 500 %}
+        {% elif states('sensor.outdoor_illuminance_average') | int < 1000 %}
           {% if state_attr('sun.sun', 'rising') %}
             dawn
           {% else %}
             dusk
           {% endif %}
-        {% elif states('sensor.outdoor_illuminance_average') | int < 8000 %}
+        {% elif states('sensor.outdoor_illuminance_average') | int < 10000 %}
           gloomy
         {% else %}
           bright
