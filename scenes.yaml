@@ -24,9 +24,9 @@
     light.diningbulb2:
       state: on
       white_value: 153
-    light.stairbulb1:
+    light.desk_bulb:
       state: on
-      white_value: 153
+      brightness: 153
     light.stairbulb2:
       state: on
       white_value: 255
@@ -51,9 +51,9 @@
     light.diningbulb2:
       state: on
       white_value: 26
-    light.stairbulb1:
+    light.desk_bulb:
       state: on
-      white_value: 26
+      brightness: 26
     light.stairbulb2:
       state: on
       white_value: 26
@@ -75,9 +75,9 @@
     light.diningbulb2:
       state: on
       white_value: 26
-    light.stairbulb1:
+    light.desk_bulb:
       state: on
-      white_value: 26
+      brightness: 26
     light.stairbulb2:
       state: on
       white_value: 26
@@ -90,7 +90,7 @@
     light.kitchen_lights: off
     light.lounge_lights: off
     light.dining_room_lights: off
-    light.stairbulb1: off
+    light.desk_bulb: off
     light.stairbulb2: off
 
 - name: Gloomy Day
@@ -110,9 +110,9 @@
     light.diningbulb2:
       state: on
       white_value: 255
-    light.stairbulb1:
+    light.desk_bulb:
       state: on
-      white_value: 255
+      brightness: 255
     light.stairbulb2: off
 
 - name: Bright Day
@@ -124,5 +124,5 @@
     light.lounge_lights: off
     light.diningbulb1: off
     light.diningbulb2: off
-    light.stairbulb1: off
+    light.desk_bulb: off
     light.stairbulb2: off

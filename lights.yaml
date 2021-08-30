@@ -56,6 +56,6 @@
     - light.lounge_lights
     - light.shelf_light
     - light.desk_light
-    - light.stairbulb1
+    - light.desk_bulb
     - light.stairbulb2
 
