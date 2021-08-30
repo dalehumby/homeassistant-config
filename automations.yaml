@@ -130,7 +130,7 @@
   alias: "Internet down"
   trigger:
     - platform: state
-      entity_id: binary_sensor.google_ping
+      entity_id: binary_sensor.internet
       to: "off"
   action:
     service: notify.mobile_app_dales_iphone_xs
@@ -141,7 +141,7 @@
   alias: "Internet up"
   trigger:
     - platform: state
-      entity_id: binary_sensor.google_ping
+      entity_id: binary_sensor.internet
       to: "on"
   action:
     service: notify.mobile_app_dales_iphone_xs
