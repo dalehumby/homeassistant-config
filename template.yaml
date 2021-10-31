@@ -1,4 +1,15 @@
 - sensor:
+  - name: Greeting
+    state: >
+      Good
+      {% if now().hour < 12 %}
+        morning
+      {% elif now().hour < 17 %}
+        afternoon
+      {% else %}
+        evening
+      {% endif %}
+
   - name: "Average temperature"
     unit_of_measurement: "°C"
     state: >
@@ -59,3 +70,15 @@
       {{ is_state("binary_sensor.front_door_contact", "on") and 
          is_state("binary_sensor.diningroom_pir_occupancy", "on") 
       }}
+
+  - name: Air quality
+    device_class: smoke
+    state: >
+      {% if states('sensor.particulate_matter_2_5um_concentration') | float > 100 or
+            states('sensor.particulate_matter_10_0um_concentration') | float > 200
+      %}
+        on
+      {% else %}
+        off
+      {% endif %}
+
