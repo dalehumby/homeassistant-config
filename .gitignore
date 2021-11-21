@@ -2,7 +2,7 @@ secrets.yaml
 .HA_VERSION
 .storage/
 tts/
-*.log
+*.log*
 *.db*
 HASSGoogAssist.json
 ip_bans.yaml
@@ -12,3 +12,6 @@ custom_components/
 www/community/
 www/pipe.svg
 known_devices.yaml
+google_calendars.yaml
+.google.token
+core

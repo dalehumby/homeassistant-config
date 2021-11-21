@@ -251,16 +251,8 @@
 - id: easy_wakeup_gym
   alias: "Turn on bedroom lights gym alarm"
   trigger:
-    - platform: time
-      at: "06:00:00"
-  condition:
-    - condition: time
-      weekday:
-        - tue
-        - thu
-    - condition: state
-      entity_id: "binary_sensor.workday_sensor"
-      state: "on"
+    - platform: template
+      value_template: "{{ state_attr('calendar.gym', 'offset_reached') }}"
   action:
     service: light.turn_on
     entity_id: light.bedside_light
@@ -350,7 +342,9 @@
     - condition: numeric_state
       entity_id: media_player.apple_tv
       attribute: media_position
-      above: 5  # Only transition when playing movie/series, not trailer
+      above: 5  # Only when playing movie/series, not trailer
+    - condition: time
+      after: "20:00"  # Not while eating TODO find another way, maybe using camera+object detection?
   action:
     - service: scene.turn_on
       data:
