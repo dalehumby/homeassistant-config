@@ -11,6 +11,7 @@
       {% endif %}
 
   - name: "Average temperature"
+    device_class: temperature
     unit_of_measurement: "°C"
     state: >
       {% set bedroom = states('sensor.bedroom_temperature') | float %}
@@ -63,6 +64,12 @@
         https://open.spotify.com/playlist/37i9dQZF1E35TbkiCN416a?si=f0e348f27e804ec2
       {% endif %}
       
+  - name: Balcony Dew Point
+    device_class: temperature
+    unit_of_measurement: "°C"
+    state: >
+      {{ states('sensor.balcony_temperature') | float - (100 - states('sensor.balcony_humidity') | int) / 5 }}
+
 - binary_sensor:
   - name: Front door
     device_class: door
