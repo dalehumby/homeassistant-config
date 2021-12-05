@@ -70,6 +70,18 @@
     state: >
       {{ states('sensor.balcony_temperature') | float - (100 - states('sensor.balcony_humidity') | int) / 5 }}
 
+  - name: Apple Watch Loadshedding Stage
+    state: >
+      {% if states('sensor.loadshedding_stage') | int > 0 %}
+        {{ states('sensor.loadshedding_stage') }}
+      {% else %}
+        ⚡️
+      {% endif %}
+
+  - name: Apple Watch Loadshedding Count-up
+    state: >
+      {{ min(max(1 - (as_timestamp(states('sensor.loadshedding_home_next')) - now().timestamp()) / 7200, 0), 1) }}
+
 - binary_sensor:
   - name: Front door
     device_class: door
