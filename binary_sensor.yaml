@@ -1,5 +1,5 @@
 - platform: workday
-  country: ZA
+  country: SE
 
 - platform: ping
   host: 8.8.8.8

@@ -1,6 +1,6 @@
 homeassistant:
   name: Home
-  time_zone: Africa/Johannesburg
+  time_zone: Europe/Stockholm
   unit_system: metric
   temperature_unit: C
   latitude: !secret home_lat
