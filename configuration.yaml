@@ -69,9 +69,29 @@ input_datetime:
     has_date: true
     has_time: true
 
+input_number:
+  rssi_present:
+    name: RSSI present threshold
+    initial: -77
+    min: -100
+    max: -40
+    step: 1
+    unit_of_measurement: dBm
+  rssi_not_present:
+    name: RSSI not-present threshold
+    initial: -90
+    min: -100
+    max: -40
+    step: 1
+    unit_of_measurement: dBm
+
 frontend:
 
 mobile_app:
+
+discovery:
+
+ios:
 
 google_assistant:
   project_id: !secret google_project_id

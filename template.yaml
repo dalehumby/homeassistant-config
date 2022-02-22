@@ -82,6 +82,42 @@
     state: >
       {{ min(max(1 - (as_timestamp(states('sensor.loadshedding_home_next')) - now().timestamp()) / 7200, 0), 1) }}
 
+  - name: Apple Watch rain sparkline
+    state: >
+      {%- set raindata = state_attr("sensor.precipitation_next_hour","precipitation_rate") %}
+      {%- for fifteenminutes in raindata|batch(3) %}
+        {%- set rainintensity = fifteenminutes|max %}
+        {%- if rainintensity < 0.1 %}{{"▁"}}
+        {%- elif 0.1 <= rainintensity < 0.5 %}{{"▂"}}
+        {%- elif 0.5 <= rainintensity < 1 %}{{"▃"}}
+        {%- elif 1 <= rainintensity < 1.5 %}{{"▄"}}
+        {%- elif 1.5 <= rainintensity < 2 %}{{"▅"}}
+        {%- elif 2 <= rainintensity < 3.5 %}{{"▆"}}
+        {%- elif 3.5 <= rainintensity < 5 %}{{"▇"}}
+        {%- elif 5 <= rainintensity < 10 %}{{"█"}}
+        {%- else %}{{"▓"}}
+        {%- endif %}
+      {%- endfor %}
+
+  - name: Apple Watch rain sparkline icon
+    state: >
+      {% set icon = state_attr("sensor.precipitation_next_hour","icon") %}
+      {% if icon == "mdi:weather-sunny" %}
+        {% if is_state("sun.sun", "above_horizon") %}{{"☀"}}
+        {% else %}{{"🌙"}}
+        {% endif %}
+      {% elif icon == "mdi:weather-partly-cloudy" %}{{"⛅"}}
+      {% elif icon == "mdi:weather-cloudy" %}{{"☁"}}
+      {% elif icon == "mdi:weather-fog" %}{{"🌫"}}
+      {% elif icon == "mdi:weather-rainy" %}{{"🌧"}}
+      {% elif icon == "mdi:weather-lightning-rainy" %}{{"🌩"}}
+      {% elif icon == "mdi:weather-pouring" %}{{"🌧"}}
+      {% elif icon == "mdi:weather-snowy" %}{{"🌨"}}
+      {% elif icon == "mdi:weather-snowy-rainy" %}{{"🌨"}}
+      {% elif icon == "mdi:weather-snowy-heavy" %}{{"🌨"}}
+      {% else %}{{"?"}}
+      {% endif %}
+
 - binary_sensor:
   - name: Front door
     device_class: door
