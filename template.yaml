@@ -101,6 +101,10 @@
 
   - name: Apple Watch rain sparkline icon
     state: >
+      {% set precip = states("sensor.precipitation_next_hour") | float %}
+      {% if precip > 0 %}
+        {{ precip }}
+      {% endif %}
       {% set icon = state_attr("sensor.precipitation_next_hour","icon") %}
       {% if icon == "mdi:weather-sunny" %}
         {% if is_state("sun.sun", "above_horizon") %}{{"☀"}}
