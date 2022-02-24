@@ -15,8 +15,9 @@
     unit_of_measurement: "°C"
     state: >
       {% set bedroom = states('sensor.bedroom_temperature') | float %}
-      {% set study = states('sensor.study_temperature') | float %}
-      {{ ((bedroom + study) / 2) | round(1) }}
+      {% set lounge = states('sensor.lounge_temperature') | float %}
+      {% set kitchen = states('sensor.kitchen_temperature') | float %}
+      {{ ((bedroom + lounge + kitchen) / 3) | round(1) }}
 
   - name: "Illuminance"
     icon: "mdi:theme-light-dark"
@@ -70,18 +71,6 @@
     state: >
       {{ states('sensor.balcony_temperature') | float - (100 - states('sensor.balcony_humidity') | int) / 5 }}
 
-  - name: Apple Watch Loadshedding Stage
-    state: >
-      {% if states('sensor.loadshedding_stage') | int > 0 %}
-        {{ states('sensor.loadshedding_stage') }}
-      {% else %}
-        ⚡️
-      {% endif %}
-
-  - name: Apple Watch Loadshedding Count-up
-    state: >
-      {{ min(max(1 - (as_timestamp(states('sensor.loadshedding_home_next')) - now().timestamp()) / 7200, 0), 1) }}
-
   - name: Apple Watch rain sparkline
     state: >
       {%- set raindata = state_attr("sensor.precipitation_next_hour","precipitation_rate") %}
@@ -127,7 +116,7 @@
     device_class: door
     state: >
       {{ is_state("binary_sensor.front_door_contact", "on") and 
-         is_state("binary_sensor.diningroom_pir_occupancy", "on") 
+         is_state("binary_sensor.entrance_pir_occupancy", "on") 
       }}
 
   - name: Air quality

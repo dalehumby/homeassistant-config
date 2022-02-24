@@ -23,7 +23,7 @@
       entity_id: person.dale
       to: "home"
   action:
-    service: notify.mobile_app_dales_iphone_xs
+    service: notify.mobile_app_dales_iphone
     data:
       message: "Welcome home"
 
@@ -64,57 +64,6 @@
     service: light.turn_off
     entity_id: all
 
-- id: loadshedding_update_home_schedule
-  alias: "Update loadshedding schedule"
-  trigger:
-    platform: mqtt
-    topic: "loadshedding/home/next"
-  action:
-    service: input_datetime.set_datetime
-    entity_id: input_datetime.loadshedding_home_next
-    data:
-      datetime: "{{ trigger.payload_json.next }}"
-
-- id: loadshedding_warning
-  alias: "Loadshedding 15 min warning"
-  trigger:
-    platform: template
-    value_template: "{{ (as_timestamp(states('sensor.date_time').replace(',', '')) - 2*60*60 + 15*60) == (state_attr('input_datetime.loadshedding_home_next', 'timestamp') | int)  }}"
-  condition:
-    - condition: numeric_state
-      entity_id: sensor.loadshedding_stage
-      above: 0
-    - condition: time
-      after: "07:00"
-      before: "22:00"
-  action:
-    - service: notify.mobile_app_dales_iphone_xs
-      data:
-        message: "Loadshedding in 15 min"
-    - service: tts.google_cloud_say
-      entity_id: media_player.all_speakers
-      data_template:
-        message: "{{ states('sensor.greeting') }}. Loadshedding starts in 15 minutes."
-
-- id: business_time
-  alias: "Business Time"
-  trigger:
-    - platform: state
-      entity_id:
-        - person.dale
-      to: "home"
-  action:
-    - service: media_player.select_source
-      target:
-        entity_id: media_player.spotify_dale
-      data:
-        source: "Living Room"
-    - service: media_player.play_media
-      entity_id: media_player.spotify_dale
-      data:
-        media_content_id: "spotify:track:39l1UORIhuHvUWfxG53tRZ"
-        media_content_type: music
-
 - id: goodnight_turns_off_tv
   alias: "Turn off Apple TV and Samsung TV when activate Goodnight scene"
   trigger:
@@ -137,7 +86,7 @@
       entity_id: binary_sensor.internet
       to: "off"
   action:
-    service: notify.mobile_app_dales_iphone_xs
+    service: notify.mobile_app_dales_iphone
     data:
       message: "Internet is down"
 
@@ -148,7 +97,7 @@
       entity_id: binary_sensor.internet
       to: "on"
   action:
-    service: notify.mobile_app_dales_iphone_xs
+    service: notify.mobile_app_dales_iphone
     data:
       message: "Internet is up"
 
@@ -166,7 +115,7 @@
         - "dark"
   action:
     service: light.turn_on
-    entity_id: light.bedside_light
+    entity_id: light.bedside_lights
 
 - id: night_lights_on
   alias: "Turn on lights when it's dark"
@@ -244,7 +193,7 @@
     - platform: state
       entity_id: sensor.dale_apple_watch_presence
   action:
-    service: notify.mobile_app_dales_iphone_xs
+    service: notify.mobile_app_dales_iphone
     data:
       message: "Room {{ states('sensor.dale_apple_watch_presence') }}"
 
@@ -255,7 +204,7 @@
       value_template: "{{ state_attr('calendar.gym', 'offset_reached') }}"
   action:
     service: light.turn_on
-    entity_id: light.bedside_light
+    entity_id: light.bedside_lights
 
 - id: brighten_kitchen_lights
   alias: "Brighten kitchen lights when working in kitchen"
@@ -413,7 +362,7 @@
     - platform: time
       at: "16:30:00"
   action:
-    - service: notify.mobile_app_dales_iphone_xs
+    - service: notify.mobile_app_dales_iphone
       data:
         message: "Bring in washing"
     - service: tts.google_cloud_say
@@ -502,7 +451,7 @@
   action:
     - service: light.toggle
       target:
-        entity_id: light.bedside_light
+        entity_id: light.bedside_lights
 
 - id: kitchen_button
   alias: Button activates working lights
@@ -544,13 +493,40 @@
     platform: state
     entity_id: binary_sensor.air_quality
   action:
-    - service: notify.mobile_app_dales_iphone_xs
+    - service: notify.mobile_app_dales_iphone
       data:
         message: "Bad indoor air quality"
     - service: tts.google_cloud_say
       entity_id: media_player.all_speakers
       data_template:
         message: "{{ states('sensor.greeting') }}. Smoke has been detected. Consider closing doors and windows"
+
+- id: brighten_entrance_lights
+  alias: "Turn on light when in entrance"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.entrance_pir_occupancy
+      from: "off"
+      to: "on"
+  action:
+    - service: light.turn_on
+      entity_id: light.entrance_overhead
+      data:
+        brightness: 255
+
+- id: dim_entrance_lights
+  alias: "Dim light when leave entrance"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.entrance_pir_occupancy
+      from: "on"
+      to: "off"
+  action:
+    - service: light.turn_on
+      entity_id: light.entrance_overhead
+      data:
+        brightness: 75
+
 
 # NOTE: Aqara Cube automations
 - id: cube_working

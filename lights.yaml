@@ -1,61 +1,24 @@
-- platform: switch
-  name: Bedside Light
-  entity_id: switch.bedside_light
-
-- platform: switch
-  name: Shelf Light
-  entity_id: switch.shelf_light
-
-- platform: switch
-  name: Desk Light
-  entity_id: switch.desk_light
-
-- platform: switch
-  name: Study Light
-  entity_id: switch.study_light
-
 - platform: group
-  name: Dining room lights
+  name: Hall lights
   entities:
-    - light.diningbulb1
-    - light.diningbulb2
+    - light.entrance_overhead
+    - light.foyer_overhead
 
 - platform: group
   name: Lounge lights
   entities:
-    - light.loungebulb1
-    - light.loungebulb2
-    - light.loungebulb3
+    - light.lounge_tree
+    - light.lounge_overhead
 
 - platform: group
   name: Kitchen lights
   entities:
-    - light.kitchenbulb1
-    - light.kitchenbulb2
-    - light.kitchenbulb3
+    - light.kitchen_downlights
+    - light.kitchen_desk
 
 - platform: group
-  name: Bedroom overhead lights
+  name: Bedroom lights
   entities:
-    - light.bedroom_cupboard
-    - light.bedroom_middle
-    - light.bedroom_window
-
-- platform: group
-  name: Study overhead lights
-  entities:
-    - light.studybulb1
-    - light.studybulb2
-    - light.studybulb3
-
-- platform: group
-  name: Downstairs lights
-  entities:
-    - light.kitchen_lights
-    - light.dining_room_lights
-    - light.lounge_lights
-    - light.shelf_light
-    - light.desk_light
-    - light.desk_bulb
-    - light.stairbulb2
+    - light.bedroom_overhead
+    - light.bedside_lights
 

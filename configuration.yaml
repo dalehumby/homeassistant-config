@@ -42,32 +42,8 @@ mqtt:
   password: !secret mqtt_password
 
 camera:
-  - platform: mqtt
-    topic: weathersa/ct50.gif
-    name: Cape Town 50km radar
-    unique_id: ct50radar
-  - platform: xiaomi_cloud_map_extractor
-    host: !secret xiaomi_vacuum_host
-    token: !secret xiaomi_vacuum_token
-    username: !secret xiaomi_cloud_username
-    password: !secret xiaomi_cloud_password
-    draw: ['all']
-    attributes:
-      - calibration_points
-    map_transformation:
-      rotate: 0
-      trim:
-        top: 20
-        bottom: 20
-        left: 20
-        right: 20
-
 
 input_datetime:
-  loadshedding_home_next:
-    name: Next scheduled loadshed time
-    has_date: true
-    has_time: true
 
 input_number:
   rssi_present:
