@@ -13,7 +13,8 @@
     state: "on"
   action:
   - service: homeassistant.update_entity
-    entity_id: sensor.work_commute
+    target:
+      entity_id: sensor.work_commute
   mode: restart
 
 - id: arrive_home
@@ -39,10 +40,11 @@
       before: "07:00"
   action:
     service: light.turn_off
-    entity_id:
-      - light.downstairs_lights
-      - light.bedroom_overhead_lights
-      - light.bedside_light
+    target:
+      entity_id:
+        - light.downstairs_lights
+        - light.bedroom_overhead_lights
+        - light.bedside_light
 
 - id: sunset
   alias: "Turn on lounge lights at dusk"
@@ -52,7 +54,8 @@
       to: "dusk"
   action:
     service: scene.turn_on
-    entity_id: scene.evening
+    target:
+      entity_id: scene.evening
 
 - id: sunrise
   alias: "Turn off all lights after dawn"
@@ -62,7 +65,8 @@
       from: "dawn"
   action:
     service: light.turn_off
-    entity_id: all
+    target:
+      entity_id: all
 
 - id: goodnight_turns_off_tv
   alias: "Turn off Apple TV and Samsung TV when activate Goodnight scene"
@@ -115,7 +119,8 @@
         - "dark"
   action:
     service: light.turn_on
-    entity_id: light.bedside_lights
+    target:
+      entity_id: light.bedside_lights
 
 - id: night_lights_on
   alias: "Turn on lights when it's dark"
@@ -165,7 +170,8 @@
       state: "off"
   action:
     service: light.turn_on
-    entity_id: light.shelf_light
+    target:
+      entity_id: light.shelf_light
 
 - id: goodnight_lounge
   alias: "Turn off lounge lights when go to bed"
@@ -204,7 +210,8 @@
       value_template: "{{ state_attr('calendar.gym', 'offset_reached') }}"
   action:
     service: light.turn_on
-    entity_id: light.bedside_lights
+    target:
+      entity_id: light.bedside_lights
 
 - id: brighten_kitchen_lights
   alias: "Brighten kitchen lights when working in kitchen"
@@ -224,7 +231,8 @@
         snapshot_entities:
           - light.kitchen_lights
     - service: light.turn_on
-      entity_id: light.kitchen_lights
+      target:
+        entity_id: light.kitchen_lights
       data:
         brightness: 255
         color_temp: 153
@@ -510,7 +518,8 @@
       to: "on"
   action:
     - service: light.turn_on
-      entity_id: light.entrance_overhead
+      target:
+        entity_id: light.entrance_overhead
       data:
         brightness: 255
 
@@ -573,7 +582,8 @@
       value_template: "{{ trigger.payload_json.action in ['rotate_right', 'rotate_left'] }}"
   action:
     - service: light.turn_on
-      entity_id: light.downstairs_lights
+      target:
+        entity_id: light.downstairs_lights
     - service: light.turn_on
       target:
         entity_id: light.downstairs_lights
