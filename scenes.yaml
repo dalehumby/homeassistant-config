@@ -1,128 +1,136 @@
-- name: Evening
-  icon: mdi:weather-sunset-down
+- name: Bright Day
+  icon: mdi:weather-sunny
   entities:
-    light.shelf_light: on
-    light.desk_light: on
-
-- name: Working
-  icon: mdi:lightbulb-on-outline
-  entities:
-    light.shelf_light: on
-    light.desk_light: on
-    light.kitchen_lights:
+    light.entrance_overhead:
       state: on
-      brightness_pct: 100
-      color_temp: 153
-      white_value: 255
-    light.lounge_lights:
+      brightness: 75
+    light.foyer_overhead:
       state: on
-      brightness_pct: 60
-      color_temp: 153
-    light.diningbulb1:
+      brightness: 255
+    light.kitchen_downlights:
       state: on
-      white_value: 255
-    light.diningbulb2:
+      brightness: 255
+      color_temp: 250
+    light.kitchen_desk:
       state: on
-      white_value: 153
-    light.desk_bulb:
-      state: on
-      brightness: 153
-    light.stairbulb2:
-      state: on
-      white_value: 255
-
-- name: Relax
-  icon: mdi:glass-cocktail
-  entities:
-    light.shelf_light: on
-    light.desk_light: on
-    light.kitchen_lights:
-      state: on
-      brightness_pct: 10
-      color_temp: 153
-      white_value: 26
-    light.lounge_lights:
-      state: on
-      brightness_pct: 10
-      color_temp: 153
-    light.diningbulb1:
-      state: on
-      white_value: 26
-    light.diningbulb2:
-      state: on
-      white_value: 26
-    light.desk_bulb:
-      state: on
-      brightness: 26
-    light.stairbulb2:
-      state: on
-      white_value: 26
-
-- name: Movie
-  icon: mdi:movie
-  entities:
-    light.shelf_light: on
-    light.desk_light: off
-    light.kitchen_lights: off
-    light.lounge_lights:
-      state: on
-      brightness_pct: 10
-      color_temp: 153
-      white_value: 26
-    light.diningbulb1:
-      state: on
-      white_value: 26
-    light.diningbulb2:
-      state: on
-      white_value: 26
-    light.desk_bulb:
-      state: on
-      brightness: 26
-    light.stairbulb2:
-      state: on
-      white_value: 26
-
-- name: Goodnight
-  icon: mdi:sleep
-  entities:
-    light.kitchen_lights: off
-    light.hall_lights: off
-    light.bedroom_overhead: off
-    light.bedside_lights:
-      state: on
-      brightness: 3
-      color_temp: 454
+      brightness: 100
+      color_temp: 250
+    light.bedroom_lights: off
 
 - name: Gloomy Day
   icon: mdi:weather-partly-cloudy
   entities:
-    light.shelf_light: off
-    light.desk_light: off
-    light.kitchen_lights:
+    light.entrance_overhead:
       state: on
-      brightness_pct: 100
-      color_temp: 153
-      white_value: 255
-    light.lounge_lights: off
-    light.diningbulb1:
-      state: on
-      white_value: 255
-    light.diningbulb2:
-      state: on
-      white_value: 255
-    light.desk_bulb:
+      brightness: 75
+    light.foyer_overhead:
       state: on
       brightness: 255
-    light.stairbulb2: off
+    light.kitchen_downlights:
+      state: on
+      brightness: 255
+      color_temp: 250
+    light.kitchen_desk:
+      state: on
+      brightness: 100
+      color_temp: 250
+    light.bedroom_overhead:
+      state: on
+      brightness: 255
 
-- name: Bright Day
-  icon: mdi:weather-sunny
+- name: Evening
+  icon: mdi:weather-sunset-down
   entities:
-    light.shelf_light: off
-    light.desk_light: off
+    light.entrance_overhead:
+      state: on
+      brightness: 75
+    light.foyer_overhead:
+      state: on
+      brightness: 128
+    light.lounge_lights:
+      state: on
+      brightness: 128
+      color_temp: 370
+    light.kitchen_lights:
+      state: on
+      brightness: 128
+      color_temp: 370
+    light.bedroom_lights:
+      state: on
+      brightness: 128
+      color_temp: 370
+
+- name: Working
+  icon: mdi:lightbulb-on-outline
+  entities:
+    light.hall_lights:
+      state: on
+      brightness: 255
+    light.lounge_lights:
+      state: on
+      brightness: 255
+      color_temp: 370
+    light.kitchen_lights:
+      state: on
+      brightness: 255
+      color_temp: 370
+    light.bedroom_lights:
+      state: on
+      brightness: 255
+      color_temp: 370
+
+- name: Relax
+  icon: mdi:glass-cocktail
+  entities:
+    light.hall_lights:
+      state: on
+      brightness: 75
+    light.lounge_lights:
+      state: on
+      brightness: 75
+      color_temp: 370
+    light.kitchen_lights:
+      state: on
+      brightness: 75
+      color_temp: 370
+    light.bedroom_lights:
+      state: on
+      brightness: 75
+      color_temp: 454
+
+- name: Movie
+  icon: mdi:movie
+  entities:
+    light.hall_lights: off
+    light.lounge_lights:
+      state: on
+      brightness: 75
+      color_temp: 370
+      transition: 5
+    light.stream_lights:
+      state: off
+      transition: 5
+    light.elgato_light_strip: off
+    light.kitchen_lights:
+      state: on
+      brightness: 75
+      color_temp: 370
+    light.bedroom_lights:
+      state: on
+      brightness: 75
+      color_temp: 454
+
+- name: Goodnight
+  icon: mdi:sleep
+  entities:
+    light.hall_lights: off
     light.kitchen_lights: off
-    light.lounge_lights: off
-    light.diningbulb1: off
-    light.diningbulb2: off
-    light.desk_bulb: off
-    light.stairbulb2: off
+    light.bedroom_overhead:
+      state: off
+      transition: 5
+    light.bedside_lights:
+      state: on
+      brightness: 3
+      color_temp: 454
+      transition: 5
+
