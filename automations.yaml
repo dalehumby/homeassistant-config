@@ -1,4 +1,3 @@
-
 - id: update_morning_commute_sensor
   alias: Update morning commute time
   trigger:
@@ -28,24 +27,6 @@
     data:
       message: "Welcome home"
 
-- id: leave_home_morning_lights_off
-  alias: "Turn off lights when leave home in morning"
-  trigger:
-    - platform: state
-      entity_id: person.dale
-      to: "not_home"
-  condition:
-    - condition: time
-      after: "05:00"
-      before: "07:00"
-  action:
-    service: light.turn_off
-    target:
-      entity_id:
-        - light.downstairs_lights
-        - light.bedroom_overhead_lights
-        - light.bedside_light
-
 - id: sunset
   alias: "Turn on lounge lights at dusk"
   trigger:
@@ -56,32 +37,6 @@
     service: scene.turn_on
     target:
       entity_id: scene.evening
-
-- id: sunrise
-  alias: "Turn off all lights after dawn"
-  trigger:
-    - platform: state
-      entity_id: sensor.illuminance
-      from: "dawn"
-  action:
-    service: light.turn_off
-    target:
-      entity_id: all
-
-- id: goodnight_turns_off_tv
-  alias: "Turn off Apple TV and Samsung TV when activate Goodnight scene"
-  trigger:
-    platform: event
-    event_type: call_service
-    event_data:
-      service_data:
-        entity_id: scene.goodnight
-      domain: scene
-      service: turn_on
-  action:
-    service: script.turn_on
-    target:
-      entity_id: script.tv_sleep
 
 - id: internet_down
   alias: "Internet down"
@@ -104,94 +59,6 @@
     service: notify.mobile_app_dales_iphone
     data:
       message: "Internet is up"
-
-- id: enter_bedroom_when_dark
-  alias: "Turn on bedroom light on entry after dark"
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.dale_bedroom_presence
-      to: "on"
-  condition:
-    - condition: state
-      entity_id: sensor.illuminance
-      state: 
-        - "dusk"
-        - "dark"
-  action:
-    service: light.turn_on
-    target:
-      entity_id: light.bedside_lights
-
-- id: night_lights_on
-  alias: "Turn on lights when it's dark"
-  trigger:
-    - platform: state
-      entity_id: sensor.illuminance
-      to: 
-        - "dusk"
-        - "dark"
-    - platform: state
-      entity_id: binary_sensor.dale_lounge_presence
-      to: "on"
-  condition:
-    - condition: state
-      entity_id: sensor.illuminance
-      state: 
-        - "dusk"
-        - "dark"
-    - condition: state
-      entity_id: binary_sensor.dale_lounge_presence
-      state: "on"
-    - condition: state
-      entity_id: light.lounge_lights
-      state: "off"
-    - condition: time
-      after: "16:00"
-  action:
-    - service: scene.turn_on
-      data:
-        entity_id: scene.working
-
-- id: enter_lounge_when_dark
-  alias: "Turn on lounge lights on entry when dark"
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.dale_lounge_presence
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.pir_stairs_occupancy
-      to: "on"
-  condition:
-    - condition: state
-      entity_id: sensor.illuminance
-      state: "dark"
-    - condition: state
-      entity_id: light.shelf_light
-      state: "off"
-  action:
-    service: light.turn_on
-    target:
-      entity_id: light.shelf_light
-
-- id: goodnight_lounge
-  alias: "Turn off lounge lights when go to bed"
-  trigger:
-    # Could also trigger if plug phone in to charge
-    - platform: state
-      entity_id: binary_sensor.dale_lounge_presence
-      from: "on"
-      for: "00:00:30"
-  condition:
-    - condition: time
-      after: "22:00"
-      before: "04:00"
-    - condition: state
-      entity_id: binary_sensor.pir_bedroom_occupancy
-      state: "on"
-  action:
-    - service: scene.turn_on
-      data:
-        entity_id: scene.goodnight
 
 - id: location_change_debug
   alias: Push notification when room location changes
@@ -362,18 +229,12 @@
     - platform: state
       entity_id: sensor.illuminance
       to: "gloomy"
-    - platform: state
-      entity_id: binary_sensor.dale_lounge_presence
-      to: "on"
   condition:
     - condition: state
       entity_id: sensor.illuminance
       state: 
         - "gloomy"
         - "dawn"
-    - condition: state
-      entity_id: binary_sensor.dale_lounge_presence
-      state: "on"
   action:
     - service: scene.turn_on
       data:
@@ -390,114 +251,6 @@
     - service: scene.turn_on
       data:
         entity_id: scene.bright_day
-
-- id: bring_in_washing
-  alias: Reminder to bring in washing
-  trigger:
-    - platform: time
-      at: "16:30:00"
-  action:
-    - service: notify.mobile_app_dales_iphone
-      data:
-        message: "Bring in washing"
-    - service: tts.google_cloud_say
-      entity_id: media_player.all_speakers
-      data_template:
-        message: "{{ states('sensor.greeting') }}. Don't forget to bring in the washing"
-
-- id: bring_in_washing_schedule
-  alias: Thur reminder to bring in washing
-  trigger:
-    - platform: time
-      at: "00:00:00"
-  action:
-    - choose:
-        - alias: "Switch on"
-          conditions:
-            - condition: time
-              weekday:
-                - thu
-          sequence:
-            - service: automation.turn_on
-              target:
-                entity_id: automation.reminder_to_bring_in_washing
-        - alias: "Switch off"
-          conditions:
-            - condition: time
-              weekday:
-                - mon
-                - tue
-                - wed
-                - fri
-                - sat
-                - sun
-          sequence:
-            - service: automation.turn_off
-              target:
-                entity_id: automation.reminder_to_bring_in_washing
-
-- id: run_dusty_today
-  alias: Run Dusty today
-  trigger:
-    - platform: time
-      at: "16:45:00"
-  action:
-    - service: vacuum.start
-      target:
-        entity_id: vacuum.dusty
-
-- id: run_dusty_schedule
-  alias: Run Dusty on specific days
-  trigger:
-    - platform: time
-      at: "00:00:00"
-  action:
-    - choose:
-        - alias: "Switch on"
-          conditions:
-            - condition: time
-              weekday:
-                - mon
-                - tue
-                - wed
-                - sat
-                - sun
-          sequence:
-            - service: automation.turn_on
-              target:
-                entity_id: automation.run_dusty_today
-        - alias: "Switch off"
-          conditions:
-            - condition: time
-              weekday:
-                - thu
-                - fri
-          sequence:
-            - service: automation.turn_off
-              target:
-                entity_id: automation.run_dusty_today
-
-- id: toggle_bedroom_lights
-  alias: Button toggles bedroom lights
-  trigger:
-    - platform: state
-      entity_id: sensor.bedroom_button_action
-      to: "on"
-  action:
-    - service: light.toggle
-      target:
-        entity_id: light.bedside_lights
-
-- id: kitchen_button
-  alias: Button activates working lights
-  trigger:
-  - platform: state
-    entity_id: sensor.kitchen_button_action
-    to: "on"
-  action:
-    - service: scene.turn_on
-      data:
-        entity_id: scene.working
 
 - id: dale_apple_watch_device_tracker
   alias: Dale Apple Watch Tracker
