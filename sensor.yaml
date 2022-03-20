@@ -101,6 +101,13 @@
   icon: mdi:emoticon-cool-outline
   expire_after: 600
 
+- platform: filter
+  name: "Solar radiation average"
+  entity_id: "sensor.wunderground_solar_radiation"
+  filters:
+    - filter: time_simple_moving_average
+      window_size: "00:10"
+
 # Exchange rates
 - platform: mqtt
   unique_id: "currency.zargbp"
