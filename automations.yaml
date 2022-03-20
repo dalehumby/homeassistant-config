@@ -281,6 +281,33 @@
         snapshot_entities:
           - light.kitchen_lights
 
+- id: set_kitchen_lights_brightness
+  alias: Dimmer sets kitchen lights brightness
+  trigger:
+    platform: mqtt
+    topic: zigbee2mqtt/Kitchen dimmer
+  condition:
+    - condition: template
+      value_template: "{{ trigger.payload_json.action in ['rotate_left', 'rotate_right', 'rotate_stop'] }}"
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.kitchen_lights
+      data_template:
+        brightness: >
+          {{ trigger.payload_json.brightness }}
+
+- id: toggle_kitchen_lights
+  alias: Dimmer toggle kitchen lights
+  trigger:
+    platform: mqtt
+    topic: zigbee2mqtt/Kitchen dimmer/action
+    payload: "play_pause"
+  action:
+    - service: light.toggle
+      target:
+        entity_id: light.kitchen_lights
+
 - id: netflix_dim_lights
   alias: "Dim lights when Netflix plays"
   trigger:
@@ -654,6 +681,3 @@
       target:
         entity_id: media_player.spotify_dale
 
-# TODO Other ideas
-# Alert when front door open + PIR -> watch, speakers (firgure out Security on HA)
-# Alert when cat litter, washing is outside, sliding door open and it starts to rain
