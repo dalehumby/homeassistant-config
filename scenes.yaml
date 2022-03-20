@@ -85,13 +85,13 @@
 - name: Goodnight
   icon: mdi:sleep
   entities:
-    light.shelf_light: off
-    light.desk_light: off
     light.kitchen_lights: off
-    light.lounge_lights: off
-    light.dining_room_lights: off
-    light.desk_bulb: off
-    light.stairbulb2: off
+    light.hall_lights: off
+    light.bedroom_overhead: off
+    light.bedside_lights:
+      state: on
+      brightness: 3
+      color_temp: 454
 
 - name: Gloomy Day
   icon: mdi:weather-partly-cloudy
