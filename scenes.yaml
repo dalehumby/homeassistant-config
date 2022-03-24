@@ -106,10 +106,8 @@
       state: on
       brightness: 75
       color_temp: 370
-      transition: 5
     light.stream_lights:
       state: off
-      transition: 5
     light.elgato_light_strip: off
     light.kitchen_lights:
       state: on
@@ -127,10 +125,8 @@
     light.kitchen_lights: off
     light.bedroom_overhead:
       state: off
-      transition: 5
     light.bedside_lights:
       state: on
-      brightness: 3
+      brightness: 15
       color_temp: 454
-      transition: 5
 
