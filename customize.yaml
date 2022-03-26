@@ -1,4 +1,4 @@
-automation.reminder_to_bring_in_washing:
+automation.laundry_reminder:
   icon: mdi:washing-machine
 automation.run_dusty_today:
   icon: mdi:robot-vacuum

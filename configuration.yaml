@@ -21,6 +21,13 @@ http:
 
 person:
 
+notify:
+  - platform: group
+    name: family
+    services:
+      - service: mobile_app_dales_iphone
+      - service: mobile_app_fruutish
+
 zone:
   - name: Home
     latitude: !secret home_lat
@@ -108,12 +115,13 @@ sun:
 
 logbook:
 
-sensor: !include sensor.yaml
-binary_sensor: !include binary_sensor.yaml
 automation: !include automations.yaml
+binary_sensor: !include binary_sensor.yaml
+climate: !include climate.yaml
 group: !include groups.yaml
 light: !include lights.yaml
-script: !include scripts.yaml
 scene: !include scenes.yaml
-climate: !include climate.yaml
+script: !include scripts.yaml
+sensor: !include sensor.yaml
+timer: !include timer.yaml
 template: !include template.yaml

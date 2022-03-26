@@ -318,6 +318,21 @@
         brightness: 75
         transition: 5
 
+- id: laundry_reminder
+  alias: Laundry is done
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.laundry
+  action:
+    - service: notify.family
+      data:
+        message: "Laundry done"
+    - service: tts.google_cloud_say
+      entity_id: media_player.all_speakers
+      data_template:
+        message: "{{ states('sensor.greeting') }}. The landry is done"
 
 # NOTE: Aqara Cube automations
 - id: cube_working
