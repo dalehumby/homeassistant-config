@@ -334,6 +334,76 @@
       data_template:
         message: "{{ states('sensor.greeting') }}. The landry is done"
 
+- id: rainfall_alert_morning
+  alias: Rainfall on the way to work
+  trigger:
+    - platform: time
+      at: "08:00:00"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: "on"
+    - condition: state
+      entity_id: person.dale
+      state: "home"
+    - condition: numeric_state
+      entity_id: sensor.precipitation_next_hour
+      above: 0
+  action:
+    service: notify.mobile_app_dales_iphone
+    data:
+      title: "Rainfall"
+      message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
+
+- id: rainfall_alert_afternoon
+  alias: Rainfall on the way home
+  trigger:
+    - platform: time
+      at: "16:30:00"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: "on"
+    - condition: state
+      entity_id: person.dale
+      state:
+        - "work"
+        - "away"
+    - condition: numeric_state
+      entity_id: sensor.precipitation_next_hour
+      above: 0
+  action:
+    service: notify.mobile_app_dales_iphone
+    data:
+      title: "Rainfall"
+      message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
+
+- id: rainfall_alert_away
+  alias: Heavy rain alert while outdoors
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.precipitation_next_hour
+      above: 5
+  condition:
+    - condition: state
+      entity_id: person.dale
+      state: "away"
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: sensor.dales_iphone_activity
+          state:
+            - "Stationary"
+            - "Unknown"
+        - condition: state
+          entity_id: sensor.dales_iphone_connection_type
+          state: "Wi-Fi"
+  action:
+    service: notify.mobile_app_dales_iphone
+    data:
+      title: "Heavy Rainfall"
+      message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
+
 # NOTE: Aqara Cube automations
 - id: cube_working
   alias: Cube Working scene
