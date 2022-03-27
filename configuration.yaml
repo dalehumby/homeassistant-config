@@ -41,12 +41,7 @@ zone:
     icon: mdi:briefcase
 
 mqtt:
-  broker: !secret mqtt_broker
-  port: 1883
-  discovery: true
   client_id: homeassistant
-  username: !secret mqtt_username
-  password: !secret mqtt_password
 
 camera:
 
@@ -104,8 +99,6 @@ tts:
     profiles:
       - large-home-entertainment-class-device
     base_url: !secret tts_base_url
-
-updater:
 
 system_health:
 
