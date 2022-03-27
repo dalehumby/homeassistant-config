@@ -285,7 +285,10 @@
       data:
         message: "Bad indoor air quality"
     - service: tts.google_cloud_say
-      entity_id: media_player.all_speakers
+      entity_id:
+        - media_player.kitchen_display
+        - media_player.bedroom_speaker
+        - media_player.lounge_speaker
       data_template:
         message: "{{ states('sensor.greeting') }}. Smoke has been detected. Consider closing doors and windows"
 
@@ -321,18 +324,21 @@
 - id: laundry_reminder
   alias: Laundry is done
   trigger:
-  - platform: event
-    event_type: timer.finished
-    event_data:
-      entity_id: timer.laundry
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.laundry
   action:
     - service: notify.family
       data:
         message: "Laundry done"
     - service: tts.google_cloud_say
-      entity_id: media_player.all_speakers
+      entity_id:
+        - media_player.kitchen_display
+        - media_player.bedroom_speaker
+        - media_player.lounge_speaker
       data_template:
-        message: "{{ states('sensor.greeting') }}. The landry is done"
+        message: "{{ states('sensor.greeting') }}. The laundry is done"
 
 - id: rainfall_alert_morning
   alias: Rainfall on the way to work
@@ -403,6 +409,26 @@
     data:
       title: "Heavy Rainfall"
       message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
+
+- id: lunch_reminder
+  alias: Lunch reminder
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.entrance_pir_occupancy
+      from: "off"
+      to: "on"
+  condition:
+    - condition: time
+      before: "10:00:00"
+  action:
+    - service: notify.mobile_app_dales_iphone
+      data:
+        message: "Remember your lunch"
+    - service: tts.google_cloud_say
+      entity_id: media_player.kitchen_display
+      data_template:
+        message: "{{ states('sensor.greeting') }}. Don't forget your lunch"
+
 
 # NOTE: Aqara Cube automations
 - id: cube_working
