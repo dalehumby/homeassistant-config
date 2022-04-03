@@ -321,7 +321,21 @@
         brightness: "{{ min(75, (state_attr('light.foyer_overhead','brightness') | int(0))) }}"
         transition: 5
 
-- id: laundry_reminder
+- id: laundry_start
+  alias: Laundry timer started
+  trigger:
+    - platform: tag
+      tag_id: f0a4261e-287b-481d-a93f-1bb33b2de291
+  action:
+    - service: notify.family
+      data:
+        title: "Laundry timer started"
+        message: "Reminder in {{ state_attr('timer.laundry','duration') }}"
+    - service: timer.start
+      target:
+        entity_id: timer.laundry
+
+- id: laundry_done_reminder
   alias: Laundry is done
   trigger:
     - platform: event
