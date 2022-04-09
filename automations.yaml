@@ -403,7 +403,7 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.precipitation_next_hour
-      above: 5
+      above: 0
   condition:
     - condition: state
       entity_id: person.dale
@@ -414,7 +414,6 @@
           entity_id: sensor.dales_iphone_activity
           state:
             - "Stationary"
-            - "Unknown"
         - condition: state
           entity_id: sensor.dales_iphone_connection_type
           state: "Wi-Fi"
