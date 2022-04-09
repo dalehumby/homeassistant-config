@@ -388,7 +388,7 @@
       entity_id: person.dale
       state:
         - "work"
-        - "away"
+        - "not_home"
     - condition: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
@@ -407,7 +407,7 @@
   condition:
     - condition: state
       entity_id: person.dale
-      state: "away"
+      state: "not_home"
     - condition: not
       conditions:
         - condition: state
