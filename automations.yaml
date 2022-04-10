@@ -19,9 +19,10 @@
 - id: arrive_home
   alias: "Arrive Home"
   trigger:
-    - platform: state
+    - platform: zone
       entity_id: person.dale
-      to: "home"
+      zone: zone.home
+      event: enter
   action:
     service: notify.mobile_app_dales_iphone
     data:
@@ -363,9 +364,9 @@
     - condition: state
       entity_id: binary_sensor.workday_sensor
       state: "on"
-    - condition: state
+    - condition: zone
       entity_id: person.dale
-      state: "home"
+      zone: zone.home
     - condition: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
@@ -381,14 +382,9 @@
     - platform: time
       at: "16:30:00"
   condition:
-    - condition: state
-      entity_id: binary_sensor.workday_sensor
-      state: "on"
-    - condition: state
+    - condition: zone
       entity_id: person.dale
-      state:
-        - "work"
-        - "not_home"
+      zone: zone.work
     - condition: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
@@ -423,6 +419,36 @@
       title: "Heavy Rainfall"
       message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
+- id: lunch_reminer_on
+  alias: Turn on lunch reminder
+  trigger:
+    - platform: tag
+      tag_id: 9c666023-7e07-491d-be90-c8be0d53b3b5
+  condition:
+    - condition: time
+      after: "18:00:00"
+  action:
+    - service: tts.google_cloud_say
+      entity_id: media_player.kitchen_display
+      data_template:
+        message: "Okay, I'll remind you about your lunch tomorrom morning."
+    - service: automation.turn_on
+      target:
+        entity_id: automation.lunch_reminder
+
+- id: lunch_reminer_off
+  alias: Turn off lunch reminder
+  trigger:
+    - platform: tag
+      tag_id: 9c666023-7e07-491d-be90-c8be0d53b3b5
+  condition:
+    - condition: time
+      before: "10:00:00"
+  action:
+    - service: automation.turn_off
+      target:
+        entity_id: automation.lunch_reminder
+
 - id: lunch_reminder
   alias: Lunch reminder
   trigger:
@@ -434,13 +460,17 @@
     - condition: time
       before: "10:00:00"
   action:
+    - service: light.turn_on
+      data:
+        effect: okay
+      target:
+        entity_id: light.entrance_overhead
     - service: notify.mobile_app_dales_iphone
       data:
         message: "Remember your lunch"
-    - service: tts.google_cloud_say
-      entity_id: media_player.kitchen_display
-      data_template:
-        message: "{{ states('sensor.greeting') }}. Don't forget your lunch"
+    - service: automation.turn_off
+      target:
+        entity_id: automation.lunch_reminder
 
 
 # NOTE: Aqara Cube automations
