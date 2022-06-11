@@ -407,16 +407,12 @@
     - condition: not
       conditions:
         - condition: state
-          entity_id: sensor.dales_iphone_activity
-          state:
-            - "Stationary"
-        - condition: state
           entity_id: sensor.dales_iphone_connection_type
           state: "Wi-Fi"
   action:
     service: notify.mobile_app_dales_iphone
     data:
-      title: "Heavy Rainfall"
+      title: "Rainfall alert"
       message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
 - id: lunch_reminer_on
