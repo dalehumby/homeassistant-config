@@ -472,6 +472,31 @@
       target:
         entity_id: automation.lunch_reminder
 
+- id: dishwasher_leak
+  alias: Dishwasher leak
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.dishwasher_leak_water_leak
+      from: "off"
+      to: "on"
+  action:
+    - service: notify.family
+      data:
+        title: "Dishwasher leak"
+        message: "Water detected under the dishwasher"
+        data:
+          push:
+            interruption-level: critical
+    - service: tts.google_cloud_say
+      entity_id:
+        - media_player.kitchen_display
+        - media_player.bedroom_speaker
+        - media_player.lounge_speaker
+      data_template:
+        message: >
+          "{{ states('sensor.greeting') }}. Water has been detected under the dishwasher.
+           Please check for leaks... The shutoff valve is on the kitchen sink tap"
+
 
 # NOTE: Aqara Cube automations
 - id: cube_working
