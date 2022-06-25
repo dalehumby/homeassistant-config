@@ -108,3 +108,12 @@ apple_tv_spotify_play:
         media_content_type: playlist
     - delay: 2
     - service: script.apple_tv_spotify_nowplaying
+
+laundry_timer_start:
+  alias: Laundry timer
+  icon: mdi:washing-machine
+  mode: restart
+  sequence:
+    - service: timer.start
+      target:
+        entity_id: timer.laundry

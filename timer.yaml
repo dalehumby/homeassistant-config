@@ -2,3 +2,4 @@ laundry:
   name: Laundry
   duration: 00:50:00
   icon: mdi:washing-machine
+  restore: true
