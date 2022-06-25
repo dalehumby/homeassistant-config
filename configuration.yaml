@@ -44,6 +44,21 @@ mqtt:
   client_id: homeassistant
 
 camera:
+  - platform: xiaomi_cloud_map_extractor
+    host: !secret xiaomi_vacuum_host
+    token: !secret xiaomi_vacuum_token
+    username: !secret xiaomi_cloud_username
+    password: !secret xiaomi_cloud_password
+    draw: ['all']
+    attributes:
+      - calibration_points
+    map_transformation:
+      rotate: 0
+      trim:
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
 
 input_datetime:
 
@@ -76,9 +91,10 @@ google_assistant:
   service_account: !include HASSGoogAssist.json
   report_state: true
   exposed_domains:
-    - switch
     - light
     - scene
+    - script
+    - switch
 
 google:
   client_id: !secret google_calendar_client_id
