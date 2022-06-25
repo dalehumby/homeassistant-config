@@ -96,14 +96,6 @@ google_assistant:
     - script
     - switch
 
-google:
-  client_id: !secret google_calendar_client_id
-  client_secret: !secret google_calendar_client_secret
-
-spotify:
-  client_id: !secret spotify_client_id
-  client_secret: !secret spotify_client_secret
-
 homekit:
 
 apple_tv:
@@ -129,8 +121,9 @@ binary_sensor: !include binary_sensor.yaml
 climate: !include climate.yaml
 group: !include groups.yaml
 light: !include lights.yaml
+mqtt: !include mqtt.yaml
 scene: !include scenes.yaml
 script: !include scripts.yaml
 sensor: !include sensor.yaml
-timer: !include timer.yaml
 template: !include template.yaml
+timer: !include timer.yaml

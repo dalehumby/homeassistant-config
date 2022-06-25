@@ -1,0 +1,111 @@
+sensor:
+
+  # Zigbee2mqtt
+  - name: Zigbee2mqtt Networkmap
+    state_topic: zigbee2mqtt/bridge/networkmap/raw
+    value_template: >-
+      {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+    json_attributes_topic: zigbee2mqtt/bridge/networkmap/raw
+
+  # Exchange rates
+  - unique_id: "currency.zargbp"
+    name: "Currency GBP"
+    icon: mdi:currency-gbp
+    state_topic: "currency/zargbp"
+    value_template: "{{ value_json.rate }}"
+    expire_after: 21600
+    unit_of_measurement: "R"
+    json_attributes_topic: "currency/zargbp"
+    json_attributes_template: "{{ value }}"
+  - unique_id: "currency.zareur"
+    name: "Currency EUR"
+    icon: mdi:currency-eur
+    state_topic: "currency/zareur"
+    value_template: "{{ value_json.rate }}"
+    expire_after: 21600
+    unit_of_measurement: "R"
+    json_attributes_topic: "currency/zareur"
+    json_attributes_template: "{{ value }}"
+  - unique_id: "currency.zarusd"
+    name: "Currency USD"
+    icon: mdi:currency-usd
+    state_topic: "currency/zarusd"
+    value_template: "{{ value_json.rate }}"
+    expire_after: 21600
+    unit_of_measurement: "R"
+    json_attributes_topic: "currency/zarusd"
+    json_attributes_template: "{{ value }}"
+  - unique_id: "currency.zarbtc"
+    name: "Currency BTC"
+    icon: mdi:currency-btc
+    state_topic: "currency/zarbtc"
+    value_template: "{{ value_json.rate }}"
+    expire_after: 21600
+    unit_of_measurement: "R"
+    json_attributes_topic: "currency/zarbtc"
+    json_attributes_template: "{{ value }}"
+
+  # Wunderground close to home
+  - unique_id: "wunderground.home.temperature"
+    name: "wunderground temperature"
+    state_topic: "wunderground/home"
+    value_template: "{{ (value_json.observations[0].metric.temp) | round(1) }}"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    expire_after: 600
+  - unique_id: "wunderground.home.humidity"
+    name: "wunderground humidity"
+    state_topic: "wunderground/home"
+    value_template: "{{ (value_json.observations[0].humidity) | round(0) }}"
+    unit_of_measurement: "%"
+    device_class: humidity
+    expire_after: 600
+  - unique_id: "wunderground.home.precipitation24"
+    name: "wunderground 24 hour rainfall"
+    state_topic: "wunderground/home"
+    value_template: "{{ (value_json.observations[0].metric.precipTotal) | round(1) }}"
+    unit_of_measurement: "mm"
+    icon: mdi:weather-pouring
+    expire_after: 600
+  - unique_id: "wunderground.home.precipitation"
+    name: "wunderground rainfall"
+    state_topic: "wunderground/home"
+    value_template: "{{ (value_json.observations[0].metric.precipRate) | round(1) }}"
+    unit_of_measurement: "mm/hr"
+    icon: mdi:weather-pouring
+    expire_after: 600
+  - unique_id: "wunderground.home.pressure"
+    name: "wunderground pressure"
+    state_topic: "wunderground/home"
+    value_template: "{{ (value_json.observations[0].metric.pressure) | round(0) }}"
+    unit_of_measurement: "hPa"
+    icon: mdi:speedometer
+    expire_after: 600
+  - unique_id: "wunderground.home.wind_speed"
+    name: "wunderground wind speed"
+    state_topic: "wunderground/home"
+    value_template: "{{ (value_json.observations[0].metric.windSpeed) | round(1) }}"
+    unit_of_measurement: "km/h"
+    icon: mdi:weather-windy
+    expire_after: 600
+  - unique_id: "wunderground.home.wind_direction"
+    name: "wunderground direction"
+    state_topic: "wunderground/home"
+    value_template: "{{ (value_json.observations[0].winddir) | round(0) }}"
+    unit_of_measurement: "°"
+    icon: mdi:arrow-top-right
+    expire_after: 600
+  - unique_id: "wunderground.home.wind_solar_radiation"
+    name: "wunderground solar radiation"
+    state_topic: "wunderground/home"
+    value_template: "{{ (value_json.observations[0].solarRadiation) | round(0) }}"
+    unit_of_measurement: "W/m²"
+    icon: mdi:weather-sunny
+    expire_after: 600
+  - unique_id: "wunderground.home.uv"
+    name: "wunderground uv"
+    state_topic: "wunderground/home"
+    value_template: "{{ (value_json.observations[0].uv) | round(0) }}"
+    unit_of_measurement: ""
+    icon: mdi:emoticon-cool-outline
+    expire_after: 600
