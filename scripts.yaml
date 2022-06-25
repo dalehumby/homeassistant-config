@@ -117,3 +117,23 @@ laundry_timer_start:
     - service: timer.start
       target:
         entity_id: timer.laundry
+
+dale_charge_phone:
+  alias: Dale charge phone
+  icon: mdi:sleep
+  mode: restart
+  sequence:
+    - condition:
+      - condition: state
+        entity_id: person.dale
+        state: "home"
+      - condition: time
+        after: "21:30:00"
+      - condition: state
+        entity_id: light.bedside_lights
+        state: "on"
+    - service: scene.turn_on
+      target:
+        entity_id: scene.goodnight
+      data:
+        transition: 5
