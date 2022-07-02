@@ -657,3 +657,45 @@
       target:
         entity_id: media_player.spotify_dale
 
+
+- id: lounge_styrbar_down
+  alias: Lounge Styrbar brightness down
+  trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/Lounge button/action
+      payload: "off"
+  action:
+    - service: light.turn_off
+      target:
+        entity_id: light.lounge_lights
+
+- id: lounge_styrbar_down_hold
+  alias: Lounge Styrbar brightness down hold
+  trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/Lounge button/action
+      payload: "brightness_move_down"
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.lounge_lights
+      data:
+        brightness: 75
+        color_temp: 370
+        transition: 3
+
+- id: lounge_styrbar_up
+  alias: Lounge Styrbar brightness up
+  trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/Lounge button/action
+      payload: "on"
+    - platform: mqtt
+      topic: zigbee2mqtt/Lounge button/action
+      payload: "brightness_move_up"
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.lounge_lights
+      data:
+        brightness: 255
