@@ -40,9 +40,6 @@ zone:
     radius: 75
     icon: mdi:briefcase
 
-mqtt:
-  client_id: homeassistant
-
 camera:
   - platform: xiaomi_cloud_map_extractor
     host: !secret xiaomi_vacuum_host
