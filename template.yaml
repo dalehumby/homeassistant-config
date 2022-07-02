@@ -130,3 +130,9 @@
         off
       {% endif %}
 
+  - name: Home Occupancy
+    device_class: occupancy
+    state: >
+      {{ is_state('person.dale', 'home') or
+         is_state('person.mark', 'home')
+      }}

@@ -493,6 +493,43 @@
           "{{ states('sensor.greeting') }}. Water has been detected under the dishwasher.
            Please check for leaks... The shutoff valve is on the kitchen sink tap"
 
+- id: start_robot_vacuum
+  alias: Start robot vacuum when leave home
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.home_occupancy
+      from: "on"
+      to: "off"
+  condition:
+    - condition: state
+      entity_id: input_boolean.run_vacuum_today
+      state: "on"
+  action:
+    - service: vacuum.start
+      target:
+        entity_id: vacuum.vader
+
+- id: run_vacuum_once_per_day
+  alias: Run vacuum once per day
+  trigger:
+    - platform: state
+      entity_id: vacuum.vader
+      to: "cleaning"
+  action:
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.run_vacuum_today
+
+- id: reset_run_vacuum_today
+  alias: Reset run vacuum today
+  trigger:
+    - platform: time
+      at: "03:00:00"
+  action:
+    - service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.run_vacuum_today
+
 
 # NOTE: Aqara Cube automations
 - id: cube_working

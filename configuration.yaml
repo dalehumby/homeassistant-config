@@ -75,6 +75,11 @@ input_number:
     step: 1
     unit_of_measurement: dBm
 
+input_boolean:
+  run_vacuum_today:
+    name: Run vacuum today
+    icon: mdi:robot-vacuum
+
 frontend:
 
 mobile_app:
