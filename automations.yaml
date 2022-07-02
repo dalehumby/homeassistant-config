@@ -358,8 +358,11 @@
 - id: rainfall_alert_morning
   alias: Rainfall on the way to work
   trigger:
+    - platform: numeric_state
+      entity_id: sensor.precipitation_next_hour
+      above: 0
     - platform: time
-      at: "08:00:00"
+      at: "08:15:00"
   condition:
     - condition: state
       entity_id: binary_sensor.workday_sensor
@@ -367,6 +370,9 @@
     - condition: zone
       entity_id: person.dale
       zone: zone.home
+    - condition: time
+      after: "08:15:00"
+      before: "10:00:00"
     - condition: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
@@ -380,11 +386,16 @@
   alias: Rainfall on the way home
   trigger:
     - platform: time
-      at: "16:30:00"
+      at: "17:00:00"
+    - platform: numeric_state
+      entity_id: sensor.precipitation_next_hour
+      above: 0
   condition:
     - condition: zone
       entity_id: person.dale
       zone: zone.work
+    - condition: time
+      after: "17:00:00"
     - condition: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
@@ -395,7 +406,7 @@
       message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
 - id: rainfall_alert_away
-  alias: Heavy rain alert while outdoors
+  alias: Rain alert while outdoors
   trigger:
     - platform: numeric_state
       entity_id: sensor.precipitation_next_hour
