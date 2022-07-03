@@ -541,6 +541,35 @@
       target:
         entity_id: input_boolean.run_vacuum_today
 
+- id: fill_vacuum_water
+  alias: Clean vacuum bin and fill water
+  trigger:
+    - platform: state
+      entity_id: vacuum.vader
+      from: "cleaning"
+      to: "returning"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.vader_water_shortage
+      state: "on"
+    - condition: numeric_state
+      entity_id: sensor.vader_current_clean_duration
+      above: 600
+  action:
+    - service: xiaomi_miio.vacuum_goto
+      target:
+        entity_id: vacuum.vader
+      data:
+        x_coord: '27500'
+        y_coord: '29500'
+    - wait_for_trigger:
+      - platform: state
+        entity_id: vacuum.vader
+        to: "idle"
+    - service: vacuum.locate
+      target:
+        entity_id: vacuum.vader
+
 
 # NOTE: Aqara Cube automations
 - id: cube_working
