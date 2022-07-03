@@ -667,7 +667,9 @@
   action:
     - service: light.turn_off
       target:
-        entity_id: light.lounge_lights
+        entity_id: 
+          - light.lounge_lights
+          - light.hall_lights
 
 - id: lounge_styrbar_down_hold
   alias: Lounge Styrbar brightness down hold
@@ -678,7 +680,9 @@
   action:
     - service: light.turn_on
       target:
-        entity_id: light.lounge_lights
+        entity_id: 
+          - light.lounge_lights
+          - light.hall_lights
       data:
         brightness: 75
         color_temp: 370
