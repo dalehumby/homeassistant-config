@@ -435,13 +435,13 @@
     - condition: time
       after: "18:00:00"
   action:
+    - service: automation.turn_on
+      target:
+        entity_id: automation.lunch_reminder
     - service: tts.google_cloud_say
       entity_id: media_player.kitchen_display
       data_template:
         message: "Okay, I'll remind you about your lunch tomorrom morning."
-    - service: automation.turn_on
-      target:
-        entity_id: automation.lunch_reminder
 
 - id: lunch_reminer_off
   alias: Turn off lunch reminder

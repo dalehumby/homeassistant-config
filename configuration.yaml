@@ -102,6 +102,8 @@ homekit:
 
 apple_tv:
 
+media_source: 
+
 tts:
   - platform: google_cloud
     key_file: HASSGoogAssist.json
