@@ -137,3 +137,22 @@ dale_charge_phone:
         entity_id: scene.goodnight
       data:
         transition: 5
+
+easy_wakeup:
+  alias: Easy wakeup
+  icon: mdi:sleep-off
+  mode: restart
+  sequence:
+    - service: light.turn_on
+      data:
+        brightness: 2
+        color_name: blue
+      target:
+        entity_id: light.bedroom_floor
+    - delay: 2
+    - service: light.turn_on
+      data:
+        transition: 300
+        brightness: 255
+      target:
+        entity_id: light.bedroom_floor

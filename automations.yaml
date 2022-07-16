@@ -755,4 +755,50 @@
       target:
         entity_id: light.bedroom_closet
 
+- id: bedroom_floor_lighting_on
+  alias: Bedroom floor night lighting on
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_door_pir_occupancy
+      to: "on"
+  condition:
+  - condition: state
+    entity_id: light.bedside_lights
+    state: "off"
+  action:
+    - service: light.turn_on
+      data:
+        transition: 1
+        color_name: red
+        brightness: 26
+      target:
+        entity_id: light.bedroom_floor
 
+- id: bedroom_floor_lighting_off
+  alias: Bedroom floor night lighting off
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_door_pir_occupancy
+      to: "off"
+  condition:
+  - condition: state
+    entity_id: light.bedside_lights
+    state: "off"
+  action:
+    - service: light.turn_off
+      data:
+        transition: 3
+      target:
+        entity_id: light.bedroom_floor
+
+- id: easy_wakeup
+  alias: Easy wakeup
+  trigger:
+    - platform: time
+      at: "07:20:00"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: "on"
+  action:
+    - service: script.easy_wakeup

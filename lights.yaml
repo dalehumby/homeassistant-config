@@ -21,4 +21,4 @@
   entities:
     - light.bedroom_overhead
     - light.bedside_lights
-
+    - light.bedroom_floor
