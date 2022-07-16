@@ -387,6 +387,8 @@
   trigger:
     - platform: time
       at: "17:00:00"
+    - platform: time
+      at: "11:55:00"
     - platform: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
@@ -394,8 +396,12 @@
     - condition: zone
       entity_id: person.dale
       zone: zone.work
-    - condition: time
-      after: "17:00:00"
+    - or:
+        - condition: time
+          after: "11:55:00"
+          before: "12:10:00"
+        - condition: time
+          after: "17:00:00"
     - condition: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
@@ -415,8 +421,7 @@
     - condition: state
       entity_id: person.dale
       state: "not_home"
-    - condition: not
-      conditions:
+    - not:
         - condition: state
           entity_id: sensor.dales_iphone_connection_type
           state: "Wi-Fi"
