@@ -121,11 +121,19 @@
 - name: Goodnight
   icon: mdi:sleep
   entities:
+    light.lounge_overhead: off
+    light.lounge_tree:
+      state: on
+      brightness: 75
     light.hall_lights: off
     light.kitchen_lights: off
     light.bedroom_overhead:
       state: off
     light.bedside_lights:
+      state: on
+      brightness: 15
+      color_temp: 454
+    light.bedroom_floor:
       state: on
       brightness: 15
       color_temp: 454
