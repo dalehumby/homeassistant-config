@@ -104,6 +104,10 @@ apple_tv:
 
 media_source: 
 
+spotcast:
+  sp_dc: !secret sp_dc
+  sp_key: !secret sp_key
+
 tts:
   - platform: google_cloud
     key_file: HASSGoogAssist.json
