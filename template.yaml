@@ -130,10 +130,3 @@
         off
       {% endif %}
 
-  # could also use zone.home = 0 or to 0 (zone.home has state that is count of people)
-  - name: Home Occupancy
-    device_class: occupancy
-    state: >
-      {{ is_state('person.dale', 'home') or
-         is_state('person.mark', 'home')
-      }}

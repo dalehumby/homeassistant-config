@@ -513,9 +513,8 @@
   alias: Start robot vacuum when leave home
   trigger:
     - platform: state
-      entity_id: binary_sensor.home_occupancy
-      from: "on"
-      to: "off"
+      entity_id: zone.home
+      to: "0"
   condition:
     - condition: state
       entity_id: input_boolean.run_vacuum_today
