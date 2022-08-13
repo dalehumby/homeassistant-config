@@ -80,6 +80,12 @@ input_boolean:
     name: Run vacuum today
     icon: mdi:robot-vacuum
 
+counter:
+  empty_vacuum_bin:
+    name: Empty vacuum bin
+    initial: 3
+    icon: mdi:delete-variant
+
 frontend:
 
 mobile_app:
