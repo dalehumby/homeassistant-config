@@ -510,22 +510,27 @@
            Please check for leaks... The shutoff valve is on the kitchen sink tap"
 
 - id: start_robot_vacuum
-  alias: Start robot vacuum when leave home
+  alias: Start robot vacuum
   trigger:
     - platform: state
       entity_id: zone.home
       to: "0"
+    - platform: time
+      at: "13:00:00"
   condition:
     - condition: state
       entity_id: input_boolean.run_vacuum_today
       state: "on"
+    - condition: state
+      entity_id: zone.home
+      state: "0"
   action:
     - service: vacuum.start
       target:
         entity_id: vacuum.vader
 
 - id: run_vacuum_once_per_day
-  alias: Run vacuum once per day
+  alias: Run vacuum max once per day
   trigger:
     - platform: state
       entity_id: vacuum.vader
