@@ -58,6 +58,10 @@ camera:
         right: 0
 
 input_datetime:
+  laundry_reminder:
+    name: Laundry reminder
+    has_date: true
+    has_time: true
 
 input_number:
   rssi_present:

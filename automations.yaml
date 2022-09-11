@@ -322,6 +322,23 @@
         brightness: "{{ min(75, (state_attr('light.foyer_overhead','brightness') | int(0))) }}"
         transition: 5
 
+- id: laundry_start_reminder
+  alias: Laundry reminder
+  trigger:
+    - platform: time
+      at: input_datetime.laundry_reminder
+  action:
+    - service: notify.family
+      data:
+        message: "Don't forget your laundry booking"
+    - service: tts.google_cloud_say
+      entity_id:
+        - media_player.kitchen_display
+        - media_player.bedroom_speaker
+        - media_player.lounge_speaker
+      data_template:
+        message: "{{ states('sensor.greeting') }}. Don't forget about your laundry"
+
 - id: laundry_start
   alias: Laundry timer started
   trigger:
