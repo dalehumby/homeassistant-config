@@ -3,3 +3,9 @@ laundry:
   duration: 00:50:00
   icon: mdi:washing-machine
   restore: true
+
+variable:
+  name: Timer
+  duration: 00:00:00
+  icon: mdi:camera-timer
+  restore: true
