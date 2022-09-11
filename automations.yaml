@@ -541,6 +541,8 @@
     - condition: state
       entity_id: zone.home
       state: "0"
+    - condition: time
+      after: "08:00:00"
   action:
     - service: vacuum.start
       target:
