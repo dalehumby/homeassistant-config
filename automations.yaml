@@ -533,6 +533,8 @@
           - binary_sensor.dishwasher_leak_water_leak
           - binary_sensor.entrance_pir_occupancy
           - binary_sensor.kitchen_pir_occupancy
+          - binary_sensor.kitchen_window_contact
+          - binary_sensor.balcony_door_contact
           - binary_sensor.bedroom_door_pir_occupancy
           - binary_sensor.bedroom_closet_pir_occupancy
           - light.bedroom_floor
