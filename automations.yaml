@@ -760,9 +760,20 @@
   action:
     - service: light.turn_off
       target:
-        entity_id: 
+        entity_id:
           - light.lounge_lights
-          - light.hall_lights
+          - light.foyer_overhead
+    - service: light.turn_on
+      target:
+        entity_id:
+          - light.entrance_overhead
+      data:
+        brightness: 26
+    - delay: 30
+    - service: light.turn_off
+      target:
+        entity_id:
+          - light.entrance_overhead
 
 - id: lounge_styrbar_down_hold
   alias: Lounge Styrbar brightness down hold
@@ -860,3 +871,40 @@
       state: "on"
   action:
     - service: script.easy_wakeup
+
+- id: kitchen_nightlight_on
+  alias: Kitchen night lighting on
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_pir_occupancy
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: light.kitchen_downlights
+      state: "off"
+  action:
+    - service: light.turn_on
+      data:
+        brightness: 26
+      target:
+        entity_id: light.kitchen_downlight_window
+
+- id: kitchen_nightlight_off
+  alias: Kitchen night lighting off
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_pir_occupancy
+      to: "off"
+  condition:
+    - condition: state
+      entity_id: light.kitchen_downlight_window
+      state: "on"
+    - condition: state
+      entity_id: light.kitchen_downlight_middle
+      state: "off"
+  action:
+    - service: light.turn_off
+      data:
+        transition: 3
+      target:
+        entity_id: light.kitchen_downlights
