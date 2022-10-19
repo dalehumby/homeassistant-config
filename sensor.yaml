@@ -8,9 +8,6 @@
     - 'date_time_iso'
     - 'time_utc'
 
-# Moon sensor
-- platform: moon
-  
 # Sun rise and set times
 - platform: template
   sensors:

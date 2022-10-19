@@ -214,7 +214,9 @@
         - "gloomy"
         - "bright"
   action:
-    service: openuv.update_uv_index_data
+    service: homeassistant.update_entity
+    target:
+      entity_id: sensor.current_uv_index
 
 - id: openuv_update_protection_window
   alias: "Update OpenUV protection window once a day"
