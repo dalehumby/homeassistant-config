@@ -832,9 +832,9 @@
       entity_id: binary_sensor.bedroom_door_pir_occupancy
       to: "on"
   condition:
-  - condition: state
-    entity_id: light.bedside_lights
-    state: "off"
+    - condition: state
+      entity_id: light.bedside_lights
+      state: "off"
   action:
     - service: light.turn_on
       data:
@@ -850,9 +850,9 @@
       entity_id: binary_sensor.bedroom_door_pir_occupancy
       to: "off"
   condition:
-  - condition: state
-    entity_id: light.bedside_lights
-    state: "off"
+    - condition: state
+      entity_id: light.bedside_lights
+      state: "off"
   action:
     - service: light.turn_off
       data:
