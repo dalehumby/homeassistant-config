@@ -838,12 +838,28 @@
       entity_id: light.bedside_lights
       state: "off"
   action:
-    - service: light.turn_on
-      data:
-        color_name: red
-        brightness: 26
-      target:
-        entity_id: light.bedroom_floor
+    - choose:
+      - conditions:
+          - condition: time
+            after: "07:30:00"
+            before: "12:00:00"
+          - condition: state
+            entity_id: binary_sensor.workday_sensor
+            state: "on"
+        sequence:
+          - service: light.turn_on
+            data:
+              color_temp: 370
+              brightness: 255
+            target:
+              entity_id: light.bedroom_floor
+      default:
+        - service: light.turn_on
+          data:
+            color_name: red
+            brightness: 26
+          target:
+            entity_id: light.bedroom_floor
 
 - id: bedroom_floor_lighting_off
   alias: Bedroom floor night lighting off
