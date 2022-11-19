@@ -10,7 +10,7 @@
         evening
       {% endif %}
 
-  - name: "Average temperature"
+  - name: Average temperature
     device_class: temperature
     unit_of_measurement: "°C"
     state: >
@@ -19,7 +19,38 @@
       {% set kitchen = states('sensor.kitchen_temperature') | float %}
       {{ ((bedroom + lounge + kitchen) / 3) | round(1) }}
 
-  - name: "Illuminance"
+  - name: Average humidity
+    device_class: humidity
+    unit_of_measurement: "%"
+    state: >
+      {% set bedroom = states('sensor.bedroom_humidity') | float %}
+      {% set lounge = states('sensor.lounge_humidity') | float %}
+      {% set kitchen = states('sensor.kitchen_humidity') | float %}
+      {{ ((bedroom + lounge + kitchen) / 3) | round(1) }}
+
+  - name: Indoor dewpoint
+    device_class: temperature
+    unit_of_measurement: "°C"
+    state: >
+      {% set b = 17.67 %}
+      {% set c = 243.5 %}
+      {% set T = states('sensor.average_temperature') | float %}
+      {% set RH = states('sensor.average_humidity') | float %}
+      {% set gamma = log(RH / 100) + ((b * T) / (c + T)) %}
+      {{ ((c * gamma) / (b - gamma)) | round(1) }}
+
+  - name: Balcony dewpoint
+    device_class: temperature
+    unit_of_measurement: "°C"
+    state: >
+      {% set b = 17.67 %}
+      {% set c = 243.5 %}
+      {% set T = states('sensor.balcony_temperature') | float %}
+      {% set RH = states('sensor.balcony_humidity') | float %}
+      {% set gamma = log(RH / 100) + ((b * T) / (c + T)) %}
+      {{ ((c * gamma) / (b - gamma)) | round(1) }}
+
+  - name: Illuminance
     icon: "mdi:theme-light-dark"
     state: >
       {% if states('sensor.solar_radiation_average') not in ['unknown', 'unavailable'] %}
@@ -38,7 +69,7 @@
         {% endif %}
       {% endif %}
 
-  - name: "Daily playlist"
+  - name: Daily playlist
     icon: mdi:spotify
     # ISO weekday is 1 (Mon) .. 7 (Sun)
     # Mon Discover weekly
@@ -65,12 +96,6 @@
         https://open.spotify.com/playlist/37i9dQZF1E35TbkiCN416a?si=f0e348f27e804ec2
       {% endif %}
       
-  - name: Balcony Dew Point
-    device_class: temperature
-    unit_of_measurement: "°C"
-    state: >
-      {{ states('sensor.balcony_temperature') | float - (100 - states('sensor.balcony_humidity') | int) / 5 }}
-
   - name: Apple Watch rain sparkline
     state: >
       {%- set raindata = state_attr("sensor.precipitation_next_hour","precipitation_rate") %}
@@ -110,6 +135,7 @@
       {% elif icon == "mdi:weather-snowy-heavy" %}{{"🌨"}}
       {% else %}{{"?"}}
       {% endif %}
+
 
 - binary_sensor:
   - name: Front door
