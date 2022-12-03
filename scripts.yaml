@@ -152,14 +152,14 @@ easy_wakeup:
     - delay: 2
     - service: light.turn_on
       data:
-        transition: 300
+        transition: 600
         brightness: 255
       target:
         entity_id: light.bedroom_floor
     - service: spotcast.start
       data:
         device_name: Bedroom speaker
-        start_volume: 20
+        start_volume: 30
         uri: spotify:playlist:37i9dQZF1DWV90ZWj21ygB
         entity_id: media_player.bedroom_speaker
         random_song: true

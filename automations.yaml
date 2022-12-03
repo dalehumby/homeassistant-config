@@ -882,7 +882,7 @@
   alias: Easy wakeup
   trigger:
     - platform: time
-      at: "07:20:00"
+      at: input_datetime.easy_wakeup
   condition:
     - condition: state
       entity_id: binary_sensor.workday_sensor

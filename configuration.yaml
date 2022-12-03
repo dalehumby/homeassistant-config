@@ -62,6 +62,10 @@ input_datetime:
     name: Laundry reminder
     has_date: true
     has_time: true
+  easy_wakeup:
+    name: Easy wakeup
+    has_time: true
+    initial: 07:30
 
 input_number:
   rssi_present:
