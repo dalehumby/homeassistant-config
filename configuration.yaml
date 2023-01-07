@@ -6,8 +6,9 @@ homeassistant:
   latitude: !secret home_lat
   longitude: !secret home_long
   elevation: 0
-  internal_url: !secret homeassistant_url
-  external_url: !secret homeassistant_url
+  country: SE
+  internal_url: !secret internal_url
+  external_url: !secret external_url
   auth_providers:
   - type: homeassistant
   customize: !include customize.yaml
@@ -118,6 +119,10 @@ apple_tv:
 
 media_source: 
 
+media_player:
+  - platform: snapcast
+    host: 10.0.0.10
+
 spotcast:
   sp_dc: !secret sp_dc
   sp_key: !secret sp_key
@@ -128,7 +133,10 @@ tts:
     voice: en-GB-Wavenet-B
     profiles:
       - large-home-entertainment-class-device
-    base_url: !secret tts_base_url
+  - platform: marytts
+    host: home_mimic3
+    voice: en_US/ljspeech_low
+    language: en_US
 
 system_health:
 

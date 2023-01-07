@@ -1,5 +1,3 @@
-client_id: homeassistant
-
 sensor:
 
   # Zigbee2mqtt

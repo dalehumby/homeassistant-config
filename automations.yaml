@@ -224,7 +224,9 @@
     platform: time
     at: "02:12:00"
   action:
-    service: openuv.update_protection_data
+    service: homeassistant.update_entity
+    target:
+      entity_id: binary_sensor.protection_window
 
 - id: gloomy_day_lights_on
   alias: "Turn on lights when it's a gloomy day"
