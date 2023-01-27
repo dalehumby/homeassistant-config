@@ -115,10 +115,6 @@
 
   - name: Apple Watch rain sparkline icon
     state: >
-      {% set precip = states("sensor.precipitation_next_hour") | float %}
-      {% if precip > 0 %}
-        {{ precip }}
-      {% endif %}
       {% set icon = state_attr("sensor.precipitation_next_hour","icon") %}
       {% if icon == "mdi:weather-sunny" %}
         {% if is_state("sun.sun", "above_horizon") %}{{"☀"}}
@@ -126,13 +122,13 @@
         {% endif %}
       {% elif icon == "mdi:weather-partly-cloudy" %}{{"⛅"}}
       {% elif icon == "mdi:weather-cloudy" %}{{"☁"}}
-      {% elif icon == "mdi:weather-fog" %}{{"🌫"}}
-      {% elif icon == "mdi:weather-rainy" %}{{"🌧"}}
-      {% elif icon == "mdi:weather-lightning-rainy" %}{{"🌩"}}
-      {% elif icon == "mdi:weather-pouring" %}{{"🌧"}}
-      {% elif icon == "mdi:weather-snowy" %}{{"🌨"}}
-      {% elif icon == "mdi:weather-snowy-rainy" %}{{"🌨"}}
-      {% elif icon == "mdi:weather-snowy-heavy" %}{{"🌨"}}
+      {% elif icon == "mdi:weather-fog" %}{{"≡"}}
+      {% elif icon == "mdi:weather-rainy" %}{{"💧"}}
+      {% elif icon == "mdi:weather-lightning-rainy" %}{{"⚡"}}
+      {% elif icon == "mdi:weather-pouring" %}{{"☔"}}
+      {% elif icon == "mdi:weather-snowy" %}{{"❄️"}}
+      {% elif icon == "mdi:weather-snowy-rainy" %}{{"❄️"}}
+      {% elif icon == "mdi:weather-snowy-heavy" %}{{"❄️"}}
       {% else %}{{"?"}}
       {% endif %}
 
