@@ -3,6 +3,7 @@
   entities:
     - light.entrance_overhead
     - light.foyer_overhead
+    - light.foyer_table
 
 - platform: group
   name: Lounge lights
