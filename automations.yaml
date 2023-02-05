@@ -150,6 +150,8 @@
           - light.kitchen_lights
 
 - id: set_kitchen_lights_brightness
+  mode: queued
+  max: 20
   alias: Dimmer sets kitchen lights brightness
   trigger:
     platform: mqtt
