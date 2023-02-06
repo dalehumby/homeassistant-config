@@ -907,7 +907,7 @@
   action:
     - service: light.turn_on
       data:
-        brightness: 26
+        brightness: 50
       target:
         entity_id: light.kitchen_downlight_window
 
