@@ -574,6 +574,26 @@
       target:
         entity_id: vacuum.vader
 
+- id: start_robot_vacuum_weekday
+  alias: Start robot vacuum limited
+  description: "Limited weekday cleanup: Entrance, kitchen, bedroom"
+  trigger:
+    - platform: time
+      at: "16:30:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.run_vacuum_today
+      state: "on"
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: "on"
+  action:
+    - service: xiaomi_miio.vacuum_clean_segment
+      data:
+        segments: [20, 16, 17]
+      target:
+        entity_id: vacuum.vader
+
 - id: run_vacuum_max_once_per_day
   alias: Run vacuum max once per day
   trigger:
