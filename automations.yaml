@@ -930,3 +930,30 @@
         transition: 3
       target:
         entity_id: light.kitchen_downlights
+
+- id: kitchen_freezer_too_warm
+  alias: Alert when freezer too warm
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.freezer_temperature
+      above: -15
+      for:
+        minutes: 1
+  action:
+    - service: notify.family
+      data:
+        title: Freezer temperature
+        message: "{{ states('sensor.freezer_temperature') |int }} °C is too warm"
+        data:
+          push:
+            interruption-level: critical
+    - service: tts.google_cloud_say
+      entity_id:
+        - media_player.kitchen_display
+        - media_player.bedroom_speaker
+        - media_player.lounge_speaker
+      data_template:
+        message: >
+          "{{ states('sensor.greeting') }}. The freezer is {{ states('sensor.freezer_temperature') | int }} degrees.
+           Please check if the door is properly closed."
+
