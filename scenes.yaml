@@ -124,7 +124,8 @@
     light.lounge_overhead: off
     light.lounge_tree:
       state: on
-      brightness: 75
+      brightness: 1
+      color_name: red
     light.hall_lights: off
     light.kitchen_lights: off
     light.bedroom_overhead:
