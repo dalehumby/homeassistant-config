@@ -956,9 +956,9 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.freezer_temperature
-      above: -15
+      above: -10
       for:
-        minutes: 1
+        minutes: 15
   action:
     - service: notify.family
       data:
