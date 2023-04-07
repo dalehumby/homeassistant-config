@@ -112,6 +112,7 @@ google_assistant:
     - scene
     - script
     - switch
+    - climate
 
 homekit:
 

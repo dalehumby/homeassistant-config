@@ -977,3 +977,26 @@
           "{{ states('sensor.greeting') }}. The freezer is {{ states('sensor.freezer_temperature') | int }} degrees.
            Please check if the door is properly closed."
 
+- id: bedroom_thermostat_night
+  alias: Set bedroom sleep temperature
+  trigger:
+    - platform: time
+      at: "19:00"
+  action:
+    - service: climate.set_temperature
+      target:
+        entity_id: climate.bedroom_thermostat
+      data:
+        temperature: 18
+
+- id: bedroom_thermostat_day
+  alias: Set bedroom day temperature
+  trigger:
+    - platform: time
+      at: "06:00"
+  action:
+    - service: climate.set_temperature
+      target:
+        entity_id: climate.bedroom_thermostat
+      data:
+        temperature: 21
