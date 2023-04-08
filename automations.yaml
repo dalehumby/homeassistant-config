@@ -992,8 +992,10 @@
 - id: bedroom_thermostat_day
   alias: Set bedroom day temperature
   trigger:
-    - platform: time
-      at: "06:00"
+    - platform: template
+      value_template: {{ now().strftime('%H:%M') == '06:00' and is_state('binary_sensor.workday_sensor', 'on') }}
+    - platform: template
+      value_template: {{ now().strftime('%H:%M') == '08:00' and is_state('binary_sensor.workday_sensor', 'off') }}
   action:
     - service: climate.set_temperature
       target:
