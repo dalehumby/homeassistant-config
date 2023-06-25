@@ -956,7 +956,7 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.freezer_temperature
-      above: -10
+      above: -15
       for:
         minutes: 15
   action:
@@ -993,9 +993,9 @@
   alias: Set bedroom day temperature
   trigger:
     - platform: template
-      value_template: {{ now().strftime('%H:%M') == '06:00' and is_state('binary_sensor.workday_sensor', 'on') }}
+      value_template: "{{ now().strftime('%H:%M') == '06:00' and is_state('binary_sensor.workday_sensor', 'on') }}"
     - platform: template
-      value_template: {{ now().strftime('%H:%M') == '08:00' and is_state('binary_sensor.workday_sensor', 'off') }}
+      value_template: "{{ now().strftime('%H:%M') == '08:00' and is_state('binary_sensor.workday_sensor', 'off') }}"
   action:
     - service: climate.set_temperature
       target:
