@@ -116,13 +116,9 @@ google_assistant:
 
 homekit:
 
-apple_tv:
-
 media_source: 
 
 media_player:
-  - platform: snapcast
-    host: 10.0.0.10
 
 spotcast:
   sp_dc: !secret sp_dc

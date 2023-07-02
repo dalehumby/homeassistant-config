@@ -1,6 +1,3 @@
-- platform: workday
-  country: SE
-
 - platform: ping
   host: 8.8.8.8
   name: "Internet"
