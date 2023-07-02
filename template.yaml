@@ -109,7 +109,7 @@
         {%- elif rainintensity < 7.5 %}{{"▆"}}
         {%- elif rainintensity < 10  %}{{"▇"}}
         {%- elif rainintensity < 15  %}{{"█"}}
-        {%- else %}                    {{"▓"}} 
+        {%- else %}{{"▓"}} 
         {%- endif %}
       {%- endfor %}
 
