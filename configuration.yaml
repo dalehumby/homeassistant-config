@@ -113,6 +113,11 @@ google_assistant:
     - script
     - switch
     - climate
+  entity_config:
+    light.vindriktning_status:
+      expose: false
+    switch.sim800_power:
+      expose: false
 
 homekit:
 
