@@ -3,13 +3,13 @@
   entities:
     - light.entrance_overhead
     - light.foyer_overhead
-    - light.foyer_table
 
 - platform: group
   name: Lounge lights
   entities:
     - light.lounge_tree
     - light.lounge_overhead
+    - light.lounge_desk
 
 - platform: group
   name: Kitchen lights
