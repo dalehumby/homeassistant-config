@@ -559,7 +559,7 @@
       entity_id: zone.home
       to: "0"
     - platform: time
-      at: "13:00:00"
+      at: "11:00:00"
   condition:
     - condition: state
       entity_id: input_boolean.run_vacuum_today
@@ -581,7 +581,7 @@
   description: "Limited weekday cleanup: Entrance, kitchen, bedroom"
   trigger:
     - platform: time
-      at: "16:30:00"
+      at: "17:00:00"
   condition:
     - condition: state
       entity_id: input_boolean.run_vacuum_today

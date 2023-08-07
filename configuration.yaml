@@ -92,7 +92,7 @@ input_boolean:
 counter:
   empty_vacuum_bin:
     name: Empty vacuum bin
-    initial: 3
+    initial: 2
     icon: mdi:delete-variant
 
 frontend:
