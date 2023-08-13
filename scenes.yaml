@@ -122,6 +122,7 @@
   icon: mdi:sleep
   entities:
     light.lounge_overhead: off
+    light.lounge_desk: off
     light.lounge_tree:
       state: on
       brightness: 1

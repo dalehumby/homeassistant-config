@@ -1004,3 +1004,26 @@
         entity_id: climate.bedroom_thermostat
       data:
         temperature: 21
+
+- id: leave_home_lights_off
+  alias: Turn lights off when leave home
+  trigger:
+    - platform: state
+      entity_id: zone.home
+      to: "0"
+  action:
+    - service: light.turn_off
+      target:
+        entity_id: all
+
+- id: arrive_home_lights_on
+  alias: Turn lights on when arrive home
+  trigger:
+    - platform: state
+      entity_id: zone.home
+      from: "0"
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.working
+
