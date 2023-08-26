@@ -454,6 +454,24 @@
       title: "Rainfall alert"
       message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
+- id: rainfall_alert_frontdoor
+  alias: Rain alert at front door
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.entrance_pir_occupancy
+      from: "off"
+      to: "on"
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.precipitation_next_hour
+      above: 0
+  action:
+    - service: light.turn_on
+      data:
+        effect: okay
+      target:
+        entity_id: light.entrance_overhead
+
 - id: lunch_reminer_on
   alias: Turn on lunch reminder
   trigger:
