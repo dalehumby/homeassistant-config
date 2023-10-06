@@ -98,8 +98,6 @@ frontend:
 
 mobile_app:
 
-discovery:
-
 ios:
 
 google_assistant:
