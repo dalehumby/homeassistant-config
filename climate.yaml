@@ -1,0 +1,13 @@
+- platform: climate_group
+  name: "All thermostats"
+  entities:
+    - climate.lounge_thermostat
+    - climate.bedroom_thermostat
+    - climate.kitchen_north_thermostat
+    - climate.kitchen_south_thermostat
+
+- platform: climate_group
+  name: 'Kitchen thermostat'
+  entities:
+    - climate.kitchen_north_thermostat
+    - climate.kitchen_south_thermostat
