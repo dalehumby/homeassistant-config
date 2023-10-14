@@ -144,8 +144,7 @@
   - name: Air quality
     device_class: smoke
     state: >
-      {% if states('sensor.particulate_matter_2_5um_concentration') | float > 100 or
-            states('sensor.particulate_matter_10_0um_concentration') | float > 200
+      {% if states('sensor.mi_air_purifier_3h_pm2_5') | float > 100
       %}
         on
       {% else %}
