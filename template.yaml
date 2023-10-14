@@ -154,7 +154,7 @@
 
   - name: Vacation
     state: >
-      {{ distance(closest(states.person)) > 50 }}
+      {{ distance(closest(states.person)) > 25 }}
     icon: >
       {% if this.state == "on" %}mdi:island{% else %}mdi:home{% endif %}
     attributes:
