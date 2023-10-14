@@ -145,6 +145,9 @@ sun:
 
 logbook:
 
+recorder:
+  purge_keep_days: 35
+
 automation: !include automations.yaml
 binary_sensor: !include binary_sensor.yaml
 climate: !include climate.yaml
