@@ -1,65 +1,3 @@
-- name: Bright Day
-  icon: mdi:weather-sunny
-  entities:
-    light.entrance_overhead:
-      state: on
-      brightness: 75
-    light.foyer_overhead:
-      state: on
-      brightness: 255
-    light.kitchen_downlights:
-      state: on
-      brightness: 255
-      color_temp: 250
-    light.kitchen_desk:
-      state: on
-      brightness: 100
-      color_temp: 250
-    light.bedroom_lights: off
-
-- name: Gloomy Day
-  icon: mdi:weather-partly-cloudy
-  entities:
-    light.entrance_overhead:
-      state: on
-      brightness: 75
-    light.foyer_overhead:
-      state: on
-      brightness: 255
-    light.kitchen_downlights:
-      state: on
-      brightness: 255
-      color_temp: 250
-    light.kitchen_desk:
-      state: on
-      brightness: 100
-      color_temp: 250
-    light.bedroom_overhead:
-      state: on
-      brightness: 255
-
-- name: Evening
-  icon: mdi:weather-sunset-down
-  entities:
-    light.entrance_overhead:
-      state: on
-      brightness: 75
-    light.foyer_overhead:
-      state: on
-      brightness: 128
-    light.lounge_lights:
-      state: on
-      brightness: 128
-      color_temp: 370
-    light.kitchen_lights:
-      state: on
-      brightness: 128
-      color_temp: 370
-    light.bedroom_lights:
-      state: on
-      brightness: 128
-      color_temp: 370
-
 - name: Working
   icon: mdi:lightbulb-on-outline
   entities:
@@ -89,26 +27,6 @@
       state: on
       brightness: 75
       color_temp: 370
-    light.kitchen_lights:
-      state: on
-      brightness: 75
-      color_temp: 370
-    light.bedroom_lights:
-      state: on
-      brightness: 75
-      color_temp: 454
-
-- name: Movie
-  icon: mdi:movie
-  entities:
-    light.hall_lights: off
-    light.lounge_lights:
-      state: on
-      brightness: 75
-      color_temp: 370
-    light.stream_lights:
-      state: off
-    light.elgato_light_strip: off
     light.kitchen_lights:
       state: on
       brightness: 75
