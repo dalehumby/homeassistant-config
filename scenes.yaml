@@ -16,6 +16,10 @@
       state: on
       brightness: 255
       color_temp: 370
+    light.bathroom_overhead:
+      state: on
+      brightness: 255
+      color_temp: 370
 
 - name: Relax
   icon: mdi:glass-cocktail
@@ -35,6 +39,10 @@
       state: on
       brightness: 75
       color_temp: 454
+    light.bathroom_overhead:
+      state: on
+      brightness: 75
+      color_temp: 370
 
 - name: Goodnight
   icon: mdi:sleep
@@ -57,4 +65,8 @@
       state: on
       brightness: 15
       color_temp: 454
+    light.bathroom_overhead:
+      state: on
+      brightness: 15
+      color_name: red
 
