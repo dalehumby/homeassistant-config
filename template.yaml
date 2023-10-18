@@ -69,6 +69,18 @@
         {% endif %}
       {% endif %}
 
+  - name: "Adaptive Lighting Brightness: Home"
+    icon: "mdi:brightness-percent"
+    unit_of_measurement: "%"
+    state: >
+      {{ state_attr("switch.adaptive_lighting_home", "brightness_pct") | round(0) }}
+
+  - name: "Adaptive Lighting Color Temp: Home"
+    icon: "mdi:palette"
+    unit_of_measurement: "mired"
+    state: >
+      {{ state_attr("switch.adaptive_lighting_home", "color_temp_mired") }}
+
   - name: Daily playlist
     icon: mdi:spotify
     # ISO weekday is 1 (Mon) .. 7 (Sun)
