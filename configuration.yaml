@@ -105,15 +105,12 @@ google_assistant:
   service_account: !include HASSGoogAssist.json
   report_state: true
   exposed_domains:
+    - climate
     - light
     - scene
     - script
-    - switch
-    - climate
   entity_config:
     light.vindriktning_status:
-      expose: false
-    switch.sim800_power:
       expose: false
 
 homekit:
