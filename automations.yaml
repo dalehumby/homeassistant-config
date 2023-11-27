@@ -487,11 +487,12 @@
       target:
         entity_id: light.bedroom_closet
 
-- id: bedroom_floor_lighting
-  alias: Bedroom floor night lighting
+- id: bedroom_floor_lighting_on
+  alias: Bedroom floor night lighting on
   trigger:
     - platform: state
       entity_id: binary_sensor.bedroom_door_pir_occupancy
+      to: "on"
   condition:
     - condition: state
       entity_id: light.bedside_lights
@@ -499,27 +500,43 @@
   action:
     - choose:
       - conditions:
-        - condition: state
-          entity_id: binary_sensor.bedroom_door_pir_occupancy
-          state: "on"
+          - condition: time
+            after: input_datetime.easy_wakeup
+            before: "12:00:00"
+          - condition: state
+            entity_id: binary_sensor.workday_sensor
+            state: "on"
         sequence:
           - service: light.turn_on
             data:
-              color_name: red
-              brightness: 26
+              color_temp: 370
+              brightness: 255
             target:
               entity_id: light.bedroom_floor
-      - conditions:
-        - condition: state
-          entity_id: binary_sensor.bedroom_door_pir_occupancy
-          state: "off"
-        sequence:
-          - service: light.turn_off
-            data:
-              transition: 3
-            target:
-              entity_id: light.bedroom_floor
-      default: []
+      default:
+        - service: light.turn_on
+          data:
+            color_name: red
+            brightness: 26
+          target:
+            entity_id: light.bedroom_floor
+
+- id: bedroom_floor_lighting_off
+  alias: Bedroom floor night lighting off
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_door_pir_occupancy
+      to: "off"
+  condition:
+    - condition: state
+      entity_id: light.bedside_lights
+      state: "off"
+  action:
+    - service: light.turn_off
+      data:
+        transition: 3
+      target:
+        entity_id: light.bedroom_floor
 
 - id: easy_wakeup
   alias: Easy wakeup
