@@ -379,14 +379,9 @@
     - service: counter.decrement
       target:
         entity_id: counter.empty_vacuum_bin
-
-- id: clean_vacuum
-  alias: Clean vacuum bin and fill water
-  trigger:
-    - platform: numeric_state
+    - condition: numeric_state
       entity_id: counter.empty_vacuum_bin
       below: 1
-  action:
     - service: xiaomi_miio.vacuum_goto
       target:
         entity_id: vacuum.vader
