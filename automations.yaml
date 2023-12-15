@@ -657,7 +657,5 @@
       entity_id: zone.home
       from: "0"
   action:
-    - service: scene.turn_on
-      target:
-        entity_id: scene.working
+    - service: script.adaptive_lights_on
 

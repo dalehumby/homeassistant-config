@@ -53,3 +53,14 @@ easy_wakeup:
         entity_id: media_player.bedroom_speaker
         random_song: true
         shuffle: true
+
+adaptive_lights_on:
+  alias: Adaptive lights on
+  icon: mdi:theme-light-dark
+  mode: single
+  sequence:
+    - service: adaptive_lighting.apply
+      data:
+        entity_id: switch.adaptive_lighting_home
+        turn_on_lights: true
+        transition: 5
