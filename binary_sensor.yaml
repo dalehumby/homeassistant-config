@@ -1,6 +1,0 @@
-- platform: ping
-  host: 8.8.8.8
-  name: "Internet"
-  count: 5
-  scan_interval: 30
-
