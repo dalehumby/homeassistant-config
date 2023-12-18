@@ -1,3 +1,6 @@
+# NOTE: Cannot use `color_name` in scenes, https://github.com/home-assistant/core/pull/27182
+
+
 - name: Working
   icon: mdi:lightbulb-on-outline
   entities:
@@ -52,7 +55,7 @@
     light.lounge_tree:
       state: on
       brightness: 1
-      color_name: red
+      rgb_color: [255, 0, 0]
     light.hall_lights: off
     light.kitchen_lights: off
     light.bedroom_overhead:
@@ -68,5 +71,5 @@
     light.bathroom_overhead:
       state: on
       brightness: 15
-      color_name: red
+      rgb_color: [255, 0, 0]
 
