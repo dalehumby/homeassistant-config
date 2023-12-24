@@ -14,18 +14,18 @@
     device_class: temperature
     unit_of_measurement: "°C"
     state: >
-      {% set bedroom = states('sensor.bedroom_temperature') | float %}
-      {% set lounge = states('sensor.lounge_temperature') | float %}
-      {% set kitchen = states('sensor.kitchen_temperature') | float %}
+      {% set bedroom = states('sensor.bedroom_air_temperature') | float %}
+      {% set lounge = states('sensor.lounge_air_temperature') | float %}
+      {% set kitchen = states('sensor.kitchen_air_temperature') | float %}
       {{ ((bedroom + lounge + kitchen) / 3) | round(1) }}
 
   - name: Average humidity
     device_class: humidity
     unit_of_measurement: "%"
     state: >
-      {% set bedroom = states('sensor.bedroom_humidity') | float %}
-      {% set lounge = states('sensor.lounge_humidity') | float %}
-      {% set kitchen = states('sensor.kitchen_humidity') | float %}
+      {% set bedroom = states('sensor.bedroom_air_humidity') | float %}
+      {% set lounge = states('sensor.lounge_air_humidity') | float %}
+      {% set kitchen = states('sensor.kitchen_air_humidity') | float %}
       {{ ((bedroom + lounge + kitchen) / 3) | round(1) }}
 
   - name: Indoor dewpoint
@@ -45,8 +45,8 @@
     state: >
       {% set b = 17.67 %}
       {% set c = 243.5 %}
-      {% set T = states('sensor.balcony_temperature') | float %}
-      {% set RH = states('sensor.balcony_humidity') | float %}
+      {% set T = states('sensor.balcony_air_temperature') | float %}
+      {% set RH = states('sensor.balcony_air_humidity') | float %}
       {% set gamma = log(RH / 100) + ((b * T) / (c + T)) %}
       {{ ((c * gamma) / (b - gamma)) | round(1) }}
 
