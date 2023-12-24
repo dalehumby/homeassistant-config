@@ -146,13 +146,6 @@
 
 
 - binary_sensor:
-  - name: Front door
-    device_class: door
-    state: >
-      {{ is_state("binary_sensor.front_door_contact", "on") and 
-         is_state("binary_sensor.entrance_pir_occupancy", "on") 
-      }}
-
   - name: Air quality
     device_class: smoke
     state: >
