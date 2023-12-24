@@ -47,6 +47,7 @@ camera:
     token: !secret xiaomi_vacuum_token
     username: !secret xiaomi_cloud_username
     password: !secret xiaomi_cloud_password
+    scan_interval: 3600  # Default is 5s, but I don't need a live view
     draw: ['all']
     attributes:
       - calibration_points
