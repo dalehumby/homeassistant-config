@@ -73,3 +73,62 @@
       brightness: 15
       rgb_color: [255, 0, 0]
 
+- name: Christmas
+  icon: mdi:pine-tree
+  entities:
+    light.entrance_overhead:
+      state: on
+      brightness: 102
+      rgb_color: [255, 0, 0]
+    light.foyer_overhead:
+      state: on
+      brightness: 102
+      rgb_color: [0, 255, 0]
+    light.lounge_overhead:
+      state: on
+      brightness: 102
+      rgb_color: [0, 0, 255]
+    light.lounge_tree_top:
+      state: on
+      brightness: 102
+      rgb_color: [0, 0, 255]
+    light.lounge_tree_middle:
+      state: on
+      brightness: 102
+      rgb_color: [0, 255, 0]
+    light.lounge_tree_bottom:
+      state: on
+      brightness: 102
+      rgb_color: [255, 0, 0]
+    light.lounge_desk:
+      state: on
+      brightness: 51
+      color_temp: 454
+    light.kitchen_downlights:
+      state: on
+      brightness: 51
+      color_temp: 454
+    light.kitchen_desk:
+      state: on
+      brightness: 51
+      color_temp: 454
+    light.bedroom_overhead:
+      state: on
+      brightness: 102
+      rgb_color: [0, 0, 255]
+    light.bedside_lights:
+      state: on
+      brightness: 51
+      color_temp: 454
+    light.bedroom_floor:
+      state: on
+      brightness: 102
+      rgb_color: [255, 0, 0]
+    light.bathroom_overhead_mirror:
+      state: on
+      brightness: 102
+      rgb_color: [255, 0, 0]
+    light.bathroom_overhead_bath:
+      state: on
+      brightness: 102
+      rgb_color: [0, 0, 255]
