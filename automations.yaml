@@ -496,7 +496,7 @@
     - choose:
       - conditions:
           - condition: time
-            after: input_datetime.easy_wakeup
+            after: input_datetime.dale_alarm_time
             before: "12:00:00"
           - condition: state
             entity_id: binary_sensor.workday_sensor
@@ -536,9 +536,14 @@
 - id: easy_wakeup
   alias: Easy wakeup
   trigger:
-    - platform: time
-      at: input_datetime.easy_wakeup
+    - platform: template
+      value_template: >
+        "{{ (states.input_datetime.dale_alarm_time.attributes.timestamp - 600) | timestamp_custom('%H:%M', False)
+             == states.sensor.time.state }}"
   condition:
+    - condition: state
+      entity_id: binary_sensor.vacation
+      state: "off"
     - condition: state
       entity_id: binary_sensor.workday_sensor
       state: "on"
