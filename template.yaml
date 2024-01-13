@@ -1,14 +1,11 @@
 - sensor:
   - name: Greeting
     state: >
-      Good
-      {% if now().hour < 12 %}
-        morning
-      {% elif now().hour < 17 %}
-        afternoon
-      {% else %}
-        evening
-      {% endif %}
+      Good {{
+        'morning' if now().hour < 12
+        else 'afternoon' if now().hour < 17
+        else 'evening'
+      }}
 
   - name: Average temperature
     device_class: temperature
