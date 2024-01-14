@@ -72,6 +72,9 @@ input_datetime:
   easy_wakeup:
     name: Easy wakeup
     has_time: true
+  dale_alarm_time:
+    name: Dale's alarm time
+    has_time: true
 
 input_number:
   rssi_present:
@@ -93,6 +96,9 @@ input_boolean:
   run_vacuum_today:
     name: Run vacuum today
     icon: mdi:robot-vacuum
+  dale_alarm_enable:
+    name: Dale's alarm enabled
+
 
 counter:
   empty_vacuum_bin:
