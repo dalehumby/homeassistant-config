@@ -659,3 +659,19 @@
   action:
     - service: script.adaptive_lights_on
 
+- id: bathroom_light_morning_on
+  alias: Turn bathroom light auto brightness in the morning
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bathroom_pir_occupancy
+      to: "on"
+  condition:
+    - condition: time
+      after: input_datetime.dale_alarm_time
+      before: "12:00:00"
+  action:
+    - service: adaptive_lighting.set_manual_control
+      data:
+        entity_id: switch.adaptive_lighting_home
+        lights: light.bathroom_overhead
+        manual_control: false
