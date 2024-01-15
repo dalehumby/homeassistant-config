@@ -537,9 +537,7 @@
   alias: Easy wakeup
   trigger:
     - platform: template
-      value_template: >
-        "{{ (states.input_datetime.dale_alarm_time.attributes.timestamp - 600) | timestamp_custom('%H:%M', False)
-             == states.sensor.time.state }}"
+      value_template: "{{ (state_attr('input_datetime.dale_alarm_time', 'timestamp') - 600) | timestamp_custom('%H:%M', False) == states('sensor.time') }}"
   condition:
     - condition: state
       entity_id: binary_sensor.vacation
@@ -629,9 +627,9 @@
   alias: Set bedroom day temperature
   trigger:
     - platform: template
-      value_template: "{{ now().strftime('%H:%M') == '06:00' and is_state('binary_sensor.workday_sensor', 'on') }}"
+      value_template: "{{ states('sensor.time') == '06:00' and is_state('binary_sensor.workday_sensor', 'on') }}"
     - platform: template
-      value_template: "{{ now().strftime('%H:%M') == '08:00' and is_state('binary_sensor.workday_sensor', 'off') }}"
+      value_template: "{{ states('sensor.time') == '08:00' and is_state('binary_sensor.workday_sensor', 'off') }}"
   action:
     - service: climate.set_temperature
       target:
