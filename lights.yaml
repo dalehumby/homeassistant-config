@@ -2,20 +2,8 @@
   name: Hall lights
   entities:
     - light.entrance_overhead
-    - light.foyer_overhead
-
-- platform: group
-  name: Lounge lights
-  entities:
-    - light.lounge_tree
-    - light.lounge_overhead
-    - light.lounge_desk
-
-- platform: group
-  name: Kitchen lights
-  entities:
-    - light.kitchen_downlights
-    - light.kitchen_desk
+    - light.entrance_table_lamp
+    - light.hall_overhead
 
 - platform: group
   name: Bedroom lights
@@ -23,3 +11,24 @@
     - light.bedroom_overhead
     - light.bedside_lights
     - light.bedroom_floor
+
+- platform: group
+  name: Study lights
+  entities:
+    - light.study_overhead
+    - light.study_dale_desk
+
+- platform: group
+  name: Kitchen lights
+  entities:
+    - light.kitchen_overhead
+    - light.diningroom_overhead
+
+- platform: group
+  name: Lounge lights
+  entities:
+    - light.lounge_tree
+    - light.lounge_table_lamp
+    - light.lounge_overhead
+    - light.lounge_west_lamp
+

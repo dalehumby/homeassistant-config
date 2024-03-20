@@ -50,14 +50,9 @@
 - name: Goodnight
   icon: mdi:sleep
   entities:
-    light.lounge_overhead: off
-    light.lounge_desk: off
-    light.lounge_tree:
-      state: on
-      brightness: 1
-      rgb_color: [255, 0, 0]
     light.hall_lights: off
     light.kitchen_lights: off
+    light.lounge_lights: off
     light.bedroom_overhead:
       state: off
     light.bedside_lights:
@@ -68,10 +63,6 @@
       state: on
       brightness: 15
       color_temp: 454
-    light.bathroom_overhead:
-      state: on
-      brightness: 15
-      rgb_color: [255, 0, 0]
 
 - name: Christmas
   icon: mdi:pine-tree

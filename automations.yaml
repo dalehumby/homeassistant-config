@@ -556,14 +556,24 @@
       to: "on"
   condition:
     - condition: state
-      entity_id: light.kitchen_downlights
+      entity_id: light.kitchen_overhead
       state: "off"
   action:
-    - service: light.turn_on
-      data:
-        brightness: 50
-      target:
-        entity_id: light.kitchen_downlight_window
+    - choose:
+      - conditions:
+          - condition: time
+            after: input_datetime.dale_alarm_time
+            before: "12:00:00"
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: light.kitchen_lights
+      default:
+        - service: light.turn_on
+          data:
+            brightness: 50
+          target:
+            entity_id: light.kitchen_overhead_1
 
 - id: kitchen_nightlight_off
   alias: Kitchen night lighting off
@@ -573,17 +583,17 @@
       to: "off"
   condition:
     - condition: state
-      entity_id: light.kitchen_downlight_window
+      entity_id: light.kitchen_overhead_1
       state: "on"
     - condition: state
-      entity_id: light.kitchen_downlight_middle
+      entity_id: light.kitchen_overhead_2
       state: "off"
   action:
     - service: light.turn_off
       data:
         transition: 3
       target:
-        entity_id: light.kitchen_downlights
+        entity_id: light.kitchen_overhead_1
 
 - id: kitchen_freezer_too_warm
   alias: Alert when freezer too warm

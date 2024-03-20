@@ -13,8 +13,8 @@
     state: >
       {% set bedroom = states('sensor.bedroom_air_temperature') | float %}
       {% set lounge = states('sensor.lounge_air_temperature') | float %}
-      {% set kitchen = states('sensor.kitchen_air_temperature') | float %}
-      {{ ((bedroom + lounge + kitchen) / 3) | round(1) }}
+      {% set study = states('sensor.study_air_temperature') | float %}
+      {{ ((bedroom + lounge + study) / 3) | round(1) }}
 
   - name: Average humidity
     device_class: humidity
@@ -22,8 +22,8 @@
     state: >
       {% set bedroom = states('sensor.bedroom_air_humidity') | float %}
       {% set lounge = states('sensor.lounge_air_humidity') | float %}
-      {% set kitchen = states('sensor.kitchen_air_humidity') | float %}
-      {{ ((bedroom + lounge + kitchen) / 3) | round(1) }}
+      {% set study = states('sensor.study_air_humidity') | float %}
+      {{ ((bedroom + lounge + study) / 3) | round(1) }}
 
   - name: Indoor dewpoint
     device_class: temperature

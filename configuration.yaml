@@ -154,10 +154,15 @@ sun:
 
 logbook:
 
+logger:
+  logs:
+    pyatv: debug
+    homeassistant.components.apple_tv: debug
+    custom_components.xiaomi_cloud_map_extractor: debug
+
 automation: !include automations.yaml
 binary_sensor: !include binary_sensor.yaml
 climate: !include climate.yaml
-group: !include groups.yaml
 light: !include lights.yaml
 mqtt: !include mqtt.yaml
 scene: !include scenes.yaml
