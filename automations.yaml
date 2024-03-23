@@ -293,7 +293,7 @@
           - binary_sensor.kitchen_window_contact
           - binary_sensor.balcony_door_contact
           - binary_sensor.bedroom_door_pir_occupancy
-          - binary_sensor.bedroom_closet_pir_occupancy
+          - binary_sensor.storeroom_pir_occupancy
           - light.bedroom_floor
       to: unavailable
   mode: parallel
@@ -465,14 +465,14 @@
       data:
         brightness: 255
 
-- id: bedroom_closet_light
-  alias: Bedroom closet light
+- id: storeroom_light
+  alias: Storeroom light
   trigger:
     - platform: state
-      entity_id: binary_sensor.bedroom_closet_pir_occupancy
+      entity_id: binary_sensor.storeroom_pir_occupancy
       to: "on"
     - platform: state
-      entity_id: binary_sensor.bedroom_closet_pir_occupancy
+      entity_id: binary_sensor.storeroom_pir_occupancy
       to: "off"
       for: "00:01:00"
   action:
@@ -480,13 +480,13 @@
       data:
         transition: 1
       target:
-        entity_id: light.bedroom_closet
+        entity_id: light.storeroom_overhead
 
 - id: bedroom_floor_lighting_on
   alias: Bedroom floor night lighting on
   trigger:
     - platform: state
-      entity_id: binary_sensor.bedroom_door_pir_occupancy
+      entity_id: binary_sensor.bedroom_pir_occupancy
       to: "on"
   condition:
     - condition: state
@@ -520,7 +520,7 @@
   alias: Bedroom floor night lighting off
   trigger:
     - platform: state
-      entity_id: binary_sensor.bedroom_door_pir_occupancy
+      entity_id: binary_sensor.bedroom_pir_occupancy
       to: "off"
   condition:
     - condition: state

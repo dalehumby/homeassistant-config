@@ -1,0 +1,28 @@
+- platform: template
+  switches:
+    lounge_candles:
+      friendly_name: "Lounge candles"
+      icon_template: "mdi:candle"
+      turn_on:
+        service: remote.send_command
+        target:
+          entity_id: remote.lounge_irblaster
+        data:
+          num_repeats: 1
+          delay_secs: 0.4
+          hold_secs: 0
+          device: candle
+          command: 
+            - power_on
+            - flicker_slow
+            - timer_4h
+      turn_off:
+        service: remote.send_command
+        target:
+          entity_id: remote.lounge_irblaster
+        data:
+          num_repeats: 1
+          delay_secs: 0.4
+          hold_secs: 0
+          device: candle
+          command: power_off

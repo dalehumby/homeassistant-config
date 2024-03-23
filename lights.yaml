@@ -32,3 +32,6 @@
     - light.lounge_overhead
     - light.lounge_west_lamp
 
+- platform: switch
+  name: Lounge candles
+  entity_id: switch.lounge_candles

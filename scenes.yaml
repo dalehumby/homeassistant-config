@@ -53,6 +53,7 @@
     light.hall_lights: off
     light.kitchen_lights: off
     light.lounge_lights: off
+    light.lounge_candles: off
     light.bedroom_overhead:
       state: off
     light.bedside_lights:
