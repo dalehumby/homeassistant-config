@@ -15,7 +15,7 @@
           command: 
             - power_on
             - flicker_slow
-            - timer_4h
+            - timer_6h
       turn_off:
         service: remote.send_command
         target:
