@@ -203,7 +203,7 @@
       data:
         effect: okay
       target:
-        entity_id: light.entrance_overhead
+        entity_id: light.entrance_table_lamp
 
 - id: lunch_reminer_on
   alias: Turn on lunch reminder
@@ -250,7 +250,7 @@
       data:
         effect: okay
       target:
-        entity_id: light.entrance_overhead
+        entity_id: light.entrance_table_lamp
     - service: notify.mobile_app_dales_iphone
       data:
         message: "Remember your lunch"
@@ -419,18 +419,17 @@
       target:
         entity_id:
           - light.lounge_lights
-          - light.foyer_overhead
     - service: light.turn_on
       target:
         entity_id:
-          - light.entrance_overhead
+          - light.entrance_table_lamp
       data:
         brightness: 26
     - delay: 30
     - service: light.turn_off
       target:
         entity_id:
-          - light.entrance_overhead
+          - light.entrance_table_lamp
 
 - id: lounge_styrbar_down_hold
   alias: Lounge Styrbar brightness down hold
@@ -563,9 +562,11 @@
       - conditions:
           - condition: time
             after: input_datetime.dale_alarm_time
-            before: "12:00:00"
+            before: "09:00:00"
         sequence:
           - service: light.turn_on
+            data:
+              transition: 3
             target:
               entity_id: light.kitchen_lights
       default:

@@ -40,11 +40,6 @@ zone:
     longitude: !secret work_long
     radius: 75
     icon: mdi:briefcase
-  - name: UE
-    latitude: !secret ue_lat
-    longitude: !secret ue_long
-    radius: 75
-    icon: mdi:briefcase
 
 camera:
   - platform: xiaomi_cloud_map_extractor

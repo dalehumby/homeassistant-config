@@ -17,6 +17,7 @@
   entities:
     - light.study_overhead
     - light.study_dale_desk
+    - light.study_bedside_lamp
 
 - platform: group
   name: Kitchen lights
@@ -28,7 +29,6 @@
   name: Lounge lights
   entities:
     - light.lounge_tree
-    - light.lounge_table_lamp
     - light.lounge_overhead
     - light.lounge_west_lamp
 
