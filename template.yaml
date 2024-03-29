@@ -51,7 +51,7 @@
     icon: "mdi:theme-light-dark"
     state: >
       {% if states('sensor.solar_radiation_average') not in ['unknown', 'unavailable'] %}
-        {% if states('sensor.solar_radiation_average') | int < 1 %}
+        {% if states('sensor.solar_radiation_average') | int < 2 %}
           dark
         {% elif states('sensor.solar_radiation_average') | int < 10 %}
           {% if state_attr('sun.sun', 'rising') %}
