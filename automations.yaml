@@ -684,3 +684,37 @@
         entity_id: switch.adaptive_lighting_home
         lights: light.bathroom_overhead
         manual_control: false
+
+- id: bathroom_towelrail_on
+  alias: Turn on bathroom towelrail when showering
+  trigger:
+    - platform: template
+      value_template: "{{  states('sensor.bathroom_air_humidity') | int >= states('sensor.average_humidity') | int + 10 }}"
+  action:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.bathroom_towelrail
+
+- id: bathroom_towelrail_timer_start
+  alias: Start auto-off bathroom towelrail timer
+  trigger:
+    - platform: state
+      entity_id: switch.bathroom_towelrail
+      from: "off"
+      to: "on"
+  action:
+    - service: timer.start
+      target:
+        entity_id: timer.bathroom_towelrail
+
+- id: bathroom_towelrail_off
+  alias: Turn off bathroom towelrail when timer expires
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.bathroom_towelrail
+  action:
+    - service: switch.turn_off
+      target:
+        entity_id: switch.bathroom_towelrail

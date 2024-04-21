@@ -9,3 +9,9 @@ variable:
   duration: 00:00:00
   icon: mdi:camera-timer
   restore: true
+
+bathroom_towelrail:
+  name: Bathroom Towelrail
+  duration: 02:00:00
+  icon: mdi:heating-coil
+  restore: true
