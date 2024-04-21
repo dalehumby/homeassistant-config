@@ -587,7 +587,7 @@
       entity_id: light.kitchen_overhead_1
       state: "on"
     - condition: state
-      entity_id: light.kitchen_overhead_2
+      entity_id: light.kitchen_overhead_4
       state: "off"
   action:
     - service: light.turn_off
