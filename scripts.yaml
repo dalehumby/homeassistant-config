@@ -25,7 +25,7 @@ dale_charge_phone:
       target:
         entity_id: scene.goodnight
       data:
-        transition: 5
+        transition: 3
 
 easy_wakeup:
   alias: Easy wakeup
@@ -69,3 +69,18 @@ adaptive_lights_on:
         entity_id: switch.adaptive_lighting_home
         turn_on_lights: true
         transition: 5
+
+relax_scene_on:
+  alias: Activate Relax scene
+  icon: mdi:glass-cocktail
+  mode: single
+  sequence:
+    - service: adaptive_lighting.set_manual_control
+      data:
+        manual_control: true
+        lights:
+          - light.kitchen_lights
+    - service: scene.turn_on
+      data:
+        entity_id: scene.relax
+        transition: 3

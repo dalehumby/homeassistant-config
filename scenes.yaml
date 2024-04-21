@@ -1,17 +1,9 @@
 # NOTE: Cannot use `color_name` in scenes, https://github.com/home-assistant/core/pull/27182
 
-
 - name: Working
   icon: mdi:lightbulb-on-outline
   entities:
     light.hall_lights:
-      state: on
-      brightness: 255
-    light.lounge_lights:
-      state: on
-      brightness: 255
-      color_temp: 370
-    light.kitchen_lights:
       state: on
       brightness: 255
       color_temp: 370
@@ -19,7 +11,15 @@
       state: on
       brightness: 255
       color_temp: 370
-    light.bathroom_overhead:
+    light.study_lights:
+      state: on
+      brightness: 255
+      color_temp: 370
+    light.kitchen_lights:
+      state: on
+      brightness: 255
+      color_temp: 370
+    light.lounge_lights:
       state: on
       brightness: 255
       color_temp: 370
@@ -27,33 +27,41 @@
 - name: Relax
   icon: mdi:glass-cocktail
   entities:
-    light.hall_lights:
+    light.entrance_overhead: off
+    light.hall_overhead: off
+    light.entrance_table_lamp:
       state: on
-      brightness: 75
-    light.lounge_lights:
-      state: on
-      brightness: 75
-      color_temp: 370
-    light.kitchen_lights:
-      state: on
-      brightness: 75
-      color_temp: 370
-    light.bedroom_lights:
-      state: on
-      brightness: 75
+      brightness: 50
       color_temp: 454
-    light.bathroom_overhead:
+    light.bedroom_lights: off
+    light.kitchen_overhead_1:
       state: on
-      brightness: 75
-      color_temp: 370
+      brightness: 50
+      color_temp: 454
+    light.kitchen_overhead_2: off
+    light.kitchen_overhead_3: off
+    light.kitchen_overhead_4:
+      state: on
+      brightness: 50
+      color_temp: 454
+    light.kitchen_overhead_5: off
+    light.kitchen_overhead_6: off
+    light.diningroom_overhead: off
+    light.lounge_tree:
+      state: on
+      brightness: 50
+      color_temp: 454
+    light.lounge_west_lamp:
+      state: on
+      brightness: 50
+      color_temp: 454
+    light.lounge_overhead: off
+    light.lounge_candles: on
 
 - name: Goodnight
   icon: mdi:sleep
   entities:
     light.hall_lights: off
-    light.kitchen_lights: off
-    light.lounge_lights: off
-    light.lounge_candles: off
     light.bedroom_overhead:
       state: off
     light.bedside_lights:
@@ -64,7 +72,10 @@
       state: on
       brightness: 15
       color_temp: 454
-
+    light.kitchen_lights: off
+    light.lounge_lights: off
+    light.lounge_candles: off
+    
 - name: Christmas
   icon: mdi:pine-tree
   entities:
