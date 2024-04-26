@@ -39,6 +39,17 @@
       entity_id: binary_sensor.entrance_pir_occupancy
       from: "off"
       to: "on"
+    - platform: state
+      entity_id: binary_sensor.hall_pir_occupancy
+      from: "off"
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.entrance_pir_occupancy
+      state: "on"
+    - condition: state
+      entity_id: binary_sensor.hall_pir_occupancy
+      state: "on"
   action:
     - service: light.turn_on
       target:
@@ -54,12 +65,22 @@
       from: "on"
       to: "off"
   action:
-    service: adaptive_lighting.set_manual_control
-    data:
-      entity_id: switch.adaptive_lighting_home
-      manual_control: false
-      lights:
-        - light.entrance_overhead
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: light.hall_overhead
+              state: "off"
+          sequence:
+            - service: light.turn_off
+              target:
+                entity_id: light.entrance_overhead
+      default:
+        - service: adaptive_lighting.set_manual_control
+          data:
+            entity_id: switch.adaptive_lighting_home
+            manual_control: false
+            lights:
+              - light.entrance_overhead
 
 - id: laundry_start_reminder
   alias: Laundry reminder
