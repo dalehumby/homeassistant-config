@@ -747,3 +747,13 @@
     - service: switch.turn_off
       target:
         entity_id: switch.bathroom_towelrail
+
+- id: adaptive_lights_on_action
+  alias: iOS action to turn adaptive lighting on
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: "Auto lights on"
+  action:
+    - service: script.adaptive_lights_on
