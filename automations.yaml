@@ -56,6 +56,7 @@
         entity_id: light.entrance_overhead
       data:
         brightness: 255
+        color_temp: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_mired') }}"
 
 - id: dim_entrance_lights
   alias: "Dim light when leave entrance"
