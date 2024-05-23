@@ -782,3 +782,13 @@
         actionName: "Auto lights on"
   action:
     - service: script.adaptive_lights_on
+
+- id: relax_scene_on_action
+  alias: iOS action to activate relax scene script
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: "Activate relax script"
+  action:
+    - service: script.relax_scene_on
