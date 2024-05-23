@@ -108,7 +108,7 @@
     - service: notify.family
       data:
         title: "Laundry timer started"
-        message: "Reminder in {{ state_attr('timer.laundry','duration') }}"
+        message: "Reminder in {{ state_attr('timer.laundry', 'duration') }}"
     - service: timer.start
       target:
         entity_id: timer.laundry
@@ -713,7 +713,7 @@
   alias: Turn on bathroom towelrail when showering
   trigger:
     - platform: template
-      value_template: "{{  states('sensor.bathroom_air_humidity') | int >= states('sensor.average_humidity') | int + 10 }}"
+      value_template: "{{ states('sensor.bathroom_air_humidity') | int >= states('sensor.average_humidity') | int + 10 }}"
   action:
     - service: switch.turn_on
       target:
