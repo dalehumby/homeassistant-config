@@ -304,6 +304,30 @@
           "{{ states('sensor.greeting') }}. Water has been detected under the dishwasher.
            Please check for leaks... The shutoff valve is on the kitchen sink tap"
 
+- id: bathroom_leak
+  alias: Bathroom leak
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bathroom_leak_water_leak
+      to: "on"
+  action:
+    - service: notify.family
+      data:
+        title: "Bathroom leak"
+        message: "Water detected under the washing machine"
+        data:
+          push:
+            interruption-level: critical
+    - service: tts.google_cloud_say
+      entity_id:
+        - media_player.kitchen_display
+        - media_player.bedroom_speaker
+        - media_player.lounge_speaker
+      data_template:
+        message: >
+          "{{ states('sensor.greeting') }}. Water has been detected in the bathroom under the washing machine.
+           Please check for leaks... The shutoff valve is on the bathroom ceiling, next to the basin."
+
 - id: offline_device_alert
   alias: Offline device alert
   trigger:
