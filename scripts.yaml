@@ -24,8 +24,6 @@ dale_charge_phone:
     - service: scene.turn_on
       target:
         entity_id: scene.goodnight
-      data:
-        transition: 3
 
 easy_wakeup:
   alias: Easy wakeup
@@ -75,12 +73,13 @@ relax_scene_on:
   icon: mdi:glass-cocktail
   mode: single
   sequence:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.relax
+        transition: 3
+    - delay: 3
     - service: adaptive_lighting.set_manual_control
       data:
         manual_control: true
         lights:
           - light.kitchen_lights
-    - service: scene.turn_on
-      data:
-        entity_id: scene.relax
-        transition: 3
