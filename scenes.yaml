@@ -51,10 +51,7 @@
       state: on
       brightness: 50
       color_temp: 454
-    light.lounge_west_lamp:
-      state: on
-      brightness: 50
-      color_temp: 454
+    light.lounge_west_lamp: off
     light.lounge_overhead: off
     light.lounge_candles: on
 
@@ -62,8 +59,7 @@
   icon: mdi:sleep
   entities:
     light.hall_lights: off
-    light.bedroom_overhead:
-      state: off
+    light.bedroom_overhead: off
     light.bedside_lights:
       state: on
       brightness: 3
