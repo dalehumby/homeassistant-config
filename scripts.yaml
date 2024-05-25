@@ -16,6 +16,7 @@ dale_charge_phone:
         state: "home"
       - condition: time
         after: "21:30:00"
+        before: "03:00:00"
       - condition: state
         entity_id: light.bedside_lights
         state: "on"
