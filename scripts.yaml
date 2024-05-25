@@ -53,13 +53,13 @@ easy_wakeup:
 adaptive_lights_on:
   alias: Adaptive lights on
   icon: mdi:theme-light-dark
-  mode: single
   sequence:
     # Remove manual control, then turn on adaptive lighting for all lights
     - service: adaptive_lighting.set_manual_control
       data:
         manual_control: false
         entity_id: switch.adaptive_lighting_home
+    - delay: 1
     - service: adaptive_lighting.apply
       data:
         entity_id: switch.adaptive_lighting_home
