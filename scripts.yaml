@@ -1,7 +1,6 @@
 laundry_timer_start:
   alias: Laundry timer
   icon: mdi:washing-machine
-  mode: restart
   sequence:
     - service: timer.start
       target:
@@ -10,7 +9,6 @@ laundry_timer_start:
 dale_charge_phone:
   alias: Dale charge phone
   icon: mdi:sleep
-  mode: restart
   sequence:
     - condition:
       - condition: state
@@ -28,7 +26,6 @@ dale_charge_phone:
 easy_wakeup:
   alias: Easy wakeup
   icon: mdi:sleep-off
-  mode: restart
   sequence:
     - service: light.turn_on
       data:
@@ -71,7 +68,6 @@ adaptive_lights_on:
 relax_scene_on:
   alias: Activate Relax scene
   icon: mdi:glass-cocktail
-  mode: single
   sequence:
     - service: scene.turn_on
       data:
