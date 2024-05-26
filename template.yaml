@@ -165,3 +165,10 @@
         {{ distance(closest(states.person)) }}
       person: >
         {{ closest(states.person).name }}
+
+  - name: Lounge north couch occupancy
+    # Change the door sensor to occupancy sensor and invert the state (door open = couch unoccupied)
+    device_class: occupancy
+    icon: mdi:sofa
+    state: >
+      {{ is_state('binary_sensor.lounge_north_couch_contact', 'off') }}
