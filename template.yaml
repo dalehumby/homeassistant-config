@@ -1,3 +1,5 @@
+# This is the "newer" way of making sensor or binary_sensor entities
+
 - sensor:
   - name: Greeting
     state: >

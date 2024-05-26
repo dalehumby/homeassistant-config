@@ -161,7 +161,7 @@ light: !include lights.yaml
 mqtt: !include mqtt.yaml
 scene: !include scenes.yaml
 script: !include scripts.yaml
-sensor: !include sensor.yaml
+sensor: !include sensor.yaml  # legacy. Rather use template.yaml
 switch: !include switch.yaml
 template: !include template.yaml
 timer: !include timer.yaml
