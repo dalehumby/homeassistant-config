@@ -6,15 +6,17 @@
 - platform: statistics
   name: Solar radiation average
   entity_id: sensor.wunderground_solar_radiation
-  state_characteristic: average_linear
+  state_characteristic: mean
   max_age:
     minutes: 10
+  keep_last_sample: true
   precision: 0
 
 - platform: statistics
   name: Kitchen illuminance average
-  entity_id: sensor.test_pir_illuminance_lux
-  state_characteristic: average_linear
+  entity_id: sensor.kitchen_ceiling_pir_illuminance_lux
+  state_characteristic: mean
   max_age:
-    minutes: 2
+    minutes: 5
+  keep_last_sample: true
   precision: 0

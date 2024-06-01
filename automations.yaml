@@ -537,15 +537,14 @@
     - condition: state
       entity_id: light.bedside_lights
       state: "off"
+    - condition: numeric_state
+      entity_id: sensor.kitchen_illuminance_average
+      below: input_number.illuminance_min
   action:
     - choose:
         - conditions:
             - condition: time
               after: input_datetime.dale_alarm_time
-              before: "12:00:00"
-            - condition: state
-              entity_id: binary_sensor.workday_sensor
-              state: "on"
           sequence:
             - service: light.turn_on
               data:
@@ -606,12 +605,14 @@
     - condition: state
       entity_id: light.kitchen_overhead
       state: "off"
+    - condition: numeric_state
+      entity_id: sensor.kitchen_illuminance_average
+      below: input_number.illuminance_min
   action:
     - choose:
       - conditions:
           - condition: time
             after: input_datetime.dale_alarm_time
-            before: "09:00:00"
         sequence:
           - service: light.turn_on
             data:
@@ -697,28 +698,41 @@
       data:
         temperature: 21
 
-- id: leave_home_lights_off
-  alias: Turn lights off when leave home
+- id: All_lights_off
+  alias: All lights off
   trigger:
-    - platform: state
+    - platform: numeric_state
       entity_id: zone.home
-      to: "0"
+      below: 1  # Unfortunatley no '== 0' in HA
+    - platform: numeric_state
+      entity_id: sensor.kitchen_illuminance_average
+      above: input_number.illuminance_max
   action:
     - service: light.turn_off
       target:
         entity_id: all
 
-- id: arrive_home_lights_on
-  alias: Turn lights on when arrive home
+- id: All_lights_on
+  alias: All lights on
   trigger:
-    - platform: state
+    - platform: numeric_state
       entity_id: zone.home
-      from: "0"
+      above: 0
+    - platform: numeric_state
+      entity_id: sensor.kitchen_illuminance_average
+      below: input_number.illuminance_min
+  condition:
+    - condition: numeric_state
+      entity_id: zone.home
+      above: 0
+    - condition: numeric_state
+      entity_id: sensor.kitchen_illuminance_average
+      below: input_number.illuminance_min
   action:
     - service: script.adaptive_lights_on
 
 - id: bathroom_light_morning_on
-  alias: Turn bathroom light auto brightness in the morning
+  alias: Bathroom light auto brightness in the morning
   trigger:
     - platform: state
       entity_id: binary_sensor.bathroom_pir_occupancy
@@ -735,7 +749,7 @@
         manual_control: false
 
 - id: bathroom_towelrail_on
-  alias: Turn on bathroom towelrail when showering
+  alias: Bathroom towelrail when showering
   trigger:
     - platform: template
       value_template: "{{ states('sensor.bathroom_air_humidity') | int >= states('sensor.average_humidity') | int + 10 }}"
@@ -760,7 +774,7 @@
         entity_id: timer.bathroom_towelrail
 
 - id: bathroom_towelrail_off
-  alias: Turn off bathroom towelrail when timer expires
+  alias: Bathroom towelrail off when timer expires
   trigger:
     - platform: event
       event_type: 
