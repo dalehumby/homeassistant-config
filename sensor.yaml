@@ -1,4 +1,5 @@
-# For most things template.yaml should be used. 
+# This is for using the "sensor" platorm.
+# Most things should use the Template platform (template.yaml)
 #
 # This is mostly used for statistics (or less often, filter) functions
 # https://www.home-assistant.io/integrations/statistics/
