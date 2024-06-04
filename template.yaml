@@ -172,3 +172,8 @@
     icon: mdi:sofa
     state: >
       {{ is_state('binary_sensor.lounge_north_couch_contact', 'off') }}
+
+  - name: Bathroom shower occupancy
+    device_class: moisture
+    state: >
+      {{ states('sensor.bathroom_air_humidity') | int >= states('sensor.average_humidity') | int + 10 }}

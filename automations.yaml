@@ -731,28 +731,50 @@
   action:
     - service: script.adaptive_lights_on
 
-- id: bathroom_light_morning_on
-  alias: Bathroom light auto brightness in the morning
+- id: bathroom_light_on
+  alias: Bathroom light on
   trigger:
     - platform: state
       entity_id: binary_sensor.bathroom_pir_occupancy
       to: "on"
-  condition:
-    - condition: time
-      after: input_datetime.dale_alarm_time
-      before: "12:00:00"
   action:
-    - service: adaptive_lighting.set_manual_control
+    - service: light.turn_on
+      target:
+        entity_id: light.bathroom_overhead
+
+- id: bathroom_light_off
+  alias: Bathroom light off
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bathroom_pir_occupancy
+      to: "off"
+      for:
+        minutes: 5
+    - platform: state
+      entity_id: binary_sensor.bathroom_shower_occupancy
+      to: "off"
+      for:
+        minutes: 5
+  condition:
+    - condition: state
+      entity_id: binary_sensor.bathroom_pir_occupancy
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.bathroom_shower_occupancy
+      state: "off"
+  action:
+    - service: light.turn_off
+      target:
+        entity_id: light.bathroom_overhead
       data:
-        entity_id: switch.adaptive_lighting_home
-        lights: light.bathroom_overhead
-        manual_control: false
+        transition: 3
 
 - id: bathroom_towelrail_on
   alias: Bathroom towelrail when showering
   trigger:
-    - platform: template
-      value_template: "{{ states('sensor.bathroom_air_humidity') | int >= states('sensor.average_humidity') | int + 10 }}"
+    - platform: state
+      entity_id: binary_sensor.bathroom_shower_occupancy
+      to: "on"
   action:
     - service: switch.turn_on
       target:
