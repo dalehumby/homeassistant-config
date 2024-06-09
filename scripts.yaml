@@ -54,7 +54,22 @@ adaptive_lights_on:
   alias: Adaptive lights on
   icon: mdi:theme-light-dark
   sequence:
-    # Remove manual control, then turn on adaptive lighting for all lights
+    # First adapt the zigbee group with all lights (except wifi lights) to minimise zigbee traffic
+    # Separate brightness from colour because IKEA bulbs can't do smothe transition of both simultaneously
+    - service: light.turn_on
+      target:
+        entity_id: light.adaptive_lighting_home
+      data:
+        brightness_pct: "{{ state_attr('switch.adaptive_lighting_home', 'brightness_pct') }}"
+        transition: 5
+    - delay: 5
+    - service: light.turn_on
+      target:
+        entity_id: light.adaptive_lighting_home
+      data:
+        color_temp: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_mired') }}"
+        transition: 2
+    - delay: 2
     - service: adaptive_lighting.set_manual_control
       data:
         manual_control: false
@@ -64,7 +79,7 @@ adaptive_lights_on:
       data:
         entity_id: switch.adaptive_lighting_home
         turn_on_lights: true
-        transition: 5
+        transition: 5  # Needed for non-zigbee lights
 
 relax_scene_on:
   alias: Activate Relax scene

@@ -172,3 +172,17 @@
     device_class: moisture
     state: >
       {{ states('sensor.bathroom_air_humidity') | int >= states('sensor.average_humidity') | int + 10 }}
+
+  - name: Illuminance bright
+    icon: "mdi:theme-light-dark"
+    state: >
+      {% set lux = states('sensor.kitchen_illuminance_average') | int %}
+      {% set upper = states('input_number.illuminance_upper') | int %}
+      {% set lower = states('input_number.illuminance_lower') | int %}
+      {% if lux >= upper %}
+        on
+      {% elif lux < lower %}
+        off
+      {% else %}
+        {{ this.state }}
+      {% endif %}

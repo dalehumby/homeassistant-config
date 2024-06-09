@@ -537,9 +537,9 @@
     - condition: state
       entity_id: light.bedside_lights
       state: "off"
-    - condition: numeric_state
-      entity_id: sensor.kitchen_illuminance_average
-      below: input_number.illuminance_min
+    - condition: state
+      entity_id: binary_sensor.illuminance_bright
+      state: "off"
   action:
     - choose:
         - conditions:
@@ -610,9 +610,9 @@
     - condition: state
       entity_id: light.kitchen_overhead
       state: "off"
-    - condition: numeric_state
-      entity_id: sensor.kitchen_illuminance_average
-      below: input_number.illuminance_min
+    - condition: state
+      entity_id: binary_sensor.illuminance_bright
+      state: "off"
   action:
     - choose:
       - conditions:
@@ -710,9 +710,9 @@
     - platform: numeric_state
       entity_id: zone.home
       below: 1  # Unfortunatley no '== 0' in HA
-    - platform: numeric_state
-      entity_id: sensor.kitchen_illuminance_average
-      above: input_number.illuminance_max
+    - platform: state
+      entity_id: binary_sensor.illuminance_bright
+      to: "on"
   action:
     - service: light.turn_off
       target:
@@ -724,16 +724,16 @@
     - platform: numeric_state
       entity_id: zone.home
       above: 0
-    - platform: numeric_state
-      entity_id: sensor.kitchen_illuminance_average
-      below: input_number.illuminance_min
+    - platform: state
+      entity_id: binary_sensor.illuminance_bright
+      to: "off"
   condition:
     - condition: numeric_state
       entity_id: zone.home
       above: 0
-    - condition: numeric_state
-      entity_id: sensor.kitchen_illuminance_average
-      below: input_number.illuminance_min
+    - condition: state
+      entity_id: binary_sensor.illuminance_bright
+      state: "off"
   action:
     - service: script.adaptive_lights_on
 

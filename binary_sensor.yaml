@@ -1,0 +1,6 @@
+# This is for using the "binary sensor" platorm.
+# Most things should use the Template platform (template.yaml)
+#
+# This is mostly used for trend, threshold sensors
+# https://www.home-assistant.io/integrations/statistics/
+# https://community.home-assistant.io/t/threshold-helper-right-upper-lower-and-hysteresis-bounds/633962/2

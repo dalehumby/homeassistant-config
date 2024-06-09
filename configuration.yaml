@@ -72,28 +72,14 @@ input_datetime:
     has_time: true
 
 input_number:
-  rssi_present:
-    name: RSSI present threshold
-    initial: -77
-    min: -100
-    max: -40
-    step: 1
-    unit_of_measurement: dBm
-  rssi_not_present:
-    name: RSSI not-present threshold
-    initial: -90
-    min: -100
-    max: -40
-    step: 1
-    unit_of_measurement: dBm
-  illuminance_min:
-    name: Illuminance min threshold
+  illuminance_lower:
+    name: Illuminance lower
     min: 0
     max: 200
     step: 1
     unit_of_measurement: lx
-  illuminance_max:
-    name: Illuminance max threshold
+  illuminance_upper:
+    name: Illuminance upper
     min: 0
     max: 200
     step: 1
@@ -168,6 +154,7 @@ logger:
     custom_components.xiaomi_cloud_map_extractor: debug
 
 automation: !include automations.yaml
+binary_sensor: !include binary_sensor.yaml  # legacy. Rather use template.yaml
 climate: !include climate.yaml
 light: !include lights.yaml
 mqtt: !include mqtt.yaml
