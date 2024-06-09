@@ -23,6 +23,7 @@
   name: Kitchen lights
   entities:
     - light.kitchen_overhead
+    - light.kitchen_counter
     - light.diningroom_overhead
 
 - platform: group
