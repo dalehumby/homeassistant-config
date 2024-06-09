@@ -592,6 +592,75 @@
       target:
         entity_id: light.bedroom_floor
 
+- id: bedroom_bedside_light_switch
+  alias: Bedroom bedside light switch
+  trigger:
+    - platform: state
+      entity_id: sensor.bedside_dale_switch_action
+      to: "single_left"
+      id: single_left
+    - platform: state
+      entity_id: sensor.bedside_dale_switch_action
+      to: "double_left"
+      id: double_left
+    - platform: state
+      entity_id: sensor.bedside_dale_switch_action
+      to: "single_right"
+      id: single_right
+    - platform: state
+      entity_id: sensor.bedside_dale_switch_action
+      to: "double_right"
+      id: double_right
+    - platform: state
+      entity_id: sensor.bedside_dale_switch_action
+      to: "single_both"
+      id: single_both
+  action:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: single_left
+          sequence:
+            - service: light.toggle
+              target:
+                entity_id: light.bedroom_overhead
+        - conditions:
+            - condition: trigger
+              id: single_right
+          sequence:
+            - service: light.toggle
+              target:
+                entity_id: light.bedside_lights
+        - conditions:
+            - condition: trigger
+              id: double_left
+          sequence:
+            - service: light.toggle
+              target:
+                entity_id: light.bedside_dale
+        - conditions:
+            - condition: trigger
+              id: double_right
+          sequence:
+            - service: light.toggle
+              target:
+                entity_id: light.bedside_mark
+        - conditions:
+            - condition: trigger
+              id: single_both
+          sequence:
+            - service: light.turn_off
+              target:
+                entity_id: light.bedroom_overhead
+            - service: light.turn_on
+              target:
+                entity_id: light.bedside_lights
+              data:
+                rgb_color:
+                  - 255
+                  - 112
+                  - 86
+
 - id: easy_wakeup
   alias: Easy wakeup
   trigger:
