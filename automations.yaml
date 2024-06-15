@@ -581,9 +581,18 @@
     - platform: state
       entity_id: binary_sensor.bedroom_pir_occupancy
       to: "off"
+    - platform: state
+      entity_id: binary_sensor.bedroom_cupboard_pir_occupancy
+      to: "off"
   condition:
     - condition: state
       entity_id: light.bedside_lights
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.bedroom_cupboard_pir_occupancy
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.bedroom_pir_occupancy
       state: "off"
   action:
     - service: light.turn_off
