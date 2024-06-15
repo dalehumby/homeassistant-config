@@ -639,7 +639,9 @@
           sequence:
             - service: light.toggle
               target:
-                entity_id: light.bedside_lights
+                entity_id:
+                  - light.bedside_lights
+                  - light.bedroom_floor
         - conditions:
             - condition: trigger
               id: double_left
