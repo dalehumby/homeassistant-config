@@ -12,7 +12,7 @@
           delay_secs: 0.4
           hold_secs: 0
           device: candle
-          command: 
+          command:
             - power_on
             - flicker_slow
             - timer_6h

@@ -1,0 +1,10 @@
+# Configuration file for yamllint
+
+extends: default
+
+rules:
+  line-length:
+    max: 120
+  document-start: disable
+  truthy:
+    allowed-values: ['true', 'false', 'on', 'off']

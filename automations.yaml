@@ -333,14 +333,14 @@
   trigger:
     - platform: state
       entity_id:
-          - binary_sensor.dishwasher_leak_water_leak
-          - binary_sensor.entrance_pir_occupancy
-          - binary_sensor.kitchen_pir_occupancy
-          - binary_sensor.kitchen_window_contact
-          - binary_sensor.balcony_door_contact
-          - binary_sensor.bedroom_door_pir_occupancy
-          - binary_sensor.storeroom_pir_occupancy
-          - light.bedroom_floor
+        - binary_sensor.dishwasher_leak_water_leak
+        - binary_sensor.entrance_pir_occupancy
+        - binary_sensor.kitchen_pir_occupancy
+        - binary_sensor.kitchen_window_contact
+        - binary_sensor.balcony_door_contact
+        - binary_sensor.bedroom_door_pir_occupancy
+        - binary_sensor.storeroom_pir_occupancy
+        - light.bedroom_floor
       to: unavailable
   mode: parallel
   action:
@@ -435,9 +435,9 @@
         x_coord: '27500'
         y_coord: '29500'
     - wait_for_trigger:
-      - platform: state
-        entity_id: vacuum.vader
-        to: "idle"
+        - platform: state
+          entity_id: vacuum.vader
+          to: "idle"
     - service: vacuum.locate
       target:
         entity_id: vacuum.vader
@@ -486,7 +486,7 @@
   action:
     - service: light.turn_on
       target:
-        entity_id: 
+        entity_id:
           - light.lounge_lights
           - light.hall_lights
       data:
@@ -703,16 +703,16 @@
       state: "off"
   action:
     - choose:
-      - conditions:
-          - condition: time
-            after: input_datetime.dale_alarm_time
-            before: "12:00:00"
-        sequence:
-          - service: light.turn_on
-            data:
-              transition: 3
-            target:
-              entity_id: light.kitchen_lights
+        - conditions:
+            - condition: time
+              after: input_datetime.dale_alarm_time
+              before: "12:00:00"
+          sequence:
+            - service: light.turn_on
+              data:
+                transition: 3
+              target:
+                entity_id: light.kitchen_lights
       default:
         - service: light.turn_on
           data:
@@ -893,7 +893,7 @@
   alias: Bathroom towelrail off when timer expires
   trigger:
     - platform: event
-      event_type: 
+      event_type:
         - timer.finished
         - timer.cancelled
       event_data:

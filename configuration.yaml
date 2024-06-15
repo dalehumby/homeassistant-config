@@ -10,7 +10,7 @@ homeassistant:
   internal_url: !secret internal_url
   external_url: !secret external_url
   auth_providers:
-  - type: homeassistant
+    - type: homeassistant
   customize: !include customize.yaml
 
 http:
@@ -121,7 +121,7 @@ google_assistant:
 
 homekit:
 
-media_source: 
+media_source:
 
 media_player:
 

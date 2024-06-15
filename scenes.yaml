@@ -72,7 +72,7 @@
     light.kitchen_lights: off
     light.lounge_lights: off
     light.lounge_candles: off
-    
+
 - name: Christmas
   icon: mdi:pine-tree
   entities:
