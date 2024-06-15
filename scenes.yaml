@@ -56,6 +56,19 @@
     light.lounge_overhead: off
     light.lounge_candles: on
 
+- name: Bedroom winddown
+  icon: mdi:bed
+  entities:
+    light.bedroom_overhead: off
+    light.bedside_lights:
+      state: on
+      brightness: 3
+      rgb_color: [255, 112, 86]
+    light.bedroom_floor:
+      state: on
+      brightness: 3
+      rgb_color: [255, 112, 86]
+
 - name: Goodnight
   icon: mdi:sleep
   entities:
