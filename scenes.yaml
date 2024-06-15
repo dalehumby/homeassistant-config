@@ -46,6 +46,7 @@
       color_temp: 454
     light.kitchen_overhead_5: off
     light.kitchen_overhead_6: off
+    light.kitchen_counter: off
     light.diningroom_overhead: off
     light.lounge_tree:
       state: on
