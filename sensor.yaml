@@ -21,3 +21,21 @@
     minutes: 5
   keep_last_sample: true
   precision: 0
+
+- platform: min_max
+  name: Average temperature
+  type: mean
+  round_digits: 1
+  entity_ids:
+    - sensor.bedroom_air_temperature
+    - sensor.lounge_air_temperature
+    - sensor.study_air_temperature
+
+- platform: min_max
+  name: Average humidity
+  type: mean
+  round_digits: 1
+  entity_ids:
+    - sensor.bedroom_air_humidity
+    - sensor.lounge_air_humidity
+    - sensor.study_air_humidity
