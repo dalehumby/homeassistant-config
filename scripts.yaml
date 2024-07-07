@@ -95,3 +95,15 @@ relax_scene_on:
         manual_control: true
         lights:
           - light.kitchen_lights
+
+study_adaptive_lights_on:
+  alias: Study adaptive lights on
+  icon: mdi:theme-light-dark
+  sequence:
+    service: adaptive_lighting.apply
+    data:
+      entity_id: switch.adaptive_lighting_home
+      lights:
+        - light.study_lights
+      turn_on_lights: true
+      transition: 3

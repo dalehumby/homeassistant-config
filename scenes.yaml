@@ -56,19 +56,6 @@
     light.lounge_overhead: off
     light.lounge_candles: on
 
-- name: Bedroom winddown
-  icon: mdi:bed
-  entities:
-    light.bedroom_overhead: off
-    light.bedside_lights:
-      state: on
-      brightness: 3
-      rgb_color: [255, 112, 86]
-    light.bedroom_floor:
-      state: on
-      brightness: 3
-      rgb_color: [255, 112, 86]
-
 - name: Goodnight
   icon: mdi:sleep
   entities:
@@ -85,6 +72,42 @@
     light.kitchen_lights: off
     light.lounge_lights: off
     light.lounge_candles: off
+
+- name: Bedroom winddown
+  icon: mdi:bed
+  entities:
+    light.bedroom_overhead: off
+    light.bedside_lights:
+      state: on
+      brightness: 3
+      rgb_color: [255, 112, 86]
+    light.bedroom_floor:
+      state: on
+      brightness: 3
+      rgb_color: [255, 112, 86]
+
+- name: Study sleep
+  icon: mdi:sleep
+  entities:
+    light.study_overhead: off
+    light.study_bedside: off
+    light.study_dale_desk:
+      state: on
+      brightness: 3
+      color_temp: 454
+
+- name: Study lights off
+  icon: mdi:lightbulb-group-off
+  entities:
+    light.study_lights: off
+
+- name: Study lights bight
+  icon: mdi:lightbulb-group
+  entities:
+    light.study_lights:
+      state: on
+      brightness: 255
+      color_temp: 370
 
 - name: Christmas
   icon: mdi:pine-tree
