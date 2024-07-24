@@ -85,12 +85,13 @@
       state: on
       brightness: 3
       rgb_color: [255, 112, 86]
+    light.hall_lights: off
 
 - name: Study sleep
   icon: mdi:sleep
   entities:
     light.study_overhead: off
-    light.study_bedside: off
+    light.study_bedside_lamp: off
     light.study_dale_desk:
       state: on
       brightness: 3
