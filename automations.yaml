@@ -521,8 +521,10 @@
       entity_id: binary_sensor.hall_pir_occupancy
       state: "on"
   action:
-    - service: "light.turn_on"
+    - service: light.turn_on
       data:
+        color_temp: 250
+        brightness: 255
         transition: 1
       target:
         entity_id: light.storeroom_overhead
@@ -531,7 +533,7 @@
           entity_id: binary_sensor.storeroom_pir_occupancy
           to: "off"
           for: "00:01:00"
-    - service: "light.turn_off"
+    - service: light.turn_off
       data:
         transition: 1
       target:
