@@ -27,22 +27,25 @@
 - name: Relax
   icon: mdi:glass-cocktail
   entities:
-    light.entrance_overhead: off
+    light.entrance_overhead:
+      state: on
+      brightness: 77
+      color_temp: 454
+    light.bedroom_lights: off
     light.hall_overhead: off
-    light.entrance_table_lamp:
+    light.kitchen_window:
       state: on
       brightness: 50
       color_temp: 454
-    light.bedroom_lights: off
     light.kitchen_overhead_1:
       state: on
-      brightness: 50
+      brightness: 2
       color_temp: 454
     light.kitchen_overhead_2: off
     light.kitchen_overhead_3: off
     light.kitchen_overhead_4:
       state: on
-      brightness: 50
+      brightness: 2
       color_temp: 454
     light.kitchen_overhead_5: off
     light.kitchen_overhead_6: off
@@ -51,9 +54,12 @@
     light.lounge_tree:
       state: on
       brightness: 50
-      color_temp: 454
-    light.lounge_west_lamp: off
-    light.lounge_overhead: off
+      color_temp: 500
+    light.lounge_window: off
+    light.lounge_overhead:
+      state: on
+      brightness: 50
+      rgb_color: [255, 160, 50]
     light.lounge_candles: on
 
 - name: Goodnight
