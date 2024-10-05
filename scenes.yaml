@@ -60,6 +60,11 @@
       state: on
       brightness: 50
       rgb_color: [255, 160, 50]
+    light.lounge_tv_cabinet:
+      state: on
+      brightness: 10
+      rgb_color: [255, 160, 50]
+      effect: Candle Multi
     light.lounge_candles: on
 
 - name: Goodnight
@@ -77,6 +82,7 @@
       rgb_color: [255, 112, 86]
     light.kitchen_lights: off
     light.lounge_lights: off
+    light.lounge_tv_cabinet: off
     light.lounge_candles: off
 
 - name: Bedroom winddown

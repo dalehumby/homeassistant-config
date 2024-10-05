@@ -2,7 +2,6 @@
   name: Hall lights
   entities:
     - light.entrance_overhead
-    - light.entrance_table_lamp
     - light.hall_overhead
 
 - platform: group
@@ -24,6 +23,7 @@
   entities:
     - light.kitchen_overhead
     - light.kitchen_counter
+    - light.kitchen_window
     - light.diningroom_overhead
 
 - platform: group
@@ -31,7 +31,7 @@
   entities:
     - light.lounge_tree
     - light.lounge_overhead
-    - light.lounge_west_lamp
+    - light.lounge_window
 
 - platform: switch
   name: Lounge candles
