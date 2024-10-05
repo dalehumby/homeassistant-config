@@ -573,7 +573,7 @@
         - service: light.turn_on
           data:
             color_name: red
-            brightness: 26
+            brightness: 50
           target:
             entity_id: light.bedroom_floor
 
@@ -796,6 +796,7 @@
       below: 1  # Unfortunatley no '== 0' in HA
     - platform: state
       entity_id: binary_sensor.illuminance_bright
+      from: "off"
       to: "on"
   action:
     - service: light.turn_off
@@ -810,6 +811,7 @@
       above: 0
     - platform: state
       entity_id: binary_sensor.illuminance_bright
+      from: "on"
       to: "off"
   condition:
     - condition: numeric_state
@@ -828,9 +830,21 @@
       entity_id: binary_sensor.bathroom_pir_occupancy
       to: "on"
   action:
-    - service: light.turn_on
-      target:
-        entity_id: light.bathroom_overhead
+    - choose:
+        - conditions:
+            - condition: time
+              after: "00:00:00"
+              before: input_datetime.dale_alarm_time
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id: light.bathroom_overhead
+              data:
+                brightness: 13
+      default:
+        - service: light.turn_on
+          target:
+            entity_id: light.bathroom_overhead
 
 - id: bathroom_light_off
   alias: Bathroom light off
