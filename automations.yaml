@@ -1,57 +1,57 @@
 - id: arrive_home
   alias: "Arrive Home"
-  trigger:
-    - platform: zone
+  triggers:
+    - trigger: zone
       entity_id: person.dale
       zone: zone.home
       event: enter
-  action:
-    service: notify.mobile_app_dales_iphone
-    data:
-      message: "Welcome home"
+  actions:
+    - action: notify.mobile_app_dales_iphone
+      data:
+        message: "Welcome home"
 
 - id: internet_down
   alias: "Internet down"
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.internet
       to: "off"
-  action:
-    service: notify.mobile_app_dales_iphone
-    data:
-      message: "Internet is down"
+  actions:
+    - action: notify.mobile_app_dales_iphone
+      data:
+        message: "Internet is down"
 
 - id: internet_up
   alias: "Internet up"
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.internet
       to: "on"
-  action:
-    service: notify.mobile_app_dales_iphone
-    data:
-      message: "Internet is up"
+  actions:
+    - action: notify.mobile_app_dales_iphone
+      data:
+        message: "Internet is up"
 
 - id: brighten_entrance_lights
   alias: "Turn on light when in entrance"
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.entrance_pir_occupancy
       from: "off"
       to: "on"
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.hall_pir_occupancy
       from: "off"
       to: "on"
-  condition:
+  conditions:
     - condition: state
       entity_id: binary_sensor.entrance_pir_occupancy
       state: "on"
     - condition: state
       entity_id: binary_sensor.hall_pir_occupancy
       state: "on"
-  action:
-    - service: light.turn_on
+  actions:
+    - action: light.turn_on
       target:
         entity_id: light.entrance_overhead
       data:
@@ -60,23 +60,23 @@
 
 - id: dim_entrance_lights
   alias: "Dim light when leave entrance"
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.entrance_pir_occupancy
       from: "on"
       to: "off"
-  action:
+  actions:
     - choose:
         - conditions:
             - condition: state
               entity_id: light.hall_overhead
               state: "off"
           sequence:
-            - service: light.turn_off
+            - action: light.turn_off
               target:
                 entity_id: light.entrance_overhead
       default:
-        - service: adaptive_lighting.set_manual_control
+        - action: adaptive_lighting.set_manual_control
           data:
             entity_id: switch.adaptive_lighting_home
             manual_control: false
@@ -85,14 +85,14 @@
 
 - id: laundry_start_reminder
   alias: Laundry reminder
-  trigger:
-    - platform: time
+  triggers:
+    - trigger: time
       at: input_datetime.laundry_reminder
-  action:
-    - service: notify.family
+  actions:
+    - action: notify.family
       data:
         message: "Don't forget your laundry booking"
-    - service: tts.google_cloud_say
+    - action: tts.google_cloud_say
       entity_id:
         - media_player.kitchen_display
         - media_player.bedroom_speaker
@@ -102,30 +102,30 @@
 
 - id: laundry_start
   alias: Laundry timer started
-  trigger:
-    - platform: tag
+  triggers:
+    - trigger: tag
       tag_id: f0a4261e-287b-481d-a93f-1bb33b2de291
-  action:
-    - service: notify.family
+  actions:
+    - action: notify.family
       data:
         title: "Laundry timer started"
         message: "Reminder in {{ state_attr('timer.laundry', 'duration') }}"
-    - service: timer.start
+    - action: timer.start
       target:
         entity_id: timer.laundry
 
 - id: laundry_done_reminder
   alias: Laundry is done
-  trigger:
-    - platform: event
+  triggers:
+    - trigger: event
       event_type: timer.finished
       event_data:
         entity_id: timer.laundry
-  action:
-    - service: notify.family
+  actions:
+    - action: notify.family
       data:
         message: "Laundry done"
-    - service: tts.google_cloud_say
+    - action: tts.google_cloud_say
       entity_id:
         - media_player.kitchen_display
         - media_player.bedroom_speaker
@@ -135,13 +135,13 @@
 
 - id: rainfall_alert_morning
   alias: Rainfall on the way to work
-  trigger:
-    - platform: numeric_state
+  triggers:
+    - trigger: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
-    - platform: time
+    - trigger: time
       at: "08:15:00"
-  condition:
+  conditions:
     - condition: state
       entity_id: binary_sensor.workday_sensor
       state: "on"
@@ -154,23 +154,23 @@
     - condition: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
-  action:
-    service: notify.mobile_app_dales_iphone
-    data:
-      title: "Rainfall"
-      message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
+  actions:
+    - action: notify.mobile_app_dales_iphone
+      data:
+        title: "Rainfall"
+        message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
 - id: rainfall_alert_afternoon
   alias: Rainfall on the way home
-  trigger:
-    - platform: time
+  triggers:
+    - trigger: time
       at: "17:00:00"
-    - platform: time
+    - trigger: time
       at: "11:55:00"
-    - platform: numeric_state
+    - trigger: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
-  condition:
+  conditions:
     - condition: zone
       entity_id: person.dale
       zone: zone.work
@@ -183,19 +183,19 @@
     - condition: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
-  action:
-    service: notify.mobile_app_dales_iphone
-    data:
-      title: "Rainfall"
-      message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
+  actions:
+    - action: notify.mobile_app_dales_iphone
+      data:
+        title: "Rainfall"
+        message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
 - id: rainfall_alert_away
   alias: Rain alert while outdoors
-  trigger:
-    - platform: numeric_state
+  triggers:
+    - trigger: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
-  condition:
+  conditions:
     - condition: state
       entity_id: person.dale
       state: "not_home"
@@ -203,25 +203,25 @@
         - condition: state
           entity_id: sensor.dales_iphone_connection_type
           state: "Wi-Fi"
-  action:
-    service: notify.mobile_app_dales_iphone
-    data:
-      title: "Rainfall alert"
-      message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
+  actions:
+    - action: notify.mobile_app_dales_iphone
+      data:
+        title: "Rainfall alert"
+        message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
 - id: rainfall_alert_frontdoor
   alias: Rain alert at front door
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.entrance_pir_occupancy
       from: "off"
       to: "on"
-  condition:
+  conditions:
     - condition: numeric_state
       entity_id: sensor.precipitation_next_hour
       above: 0
-  action:
-    - service: light.turn_on
+  actions:
+    - action: light.turn_on
       data:
         effect: okay
       target:
@@ -229,72 +229,72 @@
 
 - id: lunch_reminer_on
   alias: Turn on lunch reminder
-  trigger:
-    - platform: tag
+  triggers:
+    - trigger: tag
       tag_id: 9c666023-7e07-491d-be90-c8be0d53b3b5
-  condition:
+  conditions:
     - condition: time
       after: "18:00:00"
-  action:
-    - service: automation.turn_on
+  actions:
+    - action: automation.turn_on
       target:
         entity_id: automation.lunch_reminder
-    - service: tts.google_cloud_say
+    - action: tts.google_cloud_say
       entity_id: media_player.kitchen_display
       data_template:
         message: "Okay, I'll remind you about your lunch tomorrom morning."
 
 - id: lunch_reminer_off
   alias: Turn off lunch reminder
-  trigger:
-    - platform: tag
+  triggers:
+    - trigger: tag
       tag_id: 9c666023-7e07-491d-be90-c8be0d53b3b5
-  condition:
+  conditions:
     - condition: time
       before: "10:00:00"
-  action:
-    - service: automation.turn_off
+  actions:
+    - action: automation.turn_off
       target:
         entity_id: automation.lunch_reminder
 
 - id: lunch_reminder
   alias: Lunch reminder
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.entrance_pir_occupancy
       from: "off"
       to: "on"
-  condition:
+  conditions:
     - condition: time
       before: "10:00:00"
-  action:
-    - service: light.turn_on
+  actions:
+    - action: light.turn_on
       data:
         effect: okay
       target:
         entity_id: light.entrance_table_lamp
-    - service: notify.mobile_app_dales_iphone
+    - action: notify.mobile_app_dales_iphone
       data:
         message: "Remember your lunch"
-    - service: automation.turn_off
+    - action: automation.turn_off
       target:
         entity_id: automation.lunch_reminder
 
 - id: dishwasher_leak
   alias: Dishwasher leak
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.dishwasher_leak_water_leak
       to: "on"
-  action:
-    - service: notify.family
+  actions:
+    - action: notify.family
       data:
         title: "Dishwasher leak"
         message: "Water detected under the dishwasher"
         data:
           push:
             interruption-level: critical
-    - service: tts.google_cloud_say
+    - action: tts.google_cloud_say
       entity_id:
         - media_player.kitchen_display
         - media_player.bedroom_speaker
@@ -306,19 +306,19 @@
 
 - id: bathroom_leak
   alias: Bathroom leak
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.bathroom_leak_water_leak
       to: "on"
-  action:
-    - service: notify.family
+  actions:
+    - action: notify.family
       data:
         title: "Bathroom leak"
         message: "Water detected under the washing machine"
         data:
           push:
             interruption-level: critical
-    - service: tts.google_cloud_say
+    - action: tts.google_cloud_say
       entity_id:
         - media_player.kitchen_display
         - media_player.bedroom_speaker
@@ -330,8 +330,8 @@
 
 - id: offline_device_alert
   alias: Offline device alert
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id:
         - binary_sensor.dishwasher_leak_water_leak
         - binary_sensor.entrance_pir_occupancy
@@ -343,21 +343,21 @@
         - light.bedroom_floor
       to: unavailable
   mode: parallel
-  action:
-    - service: notify.mobile_app_dales_iphone
+  actions:
+    - action: notify.mobile_app_dales_iphone
       data:
         title: Device offline
         message: "{{ trigger.to_state.attributes.friendly_name }}"
 
 - id: start_robot_vacuum
   alias: Start robot vacuum
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: zone.home
       to: "0"
-    - platform: time
+    - trigger: time
       at: "11:00:00"
-  condition:
+  conditions:
     - condition: state
       entity_id: input_boolean.run_vacuum_today
       state: "on"
@@ -368,26 +368,26 @@
       after: "09:00:00"
     - condition: time
       before: "20:00:00"
-  action:
-    - service: vacuum.start
+  actions:
+    - action: vacuum.start
       target:
         entity_id: vacuum.vader
 
 - id: start_robot_vacuum_weekday
   alias: Start robot vacuum limited
   description: "Limited weekday cleanup: Entrance, kitchen, bedroom"
-  trigger:
-    - platform: time
+  triggers:
+    - trigger: time
       at: "17:00:00"
-  condition:
+  conditions:
     - condition: state
       entity_id: input_boolean.run_vacuum_today
       state: "on"
     - condition: state
       entity_id: binary_sensor.workday_sensor
       state: "on"
-  action:
-    - service: xiaomi_miio.vacuum_clean_segment
+  actions:
+    - action: xiaomi_miio.vacuum_clean_segment
       data:
         segments: [20, 16, 17]
       target:
@@ -395,96 +395,96 @@
 
 - id: run_vacuum_max_once_per_day
   alias: Run vacuum max once per day
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: vacuum.vader
       to: "cleaning"
-  action:
-    - service: input_boolean.turn_off
+  actions:
+    - action: input_boolean.turn_off
       target:
         entity_id: input_boolean.run_vacuum_today
 
 - id: reset_run_vacuum_today
   alias: Reset run vacuum today
-  trigger:
-    - platform: time
+  triggers:
+    - trigger: time
       at: "03:00:00"
-  action:
-    - service: input_boolean.turn_on
+  actions:
+    - action: input_boolean.turn_on
       target:
         entity_id: input_boolean.run_vacuum_today
 
 - id: vacuum_finished_cleaning
   alias: Vacuum finished cleaning
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: vacuum.vader
       from: "cleaning"
       to: "returning"
-  action:
-    - service: counter.decrement
+  actions:
+    - action: counter.decrement
       target:
         entity_id: counter.empty_vacuum_bin
     - condition: numeric_state
       entity_id: counter.empty_vacuum_bin
       below: 1
-    - service: xiaomi_miio.vacuum_goto
+    - action: xiaomi_miio.vacuum_goto
       target:
         entity_id: vacuum.vader
       data:
         x_coord: '27500'
         y_coord: '29500'
     - wait_for_trigger:
-        - platform: state
+        - trigger: state
           entity_id: vacuum.vader
           to: "idle"
-    - service: vacuum.locate
+    - action: vacuum.locate
       target:
         entity_id: vacuum.vader
 
 - id: vacuum_water_box_in
   alias: Vacuum water box reattached
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.vader_water_box_attached
       from: "off"
       to: "on"
-  action:
-    - service: counter.reset
+  actions:
+    - action: counter.reset
       target:
         entity_id: counter.empty_vacuum_bin
 
 - id: lounge_styrbar_down
   alias: Lounge Styrbar brightness down
-  trigger:
-    - platform: mqtt
+  triggers:
+    - trigger: mqtt
       topic: zigbee2mqtt/Lounge button/action
       payload: "off"
-  action:
-    - service: light.turn_off
+  actions:
+    - action: light.turn_off
       target:
         entity_id:
           - light.lounge_lights
-    - service: light.turn_on
+    - action: light.turn_on
       target:
         entity_id:
           - light.entrance_table_lamp
       data:
         brightness: 26
     - delay: 30
-    - service: light.turn_off
+    - action: light.turn_off
       target:
         entity_id:
           - light.entrance_table_lamp
 
 - id: lounge_styrbar_down_hold
   alias: Lounge Styrbar brightness down hold
-  trigger:
-    - platform: mqtt
+  triggers:
+    - trigger: mqtt
       topic: zigbee2mqtt/Lounge button/action
       payload: "brightness_move_down"
-  action:
-    - service: light.turn_on
+  actions:
+    - action: light.turn_on
       target:
         entity_id:
           - light.lounge_lights
@@ -496,15 +496,15 @@
 
 - id: lounge_styrbar_up
   alias: Lounge Styrbar brightness up
-  trigger:
-    - platform: mqtt
+  triggers:
+    - trigger: mqtt
       topic: zigbee2mqtt/Lounge button/action
       payload: "on"
-    - platform: mqtt
+    - trigger: mqtt
       topic: zigbee2mqtt/Lounge button/action
       payload: "brightness_move_up"
-  action:
-    - service: light.turn_on
+  actions:
+    - action: light.turn_on
       target:
         entity_id: light.lounge_lights
       data:
@@ -512,16 +512,16 @@
 
 - id: storeroom_light
   alias: Storeroom light
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.storeroom_pir_occupancy
       to: "on"
-  condition:
+  conditions:
     - condition: state
       entity_id: binary_sensor.hall_pir_occupancy
       state: "on"
-  action:
-    - service: light.turn_on
+  actions:
+    - action: light.turn_on
       data:
         color_temp: 250
         brightness: 255
@@ -529,11 +529,11 @@
       target:
         entity_id: light.storeroom_overhead
     - wait_for_trigger:
-        - platform: state
+        - trigger: state
           entity_id: binary_sensor.storeroom_pir_occupancy
           to: "off"
           for: "00:01:00"
-    - service: light.turn_off
+    - action: light.turn_off
       data:
         transition: 1
       target:
@@ -541,18 +541,18 @@
 
 - id: bedroom_floor_lighting_on
   alias: Bedroom floor night lighting on
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.bedroom_pir_occupancy
       to: "on"
-  condition:
+  conditions:
     - condition: state
       entity_id: light.bedside_lights
       state: "off"
     - condition: state
       entity_id: binary_sensor.illuminance_bright
       state: "off"
-  action:
+  actions:
     - choose:
         - conditions:
             - condition: time
@@ -562,7 +562,7 @@
               entity_id: binary_sensor.workday_sensor
               state: "on"
           sequence:
-            - service: light.turn_on
+            - action: light.turn_on
               data:
                 color_temp: 370
                 brightness: 255
@@ -570,7 +570,7 @@
               target:
                 entity_id: light.bedroom_floor
       default:
-        - service: light.turn_on
+        - action: light.turn_on
           data:
             color_name: red
             brightness: 50
@@ -579,14 +579,14 @@
 
 - id: bedroom_floor_lighting_off
   alias: Bedroom floor night lighting off
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.bedroom_pir_occupancy
       to: "off"
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.bedroom_cupboard_pir_occupancy
       to: "off"
-  condition:
+  conditions:
     - condition: state
       entity_id: light.bedside_lights
       state: "off"
@@ -596,8 +596,8 @@
     - condition: state
       entity_id: binary_sensor.bedroom_pir_occupancy
       state: "off"
-  action:
-    - service: light.turn_off
+  actions:
+    - action: light.turn_off
       data:
         transition: 3
       target:
@@ -605,41 +605,41 @@
 
 - id: bedroom_bedside_light_switch
   alias: Bedroom bedside light switch
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: sensor.bedside_dale_switch_action
       to: "single_left"
       id: single_left
-    - platform: state
+    - trigger: state
       entity_id: sensor.bedside_dale_switch_action
       to: "double_left"
       id: double_left
-    - platform: state
+    - trigger: state
       entity_id: sensor.bedside_dale_switch_action
       to: "single_right"
       id: single_right
-    - platform: state
+    - trigger: state
       entity_id: sensor.bedside_dale_switch_action
       to: "double_right"
       id: double_right
-    - platform: state
+    - trigger: state
       entity_id: sensor.bedside_dale_switch_action
       to: "single_both"
       id: single_both
-  action:
+  actions:
     - choose:
         - conditions:
             - condition: trigger
               id: single_left
           sequence:
-            - service: light.toggle
+            - action: light.toggle
               target:
                 entity_id: light.bedroom_overhead
         - conditions:
             - condition: trigger
               id: single_right
           sequence:
-            - service: light.toggle
+            - action: light.toggle
               target:
                 entity_id:
                   - light.bedside_lights
@@ -648,30 +648,30 @@
             - condition: trigger
               id: double_left
           sequence:
-            - service: light.toggle
+            - action: light.toggle
               target:
                 entity_id: light.bedside_dale
         - conditions:
             - condition: trigger
               id: double_right
           sequence:
-            - service: light.toggle
+            - action: light.toggle
               target:
                 entity_id: light.bedside_mark
         - conditions:
             - condition: trigger
               id: single_both
           sequence:
-            - service: scene.turn_on
+            - action: scene.turn_on
               target:
                 entity_id: scene.bedroom_winddown
 
 - id: easy_wakeup
   alias: Easy wakeup
-  trigger:
-    - platform: template
+  triggers:
+    - trigger: template
       value_template: "{{ (state_attr('input_datetime.dale_alarm_time', 'timestamp') - 600) | timestamp_custom('%H:%M', False) == states('sensor.time') }}"
-  condition:
+  conditions:
     - condition: state
       entity_id: binary_sensor.vacation
       state: "off"
@@ -681,36 +681,36 @@
     - condition: state
       entity_id: input_boolean.dale_alarm_enable
       state: "on"
-  action:
-    - service: script.easy_wakeup
+  actions:
+    - action: script.easy_wakeup
 
 - id: kitchen_nightlight_on
   alias: Kitchen night lighting on
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.kitchen_pir_occupancy
       to: "on"
-  condition:
+  conditions:
     - condition: state
       entity_id: light.kitchen_overhead
       state: "off"
     - condition: state
       entity_id: binary_sensor.illuminance_bright
       state: "off"
-  action:
+  actions:
     - choose:
         - conditions:
             - condition: time
               after: input_datetime.dale_alarm_time
               before: "12:00:00"
           sequence:
-            - service: light.turn_on
+            - action: light.turn_on
               data:
                 transition: 3
               target:
                 entity_id: light.kitchen_lights
       default:
-        - service: light.turn_on
+        - action: light.turn_on
           data:
             brightness: 50
           target:
@@ -718,19 +718,19 @@
 
 - id: kitchen_nightlight_off
   alias: Kitchen night lighting off
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.kitchen_pir_occupancy
       to: "off"
-  condition:
+  conditions:
     - condition: state
       entity_id: light.kitchen_overhead_1
       state: "on"
     - condition: state
       entity_id: light.kitchen_overhead_4
       state: "off"
-  action:
-    - service: light.turn_off
+  actions:
+    - action: light.turn_off
       data:
         transition: 3
       target:
@@ -738,21 +738,21 @@
 
 - id: kitchen_freezer_too_warm
   alias: Alert when freezer too warm
-  trigger:
-    - platform: numeric_state
+  triggers:
+    - trigger: numeric_state
       entity_id: sensor.freezer_temperature
       above: -10
       for:
         minutes: 15
-  action:
-    - service: notify.family
+  actions:
+    - action: notify.family
       data:
         title: Freezer temperature
         message: "{{ states('sensor.freezer_temperature') |int }} °C is too warm"
         data:
           push:
             interruption-level: critical
-    - service: tts.google_cloud_say
+    - action: tts.google_cloud_say
       entity_id:
         - media_player.kitchen_display
         - media_player.bedroom_speaker
@@ -764,11 +764,11 @@
 
 - id: bedroom_thermostat_night
   alias: Set bedroom sleep temperature
-  trigger:
-    - platform: time
+  triggers:
+    - trigger: time
       at: "19:00"
-  action:
-    - service: climate.set_temperature
+  actions:
+    - action: climate.set_temperature
       target:
         entity_id: climate.bedroom_thermostat
       data:
@@ -776,13 +776,13 @@
 
 - id: bedroom_thermostat_day
   alias: Set bedroom day temperature
-  trigger:
-    - platform: template
+  triggers:
+    - trigger: template
       value_template: "{{ states('sensor.time') == '06:00' and is_state('binary_sensor.workday_sensor', 'on') }}"
-    - platform: template
+    - trigger: template
       value_template: "{{ states('sensor.time') == '08:00' and is_state('binary_sensor.workday_sensor', 'off') }}"
-  action:
-    - service: climate.set_temperature
+  actions:
+    - action: climate.set_temperature
       target:
         entity_id: climate.bedroom_thermostat
       data:
@@ -790,84 +790,84 @@
 
 - id: All_lights_off
   alias: All lights off
-  trigger:
-    - platform: numeric_state
+  triggers:
+    - trigger: numeric_state
       entity_id: zone.home
       below: 1  # Unfortunatley no '== 0' in HA
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.illuminance_bright
       from: "off"
       to: "on"
-  action:
-    - service: light.turn_off
+  actions:
+    - action: light.turn_off
       target:
         entity_id: all
 
 - id: All_lights_on
   alias: All lights on
-  trigger:
-    - platform: numeric_state
+  triggers:
+    - trigger: numeric_state
       entity_id: zone.home
       above: 0
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.illuminance_bright
       from: "on"
       to: "off"
-  condition:
+  conditions:
     - condition: numeric_state
       entity_id: zone.home
       above: 0
     - condition: state
       entity_id: binary_sensor.illuminance_bright
       state: "off"
-  action:
-    - service: script.adaptive_lights_on
+  actions:
+    - action: script.adaptive_lights_on
 
 - id: bathroom_light_on
   alias: Bathroom light on
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.bathroom_pir_occupancy
       to: "on"
-  action:
+  actions:
     - choose:
         - conditions:
             - condition: time
               after: "00:00:00"
               before: input_datetime.dale_alarm_time
           sequence:
-            - service: light.turn_on
+            - action: light.turn_on
               target:
                 entity_id: light.bathroom_overhead
               data:
                 brightness: 13
       default:
-        - service: light.turn_on
+        - action: light.turn_on
           target:
             entity_id: light.bathroom_overhead
 
 - id: bathroom_light_off
   alias: Bathroom light off
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.bathroom_pir_occupancy
       to: "off"
       for:
         minutes: 5
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.bathroom_shower_occupancy
       to: "off"
       for:
         minutes: 5
-  condition:
+  conditions:
     - condition: state
       entity_id: binary_sensor.bathroom_pir_occupancy
       state: "off"
     - condition: state
       entity_id: binary_sensor.bathroom_shower_occupancy
       state: "off"
-  action:
-    - service: light.turn_off
+  actions:
+    - action: light.turn_off
       target:
         entity_id: light.bathroom_overhead
       data:
@@ -875,60 +875,60 @@
 
 - id: bathroom_towelrail_on
   alias: Bathroom towelrail when showering
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: binary_sensor.bathroom_shower_occupancy
       to: "on"
-  action:
-    - service: switch.turn_on
+  actions:
+    - action: switch.turn_on
       target:
         entity_id: switch.bathroom_towelrail
-    - service: timer.start
+    - action: timer.start
       target:
         entity_id: timer.bathroom_towelrail
 
 - id: bathroom_towelrail_timer_start  # In case the towel rail is manually turned on
   alias: Start auto-off bathroom towelrail timer
-  trigger:
-    - platform: state
+  triggers:
+    - trigger: state
       entity_id: switch.bathroom_towelrail
       from: "off"
       to: "on"
-  action:
-    - service: timer.start
+  actions:
+    - action: timer.start
       target:
         entity_id: timer.bathroom_towelrail
 
 - id: bathroom_towelrail_off
   alias: Bathroom towelrail off when timer expires
-  trigger:
-    - platform: event
+  triggers:
+    - trigger: event
       event_type:
         - timer.finished
         - timer.cancelled
       event_data:
         entity_id: timer.bathroom_towelrail
-  action:
-    - service: switch.turn_off
+  actions:
+    - action: switch.turn_off
       target:
         entity_id: switch.bathroom_towelrail
 
 - id: adaptive_lights_on_action
   alias: iOS action to turn adaptive lighting on
-  trigger:
-    - platform: event
+  triggers:
+    - trigger: event
       event_type: ios.action_fired
       event_data:
         actionName: "Auto lights on"
-  action:
-    - service: script.adaptive_lights_on
+  actions:
+    - action: script.adaptive_lights_on
 
 - id: relax_scene_on_action
   alias: iOS action to activate relax scene script
-  trigger:
-    - platform: event
+  triggers:
+    - trigger: event
       event_type: ios.action_fired
       event_data:
         actionName: "Activate relax script"
-  action:
-    - service: script.relax_scene_on
+  actions:
+    - action: script.relax_scene_on

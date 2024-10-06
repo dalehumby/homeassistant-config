@@ -2,7 +2,7 @@ laundry_timer_start:
   alias: Laundry timer
   icon: mdi:washing-machine
   sequence:
-    - service: timer.start
+    - action: timer.start
       target:
         entity_id: timer.laundry
 
@@ -20,7 +20,7 @@ dale_charge_phone:
         - condition: state
           entity_id: light.bedside_lights
           state: "on"
-    - service: scene.turn_on
+    - action: scene.turn_on
       target:
         entity_id: scene.goodnight
 
@@ -28,20 +28,20 @@ easy_wakeup:
   alias: Easy wakeup
   icon: mdi:sleep-off
   sequence:
-    - service: light.turn_on
+    - action: light.turn_on
       data:
         brightness: 2
         color_name: blue
       target:
         entity_id: light.bedroom_floor
     - delay: 2
-    - service: light.turn_on
+    - action: light.turn_on
       data:
         transition: 600
         brightness: 255
       target:
         entity_id: light.bedroom_floor
-    - service: spotcast.start
+    - action: spotcast.start
       data:
         device_name: Bedroom speaker
         start_volume: 4
@@ -56,26 +56,26 @@ adaptive_lights_on:
   sequence:
     # First adapt the zigbee group with all lights (except wifi lights) to minimise zigbee traffic
     # Separate brightness from colour because IKEA bulbs can't do smothe transition of both simultaneously
-    - service: light.turn_on
+    - action: light.turn_on
       target:
         entity_id: light.adaptive_lighting_home
       data:
         brightness_pct: "{{ state_attr('switch.adaptive_lighting_home', 'brightness_pct') }}"
         transition: 5
     - delay: 5
-    - service: light.turn_on
+    - action: light.turn_on
       target:
         entity_id: light.adaptive_lighting_home
       data:
         color_temp: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_mired') }}"
         transition: 2
     - delay: 2
-    - service: adaptive_lighting.set_manual_control
+    - action: adaptive_lighting.set_manual_control
       data:
         manual_control: false
         entity_id: switch.adaptive_lighting_home
     - delay: 1
-    - service: adaptive_lighting.apply
+    - action: adaptive_lighting.apply
       data:
         entity_id: switch.adaptive_lighting_home
         turn_on_lights: true
@@ -85,12 +85,12 @@ relax_scene_on:
   alias: Activate Relax scene
   icon: mdi:glass-cocktail
   sequence:
-    - service: scene.turn_on
+    - action: scene.turn_on
       data:
         entity_id: scene.relax
         transition: 3
     - delay: 3
-    - service: adaptive_lighting.set_manual_control
+    - action: adaptive_lighting.set_manual_control
       data:
         manual_control: true
         lights:
@@ -100,7 +100,7 @@ study_adaptive_lights_on:
   alias: Study adaptive lights on
   icon: mdi:theme-light-dark
   sequence:
-    service: adaptive_lighting.apply
+    action: adaptive_lighting.apply
     data:
       entity_id: switch.adaptive_lighting_home
       lights:
