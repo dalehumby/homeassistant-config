@@ -143,12 +143,12 @@
       person: >
         {{ closest(states.person).name }}
 
-  - name: Lounge north couch occupancy
-    # Change the door sensor to occupancy sensor and invert the state (door open = couch unoccupied)
+  - name: Diningroom chair occupancy
+    # Change the door sensor to occupancy sensor and invert the state (door open = unoccupied)
     device_class: occupancy
-    icon: mdi:sofa
+    icon: mdi:table-chair
     state: >
-      {{ is_state('binary_sensor.lounge_north_couch_contact', 'off') }}
+      {{ is_state('binary_sensor.diningroom_chair_contact', 'off') }}
 
   - name: Bathroom shower occupancy
     device_class: moisture
