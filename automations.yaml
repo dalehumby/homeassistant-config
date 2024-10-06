@@ -736,6 +736,28 @@
       target:
         entity_id: light.kitchen_overhead_1
 
+- id: diningroom_overhead_light_dim
+  alias: Diningroom overhead light dimming
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.diningroom_chair_occupancy
+      to: "on"
+  conditions:
+    - condition: numeric_state
+      entity_id: light.diningroom_overhead
+      attribute: brightness
+      above: 128
+    - condition: state
+      entity_id: binary_sensor.illuminance_bright
+      state: "off"
+  actions:
+    - action: light.turn_on
+      data:
+        brightness: 77
+        transition: 3
+      target:
+        entity_id: light.diningroom_overhead
+
 - id: kitchen_freezer_too_warm
   alias: Alert when freezer too warm
   triggers:
