@@ -30,13 +30,12 @@
     light.entrance_overhead:
       state: on
       brightness: 77
-      color_temp: 454
+      rgb_color: [255, 181, 35]
     light.bedroom_lights: off
     light.hall_overhead: off
     light.kitchen_window:
       state: on
       brightness: 50
-      color_temp: 454
     light.kitchen_overhead_1:
       state: on
       brightness: 2
@@ -54,16 +53,18 @@
     light.lounge_tree:
       state: on
       brightness: 50
-      color_temp: 500
-    light.lounge_window: off
+      rgb_color: [255, 181, 35]
+    light.lounge_window:
+      state: on
+      brightness: 13
     light.lounge_overhead:
       state: on
       brightness: 50
-      rgb_color: [255, 160, 50]
+      rgb_color: [255, 181, 35]
     light.lounge_tv_cabinet:
       state: on
-      brightness: 10
-      rgb_color: [255, 160, 50]
+      brightness: 13
+      rgb_color: [255, 181, 35]
       effect: Candle Multi
     light.lounge_candles: on
 
