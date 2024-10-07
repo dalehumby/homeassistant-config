@@ -697,6 +697,9 @@
     - condition: state
       entity_id: binary_sensor.illuminance_bright
       state: "off"
+    - condition: numeric_state
+      entity_id: sensor.kitchen_illuminance_average
+      below: 10
   actions:
     - choose:
         - conditions:
