@@ -31,36 +31,15 @@
       {% set gamma = log(RH / 100) + ((b * T) / (c + T)) %}
       {{ ((c * gamma) / (b - gamma)) | round(1) }}
 
-  - name: Illuminance
-    icon: "mdi:theme-light-dark"
-    state: >
-      {% if states('sensor.solar_radiation_average') not in ['unknown', 'unavailable'] %}
-        {% if states('sensor.solar_radiation_average') | int <= 2 %}
-          dark
-        {% elif states('sensor.solar_radiation_average') | int <= 10 %}
-          {% if state_attr('sun.sun', 'rising') %}
-            dawn
-          {% else %}
-            dusk
-          {% endif %}
-        {% elif states('sensor.solar_radiation_average') | int <= 30 %}
-          gloomy
-        {% else %}
-          bright
-        {% endif %}
-      {% endif %}
-
   - name: "Adaptive Lighting Brightness: Home"
     icon: "mdi:brightness-percent"
     unit_of_measurement: "%"
-    state: >
-      {{ state_attr("switch.adaptive_lighting_home", "brightness_pct") | round(0) }}
+    state: "{{ state_attr('switch.adaptive_lighting_home', 'brightness_pct') | round(0) }}"
 
   - name: "Adaptive Lighting Color Temp: Home"
     icon: "mdi:palette"
     unit_of_measurement: "mired"
-    state: >
-      {{ state_attr("switch.adaptive_lighting_home", "color_temp_mired") }}
+    state: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_mired') }}"
 
   - name: Daily playlist
     icon: mdi:spotify
@@ -73,87 +52,71 @@
     # Sat Daily mix 5
     # Sun Daily mix 6
     state: >
-      {% if now().isoweekday() == 1 %}
-        https://open.spotify.com/playlist/37i9dQZEVXcBLCgPN4zUED?si=b8e6f7dde3da427d
-      {% elif now().isoweekday() == 2 %}
-        https://open.spotify.com/playlist/37i9dQZF1E3500CBHfZVid?si=04389d89d8db42ed
-      {% elif now().isoweekday() == 3 %}
-        https://open.spotify.com/playlist/37i9dQZF1E36xhkhhnd6OW?si=4ae2f81701bd43df
-      {% elif now().isoweekday() == 4 %}
-        https://open.spotify.com/playlist/37i9dQZF1E36PUMXDr0n6B?si=ec6d9bacc66d46e9
-      {% elif now().isoweekday() == 5 %}
-        https://open.spotify.com/playlist/37i9dQZEVXbc0jST94T3I3?si=79d8893fa3fb4a07
-      {% elif now().isoweekday() == 6 %}
-        https://open.spotify.com/playlist/37i9dQZF1E36QhxXBTH2RE?si=0995558a2ad9472b
-      {% else %}
-        https://open.spotify.com/playlist/37i9dQZF1E35TbkiCN416a?si=f0e348f27e804ec2
-      {% endif %}
+      {% set playlists = {
+        1: "https://open.spotify.com/playlist/37i9dQZEVXcBLCgPN4zUED",
+        2: "https://open.spotify.com/playlist/37i9dQZF1E3500CBHfZVid",
+        3: "https://open.spotify.com/playlist/37i9dQZF1E36xhkhhnd6OW",
+        4: "https://open.spotify.com/playlist/37i9dQZF1E36PUMXDr0n6B",
+        5: "https://open.spotify.com/playlist/37i9dQZEVXbc0jST94T3I3",
+        6: "https://open.spotify.com/playlist/37i9dQZF1E36QhxXBTH2RE",
+        7: "https://open.spotify.com/playlist/37i9dQZF1E35TbkiCN416a"
+      } %}
+      {{ playlists[now().isoweekday()] }}
 
   - name: Apple Watch rain sparkline
     state: >
-      {%- set raindata = state_attr("sensor.precipitation_next_hour","precipitation_rate") %}
-      {%- for fifteenminutes in raindata|batch(3) %}
-        {%- set rainintensity = fifteenminutes|max %}
-        {%- if   rainintensity == 0  %}{{"▁"}}
-        {%- elif rainintensity < 0.5 %}{{"▂"}}
-        {%- elif rainintensity < 2.0 %}{{"▃"}}
-        {%- elif rainintensity < 3.5 %}{{"▄"}}
-        {%- elif rainintensity < 5.0 %}{{"▅"}}
-        {%- elif rainintensity < 7.5 %}{{"▆"}}
-        {%- elif rainintensity < 10  %}{{"▇"}}
-        {%- elif rainintensity < 15  %}{{"█"}}
-        {%- else %}{{"▓"}}
-        {%- endif %}
+      {%- set raindata = state_attr("sensor.precipitation_next_hour", "precipitation_rate") %}
+      {%- for fifteenminutes in raindata | batch(3) -%}
+        {%- set rainintensity = fifteenminutes | max -%}
+        {{ "▁" if rainintensity == 0 else
+           "▂" if rainintensity < 0.5 else
+           "▃" if rainintensity < 2.0 else
+           "▄" if rainintensity < 3.5 else
+           "▅" if rainintensity < 5.0 else
+           "▆" if rainintensity < 7.5 else
+           "▇" if rainintensity < 10 else
+           "█" if rainintensity < 15 else
+           "▓" }}
       {%- endfor %}
 
   - name: Apple Watch rain sparkline icon
     state: >
-      {% set icon = state_attr("sensor.precipitation_next_hour","icon") %}
-      {% if icon == "mdi:weather-sunny" %}
-        {% if is_state("sun.sun", "above_horizon") %}{{"☀"}}
-        {% else %}{{"🌙"}}
-        {% endif %}
-      {% elif icon == "mdi:weather-partly-cloudy" %}{{"⛅"}}
-      {% elif icon == "mdi:weather-cloudy" %}{{"☁"}}
-      {% elif icon == "mdi:weather-fog" %}{{"≡"}}
-      {% elif icon == "mdi:weather-rainy" %}{{"💧"}}
-      {% elif icon == "mdi:weather-lightning-rainy" %}{{"⚡"}}
-      {% elif icon == "mdi:weather-pouring" %}{{"☔"}}
-      {% elif icon == "mdi:weather-snowy" %}{{"❄️"}}
-      {% elif icon == "mdi:weather-snowy-rainy" %}{{"❄️"}}
-      {% elif icon == "mdi:weather-snowy-heavy" %}{{"❄️"}}
-      {% else %}{{"?"}}
-      {% endif %}
-
+      {% set icon = state_attr("sensor.precipitation_next_hour", "icon") %}
+      {% set icons = {
+        "mdi:weather-sunny": "☀" if is_state("sun.sun", "above_horizon") else "🌙",
+        "mdi:weather-partly-cloudy": "⛅",
+        "mdi:weather-cloudy": "☁",
+        "mdi:weather-fog": "≡",
+        "mdi:weather-rainy": "💧",
+        "mdi:weather-lightning-rainy": "⚡",
+        "mdi:weather-pouring": "☔",
+        "mdi:weather-snowy": "❄️",
+        "mdi:weather-snowy-rainy": "❄️",
+        "mdi:weather-snowy-heavy": "❄️"
+      } %}
+      {{ icons.get(icon, "?") }}
 
 - binary_sensor:
   - name: Air quality
     device_class: smoke
-    state: >
-      {{ states('sensor.mi_air_purifier_3h_pm2_5') | float > 100 }}
+    state: "{{ states('sensor.mi_air_purifier_3h_pm2_5') | float > 100 }}"
 
   - name: Vacation
-    state: >
-      {{ distance(closest(states.person)) > 25 }}
-    icon: >
-      {% if this.state == "on" %}mdi:island{% else %}mdi:home{% endif %}
+    state: "{{ distance(closest(states.person)) > 25 }}"
+    icon: "{{ 'mdi:island' if this.state == 'on' else 'mdi:home' }}"
     attributes:
-      distance: >
-        {{ distance(closest(states.person)) }}
-      person: >
-        {{ closest(states.person).name }}
+      distance: "{{ distance(closest(states.person)) }}"
+      person: "{{ closest(states.person).name }}"
 
   - name: Diningroom chair occupancy
     # Change the door sensor to occupancy sensor and invert the state (door open = unoccupied)
     device_class: occupancy
     icon: mdi:table-chair
-    state: >
-      {{ is_state('binary_sensor.diningroom_chair_contact', 'off') }}
+    state: "{{ is_state('binary_sensor.diningroom_chair_contact', 'off') }}"
 
   - name: Bathroom shower occupancy
     device_class: moisture
-    state: >
-      {{ states('sensor.bathroom_air_humidity') | int >= states('sensor.average_humidity') | int + 10 }}
+    state: "{{ states('sensor.bathroom_air_humidity') | int >= states('sensor.average_humidity') | int + 10 }}"
 
   - name: Illuminance bright
     icon: "mdi:theme-light-dark"
@@ -161,10 +124,8 @@
       {% set lux = states('sensor.kitchen_illuminance_average') | int %}
       {% set upper = states('input_number.illuminance_upper') | int %}
       {% set lower = states('input_number.illuminance_lower') | int %}
-      {% if lux >= upper %}
-        on
-      {% elif lux < lower %}
-        off
-      {% else %}
-        {{ this.state }}
-      {% endif %}
+      {{
+        'on' if lux >= upper
+        else 'off' if lux < lower
+        else this.state
+      }}
