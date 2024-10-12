@@ -100,6 +100,14 @@
       rgb_color: [255, 112, 86]
     light.hall_lights: off
 
+- name: Study relax
+  icon: mdi:glass-cocktail
+  entities:
+    light.study_lights:
+      state: on
+      brightness: 13
+      color_temp: 454
+
 - name: Study sleep
   icon: mdi:sleep
   entities:

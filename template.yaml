@@ -129,3 +129,6 @@
         else 'off' if lux < lower
         else this.state
       }}
+
+  - name: Study show sleep button
+    state: "{{ (now().hour >= 0 and now().hour < 6) or (state_attr('light.study_lights', 'brightness') | int < 20) }}"
