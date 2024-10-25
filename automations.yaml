@@ -32,8 +32,8 @@
       data:
         message: "Internet is up"
 
-- id: brighten_entrance_lights
-  alias: "Turn on light when in entrance"
+- id: entrance_lights_brighten
+  alias: "Entrance light brighten"
   triggers:
     - trigger: state
       entity_id: binary_sensor.entrance_pir_occupancy
@@ -51,37 +51,31 @@
       entity_id: binary_sensor.hall_pir_occupancy
       state: "on"
   actions:
+    - action: scene.create
+      data:
+        scene_id: entrance_light_saved_scene
+        snapshot_entities:
+          - light.entrance_overhead
     - action: light.turn_on
       target:
         entity_id: light.entrance_overhead
       data:
+        transition: 1
         brightness: 255
         color_temp: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_mired') }}"
 
-- id: dim_entrance_lights
-  alias: "Dim light when leave entrance"
+- id: entrance_lights_restore
+  alias: "Entrance light restore"
   triggers:
     - trigger: state
       entity_id: binary_sensor.entrance_pir_occupancy
       from: "on"
       to: "off"
   actions:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: light.hall_overhead
-              state: "off"
-          sequence:
-            - action: light.turn_off
-              target:
-                entity_id: light.entrance_overhead
-      default:
-        - action: adaptive_lighting.set_manual_control
-          data:
-            entity_id: switch.adaptive_lighting_home
-            manual_control: false
-            lights:
-              - light.entrance_overhead
+    - action: scene.turn_on
+      data:
+        entity_id: scene.entrance_light_saved_scene
+        transition: 3
 
 - id: laundry_start_reminder
   alias: Laundry reminder
@@ -813,7 +807,7 @@
       data:
         temperature: 21
 
-- id: All_lights_off
+- id: all_lights_off
   alias: All lights off
   triggers:
     - trigger: numeric_state
@@ -828,7 +822,7 @@
       target:
         entity_id: all
 
-- id: All_lights_on
+- id: all_lights_on
   alias: All lights on
   triggers:
     - trigger: numeric_state
