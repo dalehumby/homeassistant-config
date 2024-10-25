@@ -8,7 +8,7 @@
     - climate.bedroom_thermostat
 
 - platform: climate_group
-  name: 'Lounge thermostat'
+  name: "Lounge thermostat"
   entities:
     - climate.lounge_west_thermostat
     - climate.lounge_north_thermostat
