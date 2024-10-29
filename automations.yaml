@@ -36,20 +36,9 @@
   alias: "Entrance light brighten"
   triggers:
     - trigger: state
-      entity_id: binary_sensor.entrance_pir_occupancy
+      entity_id: binary_sensor.entrance_hall_occupancy
       from: "off"
       to: "on"
-    - trigger: state
-      entity_id: binary_sensor.hall_pir_occupancy
-      from: "off"
-      to: "on"
-  conditions:
-    - condition: state
-      entity_id: binary_sensor.entrance_pir_occupancy
-      state: "on"
-    - condition: state
-      entity_id: binary_sensor.hall_pir_occupancy
-      state: "on"
   actions:
     - action: scene.create
       data:
@@ -68,7 +57,7 @@
   alias: "Entrance light restore"
   triggers:
     - trigger: state
-      entity_id: binary_sensor.entrance_pir_occupancy
+      entity_id: binary_sensor.entrance_hall_occupancy
       from: "on"
       to: "off"
   actions:
@@ -685,6 +674,9 @@
       entity_id: binary_sensor.kitchen_pir_occupancy
       to: "on"
   conditions:
+    - condition: state
+      entity_id: binary_sensor.hall_pir_occupancy
+      state: "on"
     - condition: state
       entity_id: light.kitchen_overhead
       state: "off"
