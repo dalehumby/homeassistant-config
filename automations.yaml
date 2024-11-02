@@ -800,6 +800,8 @@
         - action: light.turn_on
           target:
             entity_id: light.bathroom_overhead
+          data:
+            brightness_pct: "{{ state_attr('switch.adaptive_lighting_home', 'brightness_pct') }}"
 
 - id: bathroom_light_off
   alias: Bathroom light off
@@ -887,3 +889,43 @@
         actionName: "Activate relax script"
   actions:
     - action: script.relax_scene_on
+
+- id: hall_nightlight_on
+  alias: Hall night lighting on
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.hall_pir_occupancy
+      to: "on"
+  conditions:
+    - condition: state
+      entity_id: light.hall_lights
+      state: "off"
+    - condition: numeric_state
+      entity_id: sensor.hall_pir_illuminance_lux
+      below: 1
+  actions:
+    - action: light.turn_on
+      target:
+        entity_id: light.hall_cabinet
+      data:
+        color_name: red
+        brightness: 3
+        transition: 1
+        effect: Solid
+
+- id: hall_nightlight_off
+  alias: Hall night lighting off
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.hall_pir_occupancy
+      to: "off"
+  conditions:
+    - condition: state
+      entity_id: light.hall_lights
+      state: "off"
+  actions:
+    - action: light.turn_off
+      target:
+        entity_id: light.hall_cabinet
+      data:
+        transition: 3
