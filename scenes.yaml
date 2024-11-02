@@ -31,8 +31,13 @@
       state: on
       brightness: 77
       rgb_color: [255, 181, 35]
-    light.bedroom_lights: off
     light.hall_overhead: off
+    light.hall_cabinet:
+      state: on
+      brightness: 13
+      rgb_color: [255, 181, 35]
+      effect: Candle Multi
+    light.bedroom_lights: off
     light.kitchen_window:
       state: on
       brightness: 50
@@ -72,6 +77,7 @@
   icon: mdi:sleep
   entities:
     light.hall_lights: off
+    light.hall_cabinet: off
     light.bedroom_overhead: off
     light.bedside_lights:
       state: on
