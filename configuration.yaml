@@ -43,15 +43,23 @@ zone:
 
 camera:
   - platform: xiaomi_cloud_map_extractor
+    name: Vader
     host: !secret xiaomi_vacuum_host
     token: !secret xiaomi_vacuum_token
     username: !secret xiaomi_cloud_username
     password: !secret xiaomi_cloud_password
-    auto_update: false  # do not auto-update (for now) since the Mi app is not working when this is active
-    scan_interval: 3600  # Default is 5s, but I don't need a live view
+    country: sg
+    auto_update: true  # Mi app does not work when this is active
+    scan_interval: 30
     draw: ['all']
     attributes:
       - calibration_points
+      - vacuum_position
+      - rooms
+      - room_numbers
+      - vacuum_position
+      - vacuum_room_name
+      - vacuum_room
     map_transformation:
       rotate: 0
       trim:
