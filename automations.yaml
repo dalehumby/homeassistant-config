@@ -404,6 +404,10 @@
       entity_id: vacuum.vader
       from: "cleaning"
       to: "returning"
+  conditions:
+    - condition: state
+      entity_id: binary_sensor.vacation
+      state: "off"
   actions:
     - action: counter.decrement
       target:
@@ -415,8 +419,8 @@
       target:
         entity_id: vacuum.vader
       data:
-        x_coord: '27500'
-        y_coord: '29500'
+        x_coord: '28566'
+        y_coord: '27749'
     - wait_for_trigger:
         - trigger: state
           entity_id: vacuum.vader
@@ -425,11 +429,11 @@
       target:
         entity_id: vacuum.vader
 
-- id: vacuum_water_box_in
-  alias: Vacuum water box reattached
+- id: vacuum_water_tank_in
+  alias: Vacuum water tank reattached
   triggers:
     - trigger: state
-      entity_id: binary_sensor.vader_water_box_attached
+      entity_id: binary_sensor.vader_mop_attached_2
       from: "off"
       to: "on"
   actions:
