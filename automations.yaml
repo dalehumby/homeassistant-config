@@ -140,7 +140,7 @@
   actions:
     - action: notify.mobile_app_dales_iphone
       data:
-        title: "Rainfall"
+        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }} alert"
         message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
 - id: rainfall_alert_afternoon
@@ -169,7 +169,7 @@
   actions:
     - action: notify.mobile_app_dales_iphone
       data:
-        title: "Rainfall"
+        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }} alert"
         message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
 - id: rainfall_alert_away
@@ -189,7 +189,7 @@
   actions:
     - action: notify.mobile_app_dales_iphone
       data:
-        title: "Rainfall alert"
+        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }} alert"
         message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
 - id: rainfall_alert_frontdoor
@@ -208,7 +208,7 @@
       data:
         effect: okay
       target:
-        entity_id: light.entrance_table_lamp
+        entity_id: light.entrance_overhead
 
 - id: lunch_reminer_on
   alias: Turn on lunch reminder
@@ -255,7 +255,7 @@
       data:
         effect: okay
       target:
-        entity_id: light.entrance_table_lamp
+        entity_id: light.entrance_overhead
     - action: notify.mobile_app_dales_iphone
       data:
         message: "Remember your lunch"
