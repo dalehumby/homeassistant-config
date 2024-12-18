@@ -311,27 +311,6 @@
           "{{ states('sensor.greeting') }}. Water has been detected in the bathroom under the washing machine.
            Please check for leaks... The shutoff valve is on the bathroom ceiling, next to the basin."
 
-- id: offline_device_alert
-  alias: Offline device alert
-  triggers:
-    - trigger: state
-      entity_id:
-        - binary_sensor.dishwasher_leak_water_leak
-        - binary_sensor.entrance_pir_occupancy
-        - binary_sensor.kitchen_pir_occupancy
-        - binary_sensor.kitchen_window_contact
-        - binary_sensor.balcony_door_contact
-        - binary_sensor.bedroom_door_pir_occupancy
-        - binary_sensor.storeroom_pir_occupancy
-        - light.bedroom_floor
-      to: unavailable
-  mode: parallel
-  actions:
-    - action: notify.mobile_app_dales_iphone
-      data:
-        title: Device offline
-        message: "{{ trigger.to_state.attributes.friendly_name }}"
-
 - id: start_robot_vacuum
   alias: Start robot vacuum
   triggers:
