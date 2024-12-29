@@ -107,3 +107,12 @@ study_adaptive_lights_on:
         - light.study_lights
       turn_on_lights: true
       transition: 3
+
+all_lights_off_delayed:
+  alias: All lights off after short delay
+  icon: mdi:lightbulb-group-off
+  sequence:
+    - delay: 3
+    - action: light.turn_off
+      target:
+        entity_id: all
