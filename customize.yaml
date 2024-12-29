@@ -1,8 +1,5 @@
 automation.laundry_reminder:
   icon: mdi:washing-machine
 
-automation.run_dusty_today:
-  icon: mdi:robot-vacuum
-
 light.lounge_candles:
   icon: mdi:candle
