@@ -910,3 +910,50 @@
         entity_id: light.hall_cabinet
       data:
         transition: 3
+
+- id: nspanel_entrance_screen_timeout_on
+  alias: NSPanel entrance screen timeout on
+  triggers:
+    - trigger: state
+      entity_id: light.entrance_overhead
+      to: "off"
+  actions:
+    - action: mqtt.publish
+      data:
+        topic: nspanelpro/nspanel_entrance/config/update
+        payload: >
+          { "screen-off-timeout": "120000" }
+
+- id: nspanel_entrance_screen_timeout_off
+  alias: NSPanel entrance screen timeout off
+  triggers:
+    - trigger: state
+      entity_id: light.entrance_overhead
+      to: "on"
+  actions:
+    - action: mqtt.publish
+      data:
+        topic: nspanelpro/nspanel_entrance/config/update
+        payload: >
+          { "screen-off-timeout": "2147483647" }
+    - action: mqtt.publish
+      data:
+        topic: nspanelpro/nspanel_entrance/command/device
+        payload: >
+          { "command": "wake_up" }
+
+- id: nspanel_entrance_screen_wakeup
+  alias: NSPanel entrance screen wake up
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.entrance_pir_occupancy
+      to: "on"
+    - trigger: state
+      entity_id: binary_sensor.hall_pir_occupancy
+      to: "on"
+  actions:
+    - action: mqtt.publish
+      data:
+        topic: nspanelpro/nspanel_entrance/command/device
+        payload: >
+          { "command": "wake_up" }
