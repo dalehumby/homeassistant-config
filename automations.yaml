@@ -140,7 +140,7 @@
   actions:
     - action: notify.mobile_app_dales_iphone
       data:
-        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }} alert"
+        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }}"
         message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
 - id: rainfall_alert_afternoon
@@ -169,7 +169,7 @@
   actions:
     - action: notify.mobile_app_dales_iphone
       data:
-        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }} alert"
+        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }}"
         message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
 - id: rainfall_alert_away
@@ -189,7 +189,7 @@
   actions:
     - action: notify.mobile_app_dales_iphone
       data:
-        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }} alert"
+        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }}"
         message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
 
 - id: rainfall_alert_frontdoor
