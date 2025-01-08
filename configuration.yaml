@@ -50,7 +50,7 @@ camera:
     password: !secret xiaomi_cloud_password
     country: sg
     auto_update: true  # Mi app does not work when this is active
-    scan_interval: 30
+    scan_interval: 300
     draw: ['all']
     attributes:
       - calibration_points
