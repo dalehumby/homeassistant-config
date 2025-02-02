@@ -817,6 +817,9 @@
     - trigger: state
       entity_id: binary_sensor.bathroom_shower_occupancy
       to: "on"
+    - trigger: state
+      entity_id: sensor.bathroom_towelrail_shortcut_action
+      to: "on"
   actions:
     - action: switch.turn_on
       target:
