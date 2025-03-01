@@ -960,3 +960,24 @@
         topic: nspanelpro/nspanel_entrance/command/device
         payload: >
           { "command": "wake_up" }
+
+- id: cat_doorbell
+  alias: Cat doorbell
+  triggers:
+    - trigger: state
+      entity_id: sensor.cat_doorbell_action
+      to: "on"
+  actions:
+    - action: notify.mobile_app_dales_iphone
+      data:
+        title: "Meow?"
+        message: "A Tigger wants in"
+    - action: light.turn_on
+      data:
+        effect: okay
+      target:
+        entity_id: light.entrance_overhead
+    - action: tts.google_cloud_say
+      entity_id: media_player.bedroom_speaker
+      data_template:
+        message: "Meow"
