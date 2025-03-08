@@ -730,6 +730,14 @@
     - trigger: numeric_state
       entity_id: zone.home
       below: 1  # Unfortunatley no '== 0' in HA
+  actions:
+    - action: light.turn_off
+      target:
+        entity_id: all
+
+- id: day_lights_off
+  alias: Day lights off
+  triggers:
     - trigger: state
       entity_id: binary_sensor.illuminance_bright
       from: "off"
@@ -737,7 +745,11 @@
   actions:
     - action: light.turn_off
       target:
-        entity_id: all
+        entity_id:
+          - light.hall_lights
+          - light.bedroom_lights
+          - light.kitchen_lights
+          - light.lounge_lights
 
 - id: all_lights_on
   alias: All lights on
