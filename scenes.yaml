@@ -119,10 +119,6 @@
   entities:
     light.study_overhead: off
     light.study_bedside_lamp: off
-    light.study_dale_desk:
-      state: on
-      brightness: 3
-      color_temp: 454
 
 - name: Study lights off
   icon: mdi:lightbulb-group-off

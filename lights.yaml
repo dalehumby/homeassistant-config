@@ -15,7 +15,6 @@
   name: Study lights
   entities:
     - light.study_overhead
-    - light.study_dale_desk
     - light.study_bedside_lamp
 
 - platform: group
@@ -32,6 +31,7 @@
     - light.lounge_tree
     - light.lounge_overhead
     - light.lounge_window
+    - light.lounge_dale_desk
 
 - platform: switch
   name: Lounge candles
