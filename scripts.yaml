@@ -112,7 +112,7 @@ all_lights_off_delayed:
   alias: All lights off after short delay
   icon: mdi:lightbulb-group-off
   sequence:
-    - delay: 3
+    - delay: 0
     - action: light.turn_off
       target:
         entity_id: all
