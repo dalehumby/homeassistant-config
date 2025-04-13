@@ -516,25 +516,35 @@
 - id: bedroom_bedside_light_switch
   alias: Bedroom bedside light switch
   triggers:
-    - trigger: state
-      entity_id: sensor.bedside_dale_switch_action
-      to: "single_left"
+    - trigger: device
+      domain: mqtt
+      device_id: bc5b0d803604dafae7adb68072261271
+      type: action
+      subtype: single_left
       id: single_left
-    - trigger: state
-      entity_id: sensor.bedside_dale_switch_action
-      to: "double_left"
+    - trigger: device
+      domain: mqtt
+      device_id: bc5b0d803604dafae7adb68072261271
+      type: action
+      subtype: double_left
       id: double_left
-    - trigger: state
-      entity_id: sensor.bedside_dale_switch_action
-      to: "single_right"
+    - trigger: device
+      domain: mqtt
+      device_id: bc5b0d803604dafae7adb68072261271
+      type: action
+      subtype: single_right
       id: single_right
-    - trigger: state
-      entity_id: sensor.bedside_dale_switch_action
-      to: "double_right"
+    - trigger: device
+      domain: mqtt
+      device_id: bc5b0d803604dafae7adb68072261271
+      type: action
+      subtype: double_right
       id: double_right
-    - trigger: state
-      entity_id: sensor.bedside_dale_switch_action
-      to: "single_both"
+    - trigger: device
+      domain: mqtt
+      device_id: bc5b0d803604dafae7adb68072261271
+      type: action
+      subtype: single_both
       id: single_both
   actions:
     - choose:
@@ -897,7 +907,7 @@
       entity_id: light.hall_lights
       state: "off"
     - condition: numeric_state
-      entity_id: sensor.hall_pir_illuminance_lux
+      entity_id: sensor.hall_pir_illuminance
       below: 1
   actions:
     - action: light.turn_on

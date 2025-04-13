@@ -15,7 +15,7 @@
 
 - platform: statistics
   name: Kitchen illuminance average
-  entity_id: sensor.kitchen_ceiling_pir_illuminance_lux
+  entity_id: sensor.kitchen_ceiling_pir_illuminance
   state_characteristic: mean
   max_age:
     minutes: 5
