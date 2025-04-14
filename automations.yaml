@@ -839,9 +839,11 @@
     - trigger: state
       entity_id: binary_sensor.bathroom_shower_occupancy
       to: "on"
-    - trigger: state
-      entity_id: sensor.bathroom_towelrail_shortcut_action
-      to: "on"
+    - trigger: device
+      domain: mqtt
+      device_id: 627eeddb3ce73a0ec62112b47880a07f
+      type: action
+      subtype: "on"
   actions:
     - action: switch.turn_on
       target:
@@ -986,9 +988,11 @@
 - id: cat_doorbell
   alias: Cat doorbell
   triggers:
-    - trigger: state
-      entity_id: sensor.cat_doorbell_action
-      to: "on"
+    - trigger: device
+      domain: mqtt
+      device_id: 1fc5be6bfa2096e47274790a481f8b1a
+      type: action
+      subtype: "on"
   actions:
     - action: notify.mobile_app_dales_iphone
       data:
