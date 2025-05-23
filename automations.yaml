@@ -1004,3 +1004,33 @@
       entity_id: media_player.bedroom_speaker
       data_template:
         message: "Meow"
+
+- id: vacation_lights_on
+  alias: Vacation lights on
+  triggers:
+    - trigger: sun
+      event: sunset
+      offset: "-00:30:00"
+  conditions:
+    - condition: state
+      entity_id: binary_sensor.vacation
+      state: "on"
+  actions:
+    - action: light.turn_on
+      target:
+        entity_id:
+          - light.kitchen_lights
+
+- id: vacation_lights_off
+  alias: Vacation lights off
+  triggers:
+    - trigger: time
+      at: "22:30:00"  # Must be after the latest sunset in the year
+  conditions:
+    - condition: state
+      entity_id: binary_sensor.vacation
+      state: "on"
+  actions:
+    - action: light.turn_off
+      target:
+        entity_id: all
