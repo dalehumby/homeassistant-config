@@ -672,10 +672,7 @@
     - condition: numeric_state
       entity_id: light.diningroom_overhead
       attribute: brightness
-      above: 128
-    - condition: state
-      entity_id: binary_sensor.illuminance_bright
-      state: "off"
+      above: 77
   actions:
     - action: light.turn_on
       data:
