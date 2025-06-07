@@ -681,19 +681,19 @@
       target:
         entity_id: light.diningroom_overhead
 
-- id: kitchen_freezer_too_warm
-  alias: Alert when freezer too warm
+- id: kitchen_fridge_too_warm
+  alias: Fridge too warm
   triggers:
     - trigger: numeric_state
-      entity_id: sensor.freezer_air_temperature
-      above: -10
+      entity_id: sensor.fridge_air_temperature
+      above: 7
       for:
         minutes: 15
   actions:
     - action: notify.family
       data:
-        title: Freezer temperature
-        message: "{{ states('sensor.freezer_air_temperature') |int }} °C is too warm"
+        title: Fridge temperature
+        message: "{{ states('sensor.fridge_air_temperature') |int }} °C is too warm"
         data:
           push:
             interruption-level: critical
@@ -704,7 +704,7 @@
         - media_player.lounge_speaker
       data_template:
         message: >
-          "{{ states('sensor.greeting') }}. The freezer is {{ states('sensor.freezer_air_temperature') | int }} degrees.
+          "{{ states('sensor.greeting') }}. The fridge is {{ states('sensor.fridge_air_temperature') | int }} degrees.
            Please check if the door is closed."
 
 - id: bedroom_thermostat_night
