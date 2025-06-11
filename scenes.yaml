@@ -106,6 +106,19 @@
       rgb_color: [255, 112, 86]
     light.hall_lights: off
 
+- name: Bedroom lights off
+  icon: mdi:lightbulb-group-off
+  entities:
+    light.bedroom_lights: off
+
+- name: Bedroom lights bight
+  icon: mdi:lightbulb-group
+  entities:
+    light.bedroom_lights:
+      state: on
+      brightness: 255
+      color_temp: 370
+
 - name: Study relax
   icon: mdi:glass-cocktail
   entities:

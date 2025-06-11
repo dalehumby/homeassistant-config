@@ -935,8 +935,8 @@
       data:
         transition: 3
 
-- id: nspanel_entrance_screen_timeout_on
-  alias: NSPanel entrance screen timeout on
+- id: nspanel_entrance_screen_dark
+  alias: NSPanel entrance screen when dark
   triggers:
     - trigger: state
       entity_id: light.entrance_overhead
@@ -948,8 +948,8 @@
         payload: >
           { "screen-off-timeout": "120000" }
 
-- id: nspanel_entrance_screen_timeout_off
-  alias: NSPanel entrance screen timeout off
+- id: nspanel_entrance_screen_bright
+  alias: NSPanel entrance screen when bright
   triggers:
     - trigger: state
       entity_id: light.entrance_overhead
@@ -979,6 +979,43 @@
     - action: mqtt.publish
       data:
         topic: nspanelpro/nspanel_entrance/command/device
+        payload: >
+          { "command": "wake_up" }
+
+- id: nspanel_bedroom_screen_dark
+  alias: NSPanel bedroom screen when dark
+  triggers:
+    trigger: state
+    entity_id:
+      - event.nspanel_bedroom_light
+    attribute: event_type
+    to: light_below
+  actions:
+    - action: mqtt.publish
+      data:
+        topic: nspanelpro/nspanel_bedroom/config/update
+        payload: >
+          { "screen-off-timeout": "60000" }
+
+- id: nspanel_bedroom_screen_bright
+  alias: NSPanel bedroom screen when bright
+  triggers:
+    trigger: state
+    entity_id:
+      - event.nspanel_bedroom_light
+    attribute: event_type
+    to:
+      - light_normal
+      - light_above
+  actions:
+    - action: mqtt.publish
+      data:
+        topic: nspanelpro/nspanel_bedroom/config/update
+        payload: >
+          { "screen-off-timeout": "2147483647" }
+    - action: mqtt.publish
+      data:
+        topic: nspanelpro/nspanel_bedroom/command/device
         payload: >
           { "command": "wake_up" }
 
