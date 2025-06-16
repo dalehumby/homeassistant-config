@@ -784,6 +784,10 @@
     - trigger: state
       entity_id: binary_sensor.bathroom_pir_occupancy
       to: "on"
+  conditions:
+    - condition: state
+      entity_id: light.bathroom_overhead
+      state: "off"
   actions:
     - choose:
         - conditions:
@@ -796,12 +800,15 @@
                 entity_id: light.bathroom_overhead
               data:
                 brightness: 13
+                color_name: red
       default:
         - action: light.turn_on
           target:
             entity_id: light.bathroom_overhead
           data:
+            # Set brightness, color temp so it doesn't start at eg 100% blinding you, then ramp down to 20% at night
             brightness_pct: "{{ state_attr('switch.adaptive_lighting_home', 'brightness_pct') }}"
+            color_temp: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_mired') }}"
 
 - id: bathroom_light_off
   alias: Bathroom light off
