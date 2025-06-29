@@ -18,6 +18,12 @@
     - light.study_bedside_lamp
 
 - platform: group
+  name: Bathroom lights
+  entities:
+    - light.bathroom_overhead
+    - light.bathroom_cabinet
+
+- platform: group
   name: Kitchen lights
   entities:
     - light.kitchen_overhead
@@ -36,3 +42,7 @@
 - platform: switch
   name: Lounge candles
   entity_id: switch.lounge_candles
+
+- platform: switch
+  name: Bathroom cabinet
+  entity_id: switch.bathroom_switch_left

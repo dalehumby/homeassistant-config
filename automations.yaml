@@ -809,6 +809,21 @@
             # Set brightness, color temp so it doesn't start at eg 100% blinding you, then ramp down to 20% at night
             brightness_pct: "{{ state_attr('switch.adaptive_lighting_home', 'brightness_pct') }}"
             color_temp: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_mired') }}"
+        - wait_template: >
+            {{ state_attr('light.bathroom_overhead', 'brightness') != None and
+               state_attr('light.bathroom_overhead', 'brightness') > 0 }}
+          timeout: 5
+        - choose:
+            - conditions:
+                # Turn the bathroom cabinet light on only if we're above minimum overhead brightness
+                - condition: numeric_state
+                  entity_id: light.bathroom_overhead
+                  attribute: brightness
+                  above: 53
+              sequence:
+                - action: light.turn_on
+                  target:
+                    entity_id: light.bathroom_cabinet
 
 - id: bathroom_light_off
   alias: Bathroom light off
@@ -833,9 +848,56 @@
   actions:
     - action: light.turn_off
       target:
-        entity_id: light.bathroom_overhead
+        entity_id: light.bathroom_lights
       data:
         transition: 3
+
+- id: bathroom_light_switch
+  alias: Bathroom light switch
+  triggers:
+    - trigger: device
+      domain: mqtt
+      device_id: 8858514f66d8e971f98241adfeec2c3f
+      type: action
+      subtype: single_right
+      id: single_right
+    - trigger: device
+      domain: mqtt
+      device_id: 8858514f66d8e971f98241adfeec2c3f
+      type: action
+      subtype: double_right
+      id: double_right
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: single_right
+          sequence:
+            - action: light.toggle
+              target:
+                entity_id: light.bathroom_overhead
+        - conditions:
+            - condition: trigger
+              id: double_right
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: template
+                      value_template: >
+                        {{ state_attr('light.bathroom_overhead', 'brightness') == None or
+                           state_attr('light.bathroom_overhead', 'brightness') < 255 }}
+                  sequence:
+                    - action: light.turn_on
+                      target:
+                        entity_id: light.bathroom_overhead
+                      data:
+                        brightness: 255
+                        color_temp: 370
+              default:
+                - action: adaptive_lighting.apply
+                  data:
+                    lights:
+                      - light.bathroom_overhead
 
 - id: bathroom_towelrail_on
   alias: Bathroom towelrail when showering

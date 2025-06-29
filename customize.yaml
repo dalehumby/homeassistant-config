@@ -3,3 +3,6 @@ automation.laundry_reminder:
 
 light.lounge_candles:
   icon: mdi:candle
+
+light.bathroom_cabinet:
+  icon: mdi:wall-sconce-flat
