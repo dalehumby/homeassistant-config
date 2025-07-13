@@ -62,6 +62,7 @@
     light.lounge_window:
       state: on
       brightness: 13
+    light.lounge_dale_desk: off
     light.lounge_overhead:
       state: on
       brightness: 50
