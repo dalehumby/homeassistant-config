@@ -1111,9 +1111,12 @@
       target:
         entity_id: light.entrance_overhead
     - action: tts.google_cloud_say
-      entity_id: media_player.bedroom_speaker
+      entity_id:
+        - media_player.kitchen_display
+        - media_player.bedroom_speaker
+        - media_player.lounge_speaker
       data_template:
-        message: "Meow"
+        message: "{{ states('sensor.greeting') }}. A hungry Tigger is at the door."
 
 - id: vacation_lights_on
   alias: Vacation lights on
