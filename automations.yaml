@@ -60,6 +60,10 @@
       entity_id: binary_sensor.entrance_pir_occupancy
       from: "on"
       to: "off"
+  conditions:
+    - condition: state
+      entity_id: light.entrance_overhead
+      state: "on"
   actions:
     - action: scene.turn_on
       data:
