@@ -20,6 +20,9 @@ dale_charge_phone:
         - condition: state
           entity_id: light.bedside_lights
           state: "on"
+        - condition: state
+          entity_id: input_boolean.guest_mode
+          state: "off"
     - action: scene.turn_on
       target:
         entity_id: scene.goodnight
