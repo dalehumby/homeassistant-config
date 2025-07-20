@@ -42,31 +42,6 @@ zone:
     icon: mdi:briefcase
 
 camera:
-  - platform: xiaomi_cloud_map_extractor
-    name: Vader
-    host: !secret xiaomi_vacuum_host
-    token: !secret xiaomi_vacuum_token
-    username: !secret xiaomi_cloud_username
-    password: !secret xiaomi_cloud_password
-    country: sg
-    auto_update: true  # Mi app does not work when this is active
-    scan_interval: 300
-    draw: ['all']
-    attributes:
-      - calibration_points
-      - vacuum_position
-      - rooms
-      - room_numbers
-      - vacuum_position
-      - vacuum_room_name
-      - vacuum_room
-    map_transformation:
-      rotate: 0
-      trim:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
 
 input_datetime:
   laundry_reminder:
