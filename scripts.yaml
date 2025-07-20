@@ -58,7 +58,7 @@ adaptive_lights_on:
   icon: mdi:theme-light-dark
   sequence:
     # First adapt the zigbee group with all lights (except wifi lights) to minimise zigbee traffic
-    # Separate brightness from colour because IKEA bulbs can't do smothe transition of both simultaneously
+    # Separate brightness from colour because IKEA bulbs can't do smooth transition of both simultaneously
     - action: light.turn_on
       target:
         entity_id: light.adaptive_lighting_home
