@@ -121,19 +121,23 @@
   - name: Illuminance bright
     icon: "mdi:theme-light-dark"
     state: >
-      {% set lux = states('sensor.kitchen_illuminance_average') | int %}
-      {% set upper = states('input_number.illuminance_upper') | int %}
-      {% set lower = states('input_number.illuminance_lower') | int %}
-      {{
-        'on' if lux >= upper
-        else 'off' if lux < lower
-        else this.state
-      }}
+      {% set lux = states('sensor.kitchen_illuminance_average') %}
+      {% if lux in ['unavailable', 'unknown', 'none'] %}
+        {{ this.state }}
+      {% else %}
+        {% set lux = lux | int(0) %}
+        {% set upper = states('input_number.illuminance_upper') | int %}
+        {% set lower = states('input_number.illuminance_lower') | int %}
+        {{
+          'on' if lux >= upper
+          else 'off' if lux < lower
+          else this.state
+        }}
+      {% endif %}
 
   - name: Study show sleep button
     state: >
-      {{ (now().hour >= 0 and now().hour < 6) or
-         (is_state('light.study_lights', 'on') and (state_attr('light.study_lights', 'brightness') | int(0) < 20)) }}
+      {{ is_state('light.study_lights', 'on') and (state_attr('light.study_lights', 'brightness') | int(0) == 13) }}
 
   - name: Entrance hall occupancy
     device_class: motion

@@ -16,7 +16,7 @@
 - platform: statistics
   name: Kitchen illuminance average
   entity_id: sensor.kitchen_ceiling_pir_illuminance
-  state_characteristic: mean
+  state_characteristic: average_linear
   max_age:
     minutes: 5
   keep_last_sample: true
