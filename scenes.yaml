@@ -132,7 +132,10 @@
   icon: mdi:sleep
   entities:
     light.study_overhead: off
-    light.study_bedside_lamp: off
+    light.study_bedside_lamp:
+      state: on
+      brightness: 3
+      rgb_color: [255, 0, 0]
 
 - name: Study lights off
   icon: mdi:lightbulb-group-off
