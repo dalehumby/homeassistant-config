@@ -40,6 +40,11 @@ zone:
     longitude: !secret work_long
     radius: 75
     icon: mdi:briefcase
+  - name: Mall
+    latitude: !secret mall_lat
+    longitude: !secret mall_long
+    radius: 100
+    icon: mdi:shopping
 
 camera:
 

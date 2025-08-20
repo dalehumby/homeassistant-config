@@ -1162,3 +1162,19 @@
     - action: light.turn_off
       target:
         entity_id: all
+
+- id: sync_ica_shopping_list
+  alias: Sync ICA shopping list
+  triggers:
+    - trigger: state
+      entity_id: zone.mall
+      from: "0"
+    - trigger: state
+      entity_id: zone.mall
+      to: "0"
+    - platform: time_pattern
+      minutes: "/10"
+  actions:
+    - action: google_keep_sync.request_sync
+    - delay: 5
+    - action: ica_shopping.refresh
