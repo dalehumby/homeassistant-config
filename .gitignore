@@ -16,3 +16,4 @@ google_calendars.yaml
 .google.token
 core
 image/
+backups/
