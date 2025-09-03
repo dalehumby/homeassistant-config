@@ -1071,11 +1071,14 @@
 - id: nspanel_bedroom_screen_dark
   alias: NSPanel bedroom screen when dark
   triggers:
-    trigger: state
-    entity_id:
-      - event.nspanel_bedroom_light
-    attribute: event_type
-    to: light_below
+    - trigger: state
+      entity_id:
+        - event.nspanel_bedroom_light
+      attribute: event_type
+      to: light_below
+    - trigger: numeric_state  # Needed because sometimes light_below event not sent
+      entity_id: sensor.nspanel_bedroom_light_sensor
+      below: 5
   actions:
     - action: mqtt.publish
       data:
