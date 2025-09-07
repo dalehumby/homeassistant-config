@@ -28,7 +28,6 @@
   entities:
     - light.kitchen_overhead
     - light.kitchen_counter
-    - light.kitchen_window
     - light.diningroom_overhead
 
 - platform: group
@@ -36,8 +35,14 @@
   entities:
     - light.lounge_tree
     - light.lounge_overhead
-    - light.lounge_window
     - light.lounge_dale_desk
+
+- platform: group
+  name: Window lights
+  entities:
+    - light.kitchen_window
+    - light.lounge_window
+
 
 - platform: switch
   name: Lounge candles
