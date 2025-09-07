@@ -1020,6 +1020,12 @@
         entity_id: light.hall_cabinet
       data:
         transition: 3
+    - delay: 5  # Run it again because the WLED module is not always reliable
+    - action: light.turn_off
+      target:
+        entity_id: light.hall_cabinet
+      data:
+        transition: 3
 
 - id: nspanel_entrance_screen_dark
   alias: NSPanel entrance screen when dark
