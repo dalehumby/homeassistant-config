@@ -1014,6 +1014,7 @@
       state: "off"
   actions:
     - action: light.turn_off
+      continue_on_error: true
       target:
         entity_id: light.hall_cabinet
       data:
