@@ -90,6 +90,7 @@
       rgb_color: [255, 112, 86]
     light.kitchen_lights: off
     light.lounge_lights: off
+    light.window_lights: off
     light.lounge_tv_cabinet: off
     light.lounge_candles: off
 
