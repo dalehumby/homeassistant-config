@@ -477,8 +477,8 @@
       entity_id: light.bedside_lights
       state: "off"
     - condition: state
-      entity_id: binary_sensor.illuminance_bright
-      state: "off"
+      entity_id: binary_sensor.illuminance_needs_light
+      state: "on"
   actions:
     - choose:
         - conditions:
@@ -635,8 +635,8 @@
       entity_id: light.kitchen_overhead
       state: "off"
     - condition: state
-      entity_id: binary_sensor.illuminance_bright
-      state: "off"
+      entity_id: binary_sensor.illuminance_needs_light
+      state: "on"
     - condition: numeric_state
       entity_id: sensor.kitchen_illuminance_average
       below: 10
@@ -763,9 +763,8 @@
   alias: Day lights off
   triggers:
     - trigger: state
-      entity_id: binary_sensor.illuminance_bright
-      from: "off"
-      to: "on"
+      entity_id: binary_sensor.illuminance_needs_light
+      to: "off"
   actions:
     - action: light.turn_off
       target:
@@ -782,16 +781,15 @@
       entity_id: zone.home
       above: 0
     - trigger: state
-      entity_id: binary_sensor.illuminance_bright
-      from: "on"
-      to: "off"
+      entity_id: binary_sensor.illuminance_needs_light
+      to: "on"
   conditions:
     - condition: numeric_state
       entity_id: zone.home
       above: 0
     - condition: state
-      entity_id: binary_sensor.illuminance_bright
-      state: "off"
+      entity_id: binary_sensor.illuminance_needs_light
+      state: "on"
   actions:
     - action: script.adaptive_lights_on
 

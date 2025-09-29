@@ -144,3 +144,33 @@
     state: >
       {{ is_state('binary_sensor.entrance_pir_occupancy', 'on') and
          is_state('binary_sensor.hall_pir_occupancy', 'on') }}
+
+- trigger:
+  - platform: template
+    value_template: >
+      {{ states('sensor.kitchen_illuminance_average') | float(0) >
+         states('input_number.illuminance_upper') | float(0) }}
+    for:
+      minutes: 15
+    id: 'is_bright'
+  - platform: template
+    value_template: >
+      {{ states('sensor.kitchen_illuminance_average') | float(0) <
+         states('input_number.illuminance_lower') | float(0) }}
+    id: 'is_dark'
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: event_template_reloaded
+  binary_sensor:
+  - name: "Illuminance needs light"
+    icon: "mdi:theme-light-dark"
+    state: >
+      {% if trigger.id == 'is_bright' %}
+        off
+      {% elif trigger.id == 'is_dark' %}
+        on
+      {% else %}
+        {{ states('sensor.kitchen_illuminance_average') | int(-1) < states('input_number.illuminance_lower') | int }}
+      {% endif %}
+    availability: "{{ states('sensor.kitchen_illuminance_average') not in ['unavailable', 'unknown', 'none'] }}"
