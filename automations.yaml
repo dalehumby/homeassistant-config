@@ -324,8 +324,8 @@
           "{{ states('sensor.greeting') }}. Water has been detected in the bathroom under the washing machine.
            Please check for leaks... The shutoff valve is on the bathroom ceiling, next to the basin."
 
-- id: start_robot_vacuum
-  alias: Start robot vacuum
+- id: start_robot_vacuum_when_away
+  alias: Start robot vacuum when away
   triggers:
     - trigger: state
       entity_id: zone.home
@@ -349,11 +349,10 @@
         entity_id: vacuum.vader
 
 - id: start_robot_vacuum_weekday
-  alias: Start robot vacuum limited
-  description: "Limited weekday cleanup: Entrance, kitchen, bedroom"
+  alias: Start robot vacuum weekday
   triggers:
     - trigger: time
-      at: "17:00:00"
+      at: "10:00:00"
   conditions:
     - condition: state
       entity_id: input_boolean.run_vacuum_today
@@ -361,10 +360,12 @@
     - condition: state
       entity_id: binary_sensor.workday_sensor
       state: "on"
+    - not:
+        - condition: zone
+          entity_id: person.dale
+          zone: zone.home
   actions:
-    - action: xiaomi_miio.vacuum_clean_segment
-      data:
-        segments: [20, 16, 17]
+    - action: vacuum.start
       target:
         entity_id: vacuum.vader
 
