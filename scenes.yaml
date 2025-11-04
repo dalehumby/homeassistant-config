@@ -74,6 +74,18 @@
       effect: Candle Multi
     light.lounge_candles: on
 
+- name: Sunset
+  icon: mdi:weather-sunset-down
+  entities:
+    light.window_lights:
+      state: on
+      brightness: 128
+    light.balcony_lights:
+      state: on
+      brightness: 76
+      rgb_color: [255, 137, 14]
+      effect: Candlelight
+
 - name: Goodnight
   icon: mdi:sleep
   entities:
@@ -93,6 +105,7 @@
     light.window_lights: off
     light.lounge_tv_cabinet: off
     light.lounge_candles: off
+    light.balcony_lights: off
 
 - name: Bedroom winddown
   icon: mdi:bed

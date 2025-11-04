@@ -1162,7 +1162,7 @@
   alias: Vacation lights off
   triggers:
     - trigger: time
-      at: "22:30:00"  # Must be after the latest sunset in the year
+      at: "22:30:00"  # Must be after the latest sunset in summer
   conditions:
     - condition: state
       entity_id: binary_sensor.vacation
@@ -1187,3 +1187,14 @@
     - action: google_keep_sync.request_sync
     - delay: 5
     - action: ica_shopping.refresh
+
+- id: sunset_lights_on
+  alias: "Sunset lights on"
+  triggers:
+    - trigger: sun
+      event: sunset
+  actions:
+    - action: scene.turn_on
+      data:
+        entity_id: scene.sunset
+        transition: 3
