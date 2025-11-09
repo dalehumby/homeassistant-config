@@ -17,3 +17,4 @@ google_calendars.yaml
 core
 image/
 backups/
+.ha_run.lock
