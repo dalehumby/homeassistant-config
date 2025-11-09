@@ -1084,7 +1084,7 @@
       to: light_below
     - trigger: numeric_state  # Needed because sometimes light_below event not sent
       entity_id: sensor.nspanel_bedroom_light_sensor
-      below: 5
+      below: 5  # Keep at almost dark, less than light_below value set on NSPanel
   actions:
     - action: mqtt.publish
       data:
@@ -1105,14 +1105,20 @@
   actions:
     - action: mqtt.publish
       data:
-        topic: nspanelpro/nspanel_bedroom/config/update
-        payload: >
-          { "screen-off-timeout": "2147483647" }
-    - action: mqtt.publish
-      data:
         topic: nspanelpro/nspanel_bedroom/command/device
         payload: >
           { "command": "wake_up" }
+    # If light turns on very briefly the light_below event is never sent so screen doesn't turn off
+    # Wait a few seconds then confirm light is indeed bright before turning off the timeout
+    - delay: 10
+    - condition: numeric_state
+      entity_id: sensor.nspanel_bedroom_light_sensor
+      above: 20  # Same as light_below set on NSPanel
+    - action: mqtt.publish
+      data:
+        topic: nspanelpro/nspanel_bedroom/config/update
+        payload: >
+          { "screen-off-timeout": "2147483647" }
 
 - id: cat_doorbell
   alias: Cat doorbell
