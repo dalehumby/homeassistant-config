@@ -1178,6 +1178,42 @@
       target:
         entity_id: all
 
+- id: vacation_thermostats_away
+  alias: Set thermostats to away temperature
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.vacation
+      from: "off"
+      to: "on"
+  conditions:
+    - condition: state
+      entity_id: climate.all_thermostats
+      state: "heat"
+  actions:
+    - action: climate.set_temperature
+      target:
+        entity_id: climate.all_thermostats
+      data:
+        temperature: 15
+
+- id: vacation_thermostats_home
+  alias: Set thermostats to home temperature
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.vacation
+      from: "on"
+      to: "off"
+  conditions:
+    - condition: state
+      entity_id: climate.all_thermostats
+      state: "heat"
+  actions:
+    - action: climate.set_temperature
+      target:
+        entity_id: climate.all_thermostats
+      data:
+        temperature: 21
+
 - id: sync_ica_shopping_list
   alias: Sync ICA shopping list
   triggers:
