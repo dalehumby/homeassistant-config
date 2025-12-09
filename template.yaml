@@ -38,8 +38,8 @@
 
   - name: "Adaptive Lighting Color Temp: Home"
     icon: "mdi:palette"
-    unit_of_measurement: "mired"
-    state: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_mired') }}"
+    unit_of_measurement: "kelvin"
+    state: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_kelvin') }}"
 
   - name: Daily playlist
     icon: mdi:spotify

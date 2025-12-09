@@ -51,7 +51,7 @@
       data:
         transition: 1
         brightness: 255
-        color_temp: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_mired') }}"
+        color_temp_kelvin: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_kelvin') }}"
 
 - id: entrance_lights_restore
   alias: "Entrance light restore"
@@ -451,7 +451,7 @@
   actions:
     - action: light.turn_on
       data:
-        color_temp: 250
+        color_temp_kelvin: 4000
         brightness: 255
         transition: 1
       target:
@@ -492,7 +492,7 @@
           sequence:
             - action: light.turn_on
               data:
-                color_temp: 370
+                color_temp_kelvin: 2700
                 brightness: 255
                 transition: 3
               target:
@@ -824,7 +824,7 @@
           data:
             # Set brightness, color temp so it doesn't start at eg 100% blinding you, then ramp down to 20% at night
             brightness_pct: "{{ state_attr('switch.adaptive_lighting_bathroom', 'brightness_pct') }}"
-            color_temp: "{{ state_attr('switch.adaptive_lighting_bathroom', 'color_temp_mired') }}"
+            color_temp_kelvin: "{{ state_attr('switch.adaptive_lighting_bathroom', 'color_temp_kelvin') }}"
         - wait_template: >
             {{ state_attr('light.bathroom_overhead', 'brightness') != None and
                state_attr('light.bathroom_overhead', 'brightness') > 0 }}
@@ -908,7 +908,7 @@
                         entity_id: light.bathroom_overhead
                       data:
                         brightness: 255
-                        color_temp: 370
+                        color_temp_kelvin: 2700
               default:
                 - action: adaptive_lighting.apply
                   data:

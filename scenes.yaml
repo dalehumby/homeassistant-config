@@ -6,23 +6,23 @@
     light.hall_lights:
       state: on
       brightness: 255
-      color_temp: 370
+      color_temp_kelvin: 2700
     light.bedroom_lights:
       state: on
       brightness: 255
-      color_temp: 370
+      color_temp_kelvin: 2700
     light.study_lights:
       state: on
       brightness: 255
-      color_temp: 370
+      color_temp_kelvin: 2700
     light.kitchen_lights:
       state: on
       brightness: 255
-      color_temp: 370
+      color_temp_kelvin: 2700
     light.lounge_lights:
       state: on
       brightness: 255
-      color_temp: 370
+      color_temp_kelvin: 2700
 
 - name: Relax
   icon: mdi:glass-cocktail
@@ -44,13 +44,13 @@
     light.kitchen_overhead_1:
       state: on
       brightness: 2
-      color_temp: 454
+      color_temp_kelvin: 2202
     light.kitchen_overhead_2: off
     light.kitchen_overhead_3: off
     light.kitchen_overhead_4:
       state: on
       brightness: 2
-      color_temp: 454
+      color_temp_kelvin: 2202
     light.kitchen_overhead_5: off
     light.kitchen_overhead_6: off
     light.kitchen_counter: off
@@ -132,7 +132,7 @@
     light.bedroom_lights:
       state: on
       brightness: 255
-      color_temp: 370
+      color_temp_kelvin: 2700
 
 - name: Study relax
   icon: mdi:glass-cocktail
@@ -140,7 +140,7 @@
     light.study_lights:
       state: on
       brightness: 13
-      color_temp: 454
+      color_temp_kelvin: 2202
 
 - name: Study sleep
   icon: mdi:sleep
@@ -162,7 +162,7 @@
     light.study_lights:
       state: on
       brightness: 255
-      color_temp: 370
+      color_temp_kelvin: 2700
 
 - name: Christmas
   icon: mdi:pine-tree
@@ -194,15 +194,15 @@
     light.lounge_desk:
       state: on
       brightness: 51
-      color_temp: 454
+      color_temp_kelvin: 2202
     light.kitchen_downlights:
       state: on
       brightness: 51
-      color_temp: 454
+      color_temp_kelvin: 2202
     light.kitchen_desk:
       state: on
       brightness: 51
-      color_temp: 454
+      color_temp_kelvin: 2202
     light.bedroom_overhead:
       state: on
       brightness: 102
@@ -210,7 +210,7 @@
     light.bedside_lights:
       state: on
       brightness: 51
-      color_temp: 454
+      color_temp_kelvin: 2202
     light.bedroom_floor:
       state: on
       brightness: 102

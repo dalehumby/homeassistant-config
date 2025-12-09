@@ -70,7 +70,7 @@ adaptive_lights_on:
       target:
         entity_id: light.adaptive_lighting_home
       data:
-        color_temp: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_mired') }}"
+        color_temp_kelvin: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_kelvin') }}"
         transition: 2
     - delay: 2
     - action: adaptive_lighting.set_manual_control
