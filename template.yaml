@@ -174,3 +174,33 @@
         {{ states('sensor.kitchen_illuminance_average') | int(-1) < states('input_number.illuminance_lower') | int }}
       {% endif %}
     availability: "{{ states('sensor.kitchen_illuminance_average') not in ['unavailable', 'unknown', 'none'] }}"
+
+- switch:
+  - turn_on:
+    - target:
+        entity_id:
+        - remote.lounge_irblaster
+      data:
+        num_repeats: 1
+        delay_secs: 0.4
+        hold_secs: 0
+        device: candle
+        command:
+        - power_on
+        - flicker_slow
+        - timer_6h
+      action: remote.send_command
+    turn_off:
+    - target:
+        entity_id:
+        - remote.lounge_irblaster
+      data:
+        num_repeats: 1
+        delay_secs: 0.4
+        hold_secs: 0
+        device: candle
+        command: power_off
+      action: remote.send_command
+    default_entity_id: switch.lounge_candles
+    icon: mdi:candle
+    name: Lounge candles
