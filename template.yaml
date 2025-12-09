@@ -163,7 +163,7 @@
   - platform: event
     event_type: event_template_reloaded
   binary_sensor:
-  - name: "Illuminance needs light"
+    name: "Illuminance needs light"
     icon: "mdi:theme-light-dark"
     state: >
       {% if trigger.id == 'is_bright' %}
