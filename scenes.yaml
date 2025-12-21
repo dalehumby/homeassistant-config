@@ -84,7 +84,7 @@
       state: on
       brightness: 76
       rgb_color: [255, 137, 14]
-      effect: Candlelight
+      effect: "Sunset Glow"
 
 - name: Goodnight
   icon: mdi:sleep
@@ -171,10 +171,54 @@
       state: on
       brightness: 102
       rgb_color: [255, 0, 0]
-    light.foyer_overhead:
+    light.hall_overhead: off
+    light.hall_cabinet:
+      state: on
+      brightness: 128
+      effect: "Twinklefox"
+    select.hall_cabinet_color_palette: "C9 New"
+    number.hall_cabinet_speed: "50"
+    light.bedroom_overhead:
       state: on
       brightness: 102
+      rgb_color: [0, 0, 255]
+    light.bedside_dale:
+      state: on
+      brightness: 51
       rgb_color: [0, 255, 0]
+    light.bedside_mark:
+      state: on
+      brightness: 51
+      rgb_color: [255, 0, 0]
+    light.bedroom_floor:
+      state: on
+      brightness: 102
+      rgb_color: [255, 0, 0]
+    light.study_overhead: off
+    light.study_bedside_lamp:
+      state: on
+      brightness: 3
+      rgb_color: [255, 0, 0]
+    light.kitchen_window:
+      state: on
+      brightness: 50
+    light.kitchen_overhead_1:
+      state: on
+      brightness: 2
+      color_temp_kelvin: 2202
+    light.kitchen_overhead_2: off
+    light.kitchen_overhead_3: off
+    light.kitchen_overhead_4:
+      state: on
+      brightness: 2
+      color_temp_kelvin: 2202
+    light.kitchen_overhead_5: off
+    light.kitchen_overhead_6: off
+    light.kitchen_counter: off
+    light.diningroom_overhead:
+      state: on
+      brightness: 51
+      color_temp_kelvin: 2202
     light.lounge_overhead:
       state: on
       brightness: 102
@@ -191,35 +235,17 @@
       state: on
       brightness: 102
       rgb_color: [255, 0, 0]
-    light.lounge_desk:
+    light.lounge_tv_cabinet:
       state: on
-      brightness: 51
-      color_temp_kelvin: 2202
-    light.kitchen_downlights:
+      brightness: 128
+      effect: "Twinklefox"
+    select.lounge_tv_cabinet_color_palette: "C9 New"
+    number.lounge_tv_cabinet_speed: "50"
+    light.lounge_window:
       state: on
-      brightness: 51
-      color_temp_kelvin: 2202
-    light.kitchen_desk:
+      brightness: 13
+    light.lounge_candles: on
+    light.balcony_lights:
       state: on
-      brightness: 51
-      color_temp_kelvin: 2202
-    light.bedroom_overhead:
-      state: on
-      brightness: 102
-      rgb_color: [0, 0, 255]
-    light.bedside_lights:
-      state: on
-      brightness: 51
-      color_temp_kelvin: 2202
-    light.bedroom_floor:
-      state: on
-      brightness: 102
-      rgb_color: [255, 0, 0]
-    light.bathroom_overhead_mirror:
-      state: on
-      brightness: 102
-      rgb_color: [255, 0, 0]
-    light.bathroom_overhead_bath:
-      state: on
-      brightness: 102
-      rgb_color: [0, 0, 255]
+      brightness: 76
+      effect: "Sunset Glow"
