@@ -37,6 +37,8 @@
       brightness: 13
       rgb_color: [255, 181, 35]
       effect: Candle Multi
+    select.hall_cabinet_color_palette: "Default"
+    number.hall_cabinet_speed: "50"
     light.bedroom_lights: off
     light.kitchen_window:
       state: on
@@ -72,6 +74,8 @@
       brightness: 13
       rgb_color: [255, 181, 35]
       effect: Candle Multi
+    select.lounge_tv_cabinet_color_palette: "Default"
+    number.lounge_tv_cabinet_speed: "50"
     light.lounge_candles: on
 
 - name: Sunset
@@ -84,7 +88,7 @@
       state: on
       brightness: 76
       rgb_color: [255, 137, 14]
-      effect: "Sunset Glow"
+      # effect: "Sunset Glow"  # Disable the effect
 
 - name: Goodnight
   icon: mdi:sleep
