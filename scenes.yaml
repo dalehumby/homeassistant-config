@@ -61,10 +61,13 @@
       state: on
       brightness: 50
       rgb_color: [255, 181, 35]
+    light.lounge_table:
+      state: on
+      brightness: 50
+      rgb_color: [255, 181, 35]
     light.lounge_window:
       state: on
       brightness: 13
-    light.lounge_dale_desk: off
     light.lounge_overhead:
       state: on
       brightness: 50

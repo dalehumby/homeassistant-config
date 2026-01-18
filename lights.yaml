@@ -35,7 +35,7 @@
   entities:
     - light.lounge_tree
     - light.lounge_overhead
-    - light.lounge_dale_desk
+    - light.lounge_table
 
 - platform: group
   name: Window lights
