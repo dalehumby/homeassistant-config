@@ -702,11 +702,9 @@
 - id: kitchen_fridge_too_warm
   alias: Fridge too warm
   triggers:
-    - trigger: numeric_state
-      entity_id: sensor.fridge_air_temperature
-      above: 7
-      for:
-        minutes: 15
+    - trigger: state
+      entity_id: binary_sensor.fridge_too_warm
+      to: "on"
   actions:
     - action: notify.family
       data:
@@ -716,10 +714,7 @@
           push:
             interruption-level: critical
     - action: tts.google_cloud_say
-      entity_id:
-        - media_player.kitchen_display
-        - media_player.bedroom_speaker
-        - media_player.lounge_speaker
+      entity_id: media_player.all_speakers
       data_template:
         message: >
           "{{ states('sensor.greeting') }}. The fridge is {{ states('sensor.fridge_air_temperature') | int }} degrees.

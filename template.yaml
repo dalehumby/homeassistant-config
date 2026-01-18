@@ -145,6 +145,14 @@
       {{ is_state('binary_sensor.entrance_pir_occupancy', 'on') and
          is_state('binary_sensor.hall_pir_occupancy', 'on') }}
 
+  - name: "Fridge Too Warm"
+    unique_id: fridge_too_warm
+    device_class: problem
+    state: >
+      {{ states('sensor.fridge_air_temperature') | float(0) > 8 }}
+    delay_on:
+      minutes: 15
+
 - trigger:
   - platform: template
     value_template: >
