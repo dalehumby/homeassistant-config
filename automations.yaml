@@ -1129,10 +1129,28 @@
       type: action
       subtype: "on"
   actions:
+    - action: openai_conversation.generate_content
+      data:
+        config_entry: 01KE01CZMP5EGSWYHD0N1GZEJG
+        prompt: >-
+          Our neighbours cat, Tigger, comes to visit us.
+          He has learned to press a zigbee doorbell button so we know to open for him.
+          Create a short text message (1 very short sentence) to play on Google Home speakers,
+          something like, A hungry/playful/naughty/demanding Tigger is at the door.
+          It should be fun and playful and a bit snarky, giving cat energy.
+          Do not add emojis.
+          Only return text that should be turned into speech using TTS.
+          The time is {{ states('sensor.time') }}
+          The weather is {{ states('weather.home') }}
+          Temperature: {{ state_attr('weather.home', 'temperature') }} {{ state_attr('weather.home', 'temperature_unit') }}
+          Wind: {{ state_attr('weather.home', 'wind_speed') }} {{ state_attr('weather.home', 'wind_speed_unit') }}
+          Cloud coverage: {{ state_attr('weather.home', 'cloud_coverage') }} %
+          Precipitation next hour: {{ states('sensor.precipitation_next_hour') }} mm {{ state_attr('sensor.precipitation_next_hour', 'symbol_code') }}
+      response_variable: generated_content
     - action: notify.mobile_app_dales_iphone
       data:
         title: "Meow"
-        message: "A Tigger wants in"
+        message: "{{ generated_content.text | default('A demanding Tigger is at the door.') }}"
         data:
           image: "/local/images/feed-me.png"
     - action: light.turn_on
@@ -1141,12 +1159,9 @@
       target:
         entity_id: light.entrance_overhead
     - action: tts.google_cloud_say
-      entity_id:
-        - media_player.kitchen_display
-        - media_player.bedroom_speaker
-        - media_player.lounge_speaker
+      entity_id: media_player.all_speakers
       data_template:
-        message: "{{ states('sensor.greeting') }}. A hungry Tigger is at the door."
+        message: "{{ generated_content.text | default('A hungry Tigger is at the door.') }}"
 
 - id: vacation_lights_on
   alias: Vacation lights on
