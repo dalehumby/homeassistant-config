@@ -56,6 +56,7 @@
     light.kitchen_overhead_5: off
     light.kitchen_overhead_6: off
     light.kitchen_counter: off
+    light.kitchen_lamp: off
     light.diningroom_overhead: off
     light.lounge_tree:
       state: on
@@ -153,10 +154,14 @@
   icon: mdi:sleep
   entities:
     light.study_overhead: off
-    light.study_bedside_lamp:
+    light.study_dale_desk:
       state: on
-      brightness: 3
-      rgb_color: [255, 0, 0]
+      brightness: 2
+      color_temp_kelvin: 2202
+    light.study_mark_desk:
+      state: on
+      brightness: 2
+      color_temp_kelvin: 2202
 
 - name: Study lights off
   icon: mdi:lightbulb-group-off
@@ -202,10 +207,14 @@
       brightness: 102
       rgb_color: [255, 0, 0]
     light.study_overhead: off
-    light.study_bedside_lamp:
+    light.study_dale_desk:
       state: on
-      brightness: 3
-      rgb_color: [255, 0, 0]
+      brightness: 2
+      color_temp_kelvin: 2202
+    light.study_mark_desk:
+      state: on
+      brightness: 2
+      color_temp_kelvin: 2202
     light.kitchen_window:
       state: on
       brightness: 50
@@ -222,6 +231,10 @@
     light.kitchen_overhead_5: off
     light.kitchen_overhead_6: off
     light.kitchen_counter: off
+    light.kitchen_lamp:
+      state: on
+      brightness: 3
+      rgb_color: [255, 0, 0]
     light.diningroom_overhead:
       state: on
       brightness: 51

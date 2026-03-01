@@ -15,7 +15,8 @@
   name: Study lights
   entities:
     - light.study_overhead
-    - light.study_bedside_lamp
+    - light.study_dale_desk
+    - light.study_mark_desk
 
 - platform: group
   name: Bathroom lights
@@ -28,6 +29,7 @@
   entities:
     - light.kitchen_overhead
     - light.kitchen_counter
+    - light.kitchen_lamp
     - light.diningroom_overhead
 
 - platform: group
@@ -42,7 +44,6 @@
   entities:
     - light.kitchen_window
     - light.lounge_window
-
 
 - platform: switch
   name: Lounge candles

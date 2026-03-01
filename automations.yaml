@@ -42,7 +42,7 @@
   actions:
     - action: scene.create
       data:
-        scene_id: entrance_light_saved_scene
+        scene_id: before_entrance_light_brighten
         snapshot_entities:
           - light.entrance_overhead
     - action: light.turn_on
@@ -67,7 +67,7 @@
   actions:
     - action: scene.turn_on
       data:
-        entity_id: scene.entrance_light_saved_scene
+        entity_id: scene.before_entrance_light_brighten
         transition: 3
 
 - id: laundry_start_reminder
@@ -352,7 +352,7 @@
   alias: Start robot vacuum weekday
   triggers:
     - trigger: time
-      at: "10:00:00"
+      at: "09:00:00"
   conditions:
     - condition: state
       entity_id: input_boolean.run_vacuum_today
@@ -1148,15 +1148,27 @@
         message: "{{ generated_content.text | default('A demanding Tigger is at the door.') }}"
         data:
           image: "/local/images/feed-me.png"
+    - action: scene.create
+      data:
+        scene_id: before_cat_doorbell
+        snapshot_entities:
+          - light.entrance_overhead
+          - light.study_mark_desk
     - action: light.turn_on
       data:
-        effect: okay
+        effect: breathe
       target:
-        entity_id: light.entrance_overhead
+        entity_id:
+          - light.entrance_overhead
+          - light.study_mark_desk
     - action: tts.google_cloud_say
       entity_id: media_player.all_speakers
       data_template:
         message: "{{ generated_content.text | default('A hungry Tigger is at the door.') }}"
+    - delay: "00:00:15"
+    - action: scene.turn_on
+      target:
+        entity_id: scene.before_cat_doorbell
 
 - id: vacation_lights_on
   alias: Vacation lights on
