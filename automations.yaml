@@ -1125,6 +1125,7 @@
       subtype: "on"
   actions:
     - action: openai_conversation.generate_content
+      continue_on_error: true
       data:
         config_entry: 01KE01CZMP5EGSWYHD0N1GZEJG
         prompt: >-
@@ -1142,10 +1143,17 @@
           Cloud coverage: {{ state_attr('weather.home', 'cloud_coverage') }} %
           Precipitation next hour: {{ states('sensor.precipitation_next_hour') }} mm {{ state_attr('sensor.precipitation_next_hour', 'symbol_code') }}
       response_variable: generated_content
+    - variables:
+        tigger_message: >
+          {% if generated_content is defined and generated_content.text is defined %}
+            {{ generated_content.text }}
+          {% else %}
+            A demanding Tigger is at the door. Improvising without AI.
+          {% endif %}
     - action: notify.mobile_app_dales_iphone
       data:
         title: "Meow"
-        message: "{{ generated_content.text | default('A demanding Tigger is at the door.') }}"
+        message: "{{ tigger_message }}"
         data:
           image: "/local/images/feed-me.png"
     - action: scene.create
@@ -1164,7 +1172,7 @@
     - action: tts.google_cloud_say
       entity_id: media_player.all_speakers
       data_template:
-        message: "{{ generated_content.text | default('A hungry Tigger is at the door.') }}"
+        message: "{{ tigger_message }}"
     - delay: "00:00:15"
     - action: scene.turn_on
       target:
