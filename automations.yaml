@@ -986,7 +986,7 @@
       state: "off"
     - condition: numeric_state
       entity_id: sensor.hall_pir_illuminance
-      below: 1
+      below: 5
   actions:
     - action: light.turn_on
       target:
