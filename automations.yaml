@@ -1021,53 +1021,6 @@
       data:
         transition: 3
 
-- id: nspanel_entrance_screen_dark
-  alias: NSPanel entrance screen when dark
-  triggers:
-    - trigger: state
-      entity_id: light.entrance_overhead
-      to: "off"
-  actions:
-    - action: mqtt.publish
-      data:
-        topic: nspanelpro/nspanel_entrance/config/update
-        payload: >
-          { "screen-off-timeout": "120000" }
-
-- id: nspanel_entrance_screen_bright
-  alias: NSPanel entrance screen when bright
-  triggers:
-    - trigger: state
-      entity_id: light.entrance_overhead
-      to: "on"
-  actions:
-    - action: mqtt.publish
-      data:
-        topic: nspanelpro/nspanel_entrance/config/update
-        payload: >
-          { "screen-off-timeout": "2147483647" }
-    - action: mqtt.publish
-      data:
-        topic: nspanelpro/nspanel_entrance/command/device
-        payload: >
-          { "command": "wake_up" }
-
-- id: nspanel_entrance_screen_wakeup
-  alias: NSPanel entrance screen wake up
-  triggers:
-    - trigger: state
-      entity_id: binary_sensor.entrance_pir_occupancy
-      to: "on"
-    - trigger: state
-      entity_id: binary_sensor.hall_pir_occupancy
-      to: "on"
-  actions:
-    - action: mqtt.publish
-      data:
-        topic: nspanelpro/nspanel_entrance/command/device
-        payload: >
-          { "command": "wake_up" }
-
 - id: nspanel_bedroom_screen_dark
   alias: NSPanel bedroom screen when dark
   triggers:
@@ -1079,23 +1032,47 @@
     - trigger: numeric_state  # Needed because sometimes light_below event not sent
       entity_id: sensor.nspanel_bedroom_light_sensor
       below: 5  # Keep at almost dark, less than light_below value set on NSPanel
+    - trigger: device  # Force screen off using bedside light switch, in case triggers misbehaving during night
+      domain: mqtt
+      device_id: bc5b0d803604dafae7adb68072261271
+      type: action
+      subtype: double_both
+      id: double_both
   actions:
+    - action: mqtt.publish
+      data:
+        topic: nspanelpro/nspanel_bedroom/command/device
+        payload: >
+          { "command": "sleep" }
     - action: mqtt.publish
       data:
         topic: nspanelpro/nspanel_bedroom/config/update
         payload: >
-          { "screen-off-timeout": "60000" }
+          { "screen-off-timeout": "30000" }
+    - delay: 5  # Retry commands because device wifi might be sleeping
+    - action: mqtt.publish
+      data:
+        topic: nspanelpro/nspanel_bedroom/command/device
+        payload: >
+          { "command": "sleep" }
+    - action: mqtt.publish
+      data:
+        topic: nspanelpro/nspanel_bedroom/config/update
+        payload: >
+          { "screen-off-timeout": "30000" }
 
 - id: nspanel_bedroom_screen_bright
   alias: NSPanel bedroom screen when bright
   triggers:
-    trigger: state
-    entity_id:
-      - event.nspanel_bedroom_light
-    attribute: event_type
-    to:
-      - light_normal
-      - light_above
+    - trigger: state
+      entity_id:
+        - event.nspanel_bedroom_light
+      attribute: event_type
+      from:
+        - light_below
+      to:
+        - light_normal
+        - light_above
   actions:
     - action: mqtt.publish
       data:
