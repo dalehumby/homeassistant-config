@@ -137,6 +137,8 @@ sun:
 logbook:
 
 logger:
+  logs:
+    homeassistant.components.http.ban: info
 
 automation: !include automations.yaml
 binary_sensor: !include binary_sensor.yaml  # legacy. Rather use template.yaml
