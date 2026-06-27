@@ -3,6 +3,10 @@
 
 extends: default
 
+ignore: |
+  custom_components/
+  .storage/
+
 rules:
   indentation:
     spaces: 2

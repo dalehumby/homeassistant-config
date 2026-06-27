@@ -6,6 +6,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a [Home Assistant](https://www.home-assistant.io/) configuration repository — YAML files that define all automations, sensors, lights, scripts, and scenes for a home running HA. There is no build step or test runner; changes take effect when HA reloads the relevant config or restarts. The repo is checked out directly into the HA config directory (provisioned via [rpi-provision](https://github.com/dalehumby/rpi-provision)).
 
+## YAML linting
+
+`yamllint` (v1.38.0) is installed and configured via `.yamllint`. After editing any YAML file, run:
+
+```bash
+yamllint -c .yamllint <file>
+```
+
+A pre-commit git hook (`.git/hooks/pre-commit`) automatically lints all staged `.yaml`/`.yml` files and then runs the Home Assistant config check inside the running Docker container (`home_homeassistant`). Both must pass or the commit is aborted.
+
+After any significant change or refactor to config files, run the HA config check explicitly:
+
+```bash
+docker exec $(docker ps --filter "name=home_homeassistant" --format "{{.Names}}" | head -1) python3 -m homeassistant --script check_config -c /config
+```
+
 ## Validating changes
 
 HA has a built-in config checker. Run it from the HA UI under **Developer Tools → YAML → Check Configuration**, or via the CLI if `ha` is available:
