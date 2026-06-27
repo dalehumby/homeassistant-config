@@ -47,28 +47,6 @@
     unit_of_measurement: "kelvin"
     state: "{{ state_attr('switch.adaptive_lighting_home', 'color_temp_kelvin') }}"
 
-  - name: Daily playlist
-    icon: mdi:spotify
-    # ISO weekday is 1 (Mon) .. 7 (Sun)
-    # Mon Discover weekly
-    # Tue Daily mix 1
-    # Wed Daily mix 2
-    # Thr Daily mix 3
-    # Fri Release radar
-    # Sat Daily mix 5
-    # Sun Daily mix 6
-    state: >
-      {% set playlists = {
-        1: "https://open.spotify.com/playlist/37i9dQZEVXcBLCgPN4zUED",
-        2: "https://open.spotify.com/playlist/37i9dQZF1E3500CBHfZVid",
-        3: "https://open.spotify.com/playlist/37i9dQZF1E36xhkhhnd6OW",
-        4: "https://open.spotify.com/playlist/37i9dQZF1E36PUMXDr0n6B",
-        5: "https://open.spotify.com/playlist/37i9dQZEVXbc0jST94T3I3",
-        6: "https://open.spotify.com/playlist/37i9dQZF1E36QhxXBTH2RE",
-        7: "https://open.spotify.com/playlist/37i9dQZF1E35TbkiCN416a"
-      } %}
-      {{ playlists[now().isoweekday()] }}
-
   - name: Apple Watch rain sparkline
     state: >
       {%- set raindata = state_attr("sensor.precipitation_next_hour", "precipitation_rate") %}

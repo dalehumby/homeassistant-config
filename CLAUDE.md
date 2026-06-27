@@ -66,7 +66,6 @@ To reload only specific domains without restarting HA (available under **Develop
 ## Custom components (installed via HACS, git-ignored)
 
 - `adaptive_lighting` — circadian rhythm light adjustment
-- `spotcast` — cast Spotify to Chromecast/Google Home speakers
 - `nordpool` — electricity spot price sensor
 - `bambu_lab` — Bambu 3D printer integration
 - `google_keep_sync` — sync Google Keep lists
