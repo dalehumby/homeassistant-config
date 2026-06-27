@@ -1157,13 +1157,16 @@
 - id: vacation_lights_on
   alias: Vacation lights on
   triggers:
-    - trigger: sun
-      event: sunset
-      offset: "-00:30:00"
+    - trigger: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: -6
   conditions:
     - condition: state
       entity_id: binary_sensor.vacation
       state: "on"
+    - condition: time
+      before: "22:30:00"
   actions:
     - action: light.turn_on
       target:
@@ -1174,7 +1177,7 @@
   alias: Vacation lights off
   triggers:
     - trigger: time
-      at: "22:30:00"  # Must be after the latest sunset in summer
+      at: "22:30:00"
   conditions:
     - condition: state
       entity_id: binary_sensor.vacation
@@ -1239,8 +1242,13 @@
 - id: sunset_lights_on
   alias: "Sunset lights on"
   triggers:
-    - trigger: sun
-      event: sunset
+    - trigger: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: -6
+  conditions:
+    - condition: time
+      before: "22:30:00"
   actions:
     - action: scene.turn_on
       data:
