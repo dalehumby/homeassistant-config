@@ -12,6 +12,9 @@
   - name: Indoor dewpoint
     device_class: temperature
     unit_of_measurement: "°C"
+    availability: >
+      {{ states('sensor.average_temperature') not in ['unknown', 'unavailable']
+         and states('sensor.average_humidity') not in ['unknown', 'unavailable'] }}
     state: >
       {% set b = 17.67 %}
       {% set c = 243.5 %}
@@ -23,6 +26,9 @@
   - name: Balcony dewpoint
     device_class: temperature
     unit_of_measurement: "°C"
+    availability: >
+      {{ states('sensor.balcony_air_temperature') not in ['unknown', 'unavailable']
+         and states('sensor.balcony_air_humidity') not in ['unknown', 'unavailable'] }}
     state: >
       {% set b = 17.67 %}
       {% set c = 243.5 %}
@@ -99,6 +105,7 @@
 - binary_sensor:
   - name: Air quality
     device_class: smoke
+    availability: "{{ states('sensor.purifier_3h_pm2_5') not in ['unknown', 'unavailable'] }}"
     state: "{{ states('sensor.purifier_3h_pm2_5') | float > 100 }}"
 
   - name: Vacation
@@ -116,6 +123,9 @@
 
   - name: Bathroom shower occupancy
     device_class: moisture
+    availability: >
+      {{ states('sensor.bathroom_air_humidity') not in ['unknown', 'unavailable']
+         and states('sensor.average_humidity') not in ['unknown', 'unavailable'] }}
     state: "{{ states('sensor.bathroom_air_humidity') | int >= states('sensor.average_humidity') | int + 10 }}"
 
   - name: Illuminance bright
