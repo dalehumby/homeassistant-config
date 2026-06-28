@@ -19,3 +19,4 @@ image/
 backups/
 .ha_run.lock
 .cache/
+.mcp.json
