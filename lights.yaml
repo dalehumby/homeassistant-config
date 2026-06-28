@@ -16,7 +16,6 @@
   entities:
     - light.study_overhead
     - light.study_dale_desk
-    - light.study_mark_desk
 
 - platform: group
   name: Bathroom lights
@@ -37,7 +36,8 @@
   entities:
     - light.lounge_tree
     - light.lounge_overhead
-    - light.lounge_table
+    - light.lounge_table_left
+    - light.lounge_table_right
 
 - platform: group
   name: Window lights

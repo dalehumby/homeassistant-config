@@ -1137,14 +1137,14 @@
         scene_id: before_cat_doorbell
         snapshot_entities:
           - light.entrance_overhead
-          - light.study_mark_desk
+          - light.study_overhead
     - action: light.turn_on
       data:
         effect: breathe
       target:
         entity_id:
           - light.entrance_overhead
-          - light.study_mark_desk
+          - light.study_overhead
     - action: tts.google_cloud_say
       entity_id: media_player.all_speakers
       data_template:

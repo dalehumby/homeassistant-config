@@ -62,7 +62,11 @@
       state: on
       brightness: 50
       rgb_color: [255, 181, 35]
-    light.lounge_table:
+    light.lounge_table_left:
+      state: on
+      brightness: 50
+      rgb_color: [255, 181, 35]
+    light.lounge_table_right:
       state: on
       brightness: 50
       rgb_color: [255, 181, 35]
@@ -158,10 +162,6 @@
       state: on
       brightness: 2
       color_temp_kelvin: 2202
-    light.study_mark_desk:
-      state: on
-      brightness: 2
-      color_temp_kelvin: 2202
 
 - name: Study lights off
   icon: mdi:lightbulb-group-off
@@ -211,7 +211,7 @@
       state: on
       brightness: 2
       color_temp_kelvin: 2202
-    light.study_mark_desk:
+    light.lounge_table_right:
       state: on
       brightness: 2
       color_temp_kelvin: 2202
