@@ -1,10 +1,23 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This is a [Home Assistant](https://www.home-assistant.io/) configuration repository — YAML files that define all automations, sensors, lights, scripts, and scenes for a home running HA. There is no build step or test runner; changes take effect when HA reloads the relevant config or restarts. The repo is checked out directly into the HA config directory.
 
-## What this repo is
+## Infrastructure
 
-This is a [Home Assistant](https://www.home-assistant.io/) configuration repository — YAML files that define all automations, sensors, lights, scripts, and scenes for a home running HA. There is no build step or test runner; changes take effect when HA reloads the relevant config or restarts. The repo is checked out directly into the HA config directory (provisioned via [rpi-provision](https://github.com/dalehumby/rpi-provision)).
+HA runs as a Docker container (not HA OS) on the home server. Related services, also containerised on the same host:
+
+| Service | Role |
+|---|---|
+| `zigbee2mqtt` | Zigbee coordinator → MQTT bridge (all Zigbee devices) |
+| `mosquitto` | MQTT broker (zigbee2mqtt, ESPHome, and MQTT sensors publish here) |
+| `esphome` | Firmware and dashboard for ESP32/ESP8266 devices  |
+| `node-red` | Supplementary automations and flows; companion integration exposed to HA |
+
+## MCP server
+
+A `home-assistant` MCP server is configured in `.mcp.json`. Use its tools to interact with the live HA instance — inspect state, control devices, reload config, and debug automations — without needing the HA UI or docker commands.
+
+After editing YAML files, use `ha_reload_core` to apply changes (target: `automations`, `scripts`, `scenes`, `templates`, `all`, etc.) rather than restarting. Use `ha_restart(confirm=True)` only for structural `configuration.yaml` changes.
 
 ## YAML linting
 
@@ -15,23 +28,6 @@ yamllint -c .yamllint <file>
 ```
 
 A pre-commit git hook (`.git/hooks/pre-commit`) automatically lints all staged `.yaml`/`.yml` files and then runs the Home Assistant config check inside the running Docker container (`home_homeassistant`). Both must pass or the commit is aborted.
-
-After any significant change or refactor to config files, run the HA config check explicitly:
-
-```bash
-docker exec $(docker ps --filter "name=home_homeassistant" --format "{{.Names}}" | head -1) python3 -m homeassistant --script check_config -c /config
-```
-
-## Validating changes
-
-HA has a built-in config checker. Run it from the HA UI under **Developer Tools → YAML → Check Configuration**, or via the CLI if `ha` is available:
-
-```bash
-ha core check
-```
-
-To reload only specific domains without restarting HA (available under **Developer Tools → YAML**):
-- Automations, Scripts, Scenes, Templates, etc. each have individual reload buttons.
 
 ## File structure and where things go
 
@@ -77,4 +73,22 @@ To reload only specific domains without restarting HA (available under **Develop
 
 ## Home location
 
-Stockholm, Sweden (`Europe/Stockholm`, metric, `country: SE`). Zones defined: Home (50 m radius), Work (75 m), Mall (100 m).
+Stockholm, Sweden (`Europe/Stockholm`, metric, `country: SE`).
+Zones defined: Home (50 m radius), Work (75 m), Mall (100 m).
+
+## Residents
+
+Dale and Mark. Both tracked via iPhone for presence (`person.dale`, `person.mark`). `notify.family` notifies both; `notify.mobile_app_dales_iphone` is Dale only.
+
+## Rooms
+
+Entrance, hall, bedroom, study, bathroom, kitchen (open to dining room), lounge, balcony, storeroom.
+
+## Notable devices
+
+**NSPanels** — Three Sonoff NSPanel Pro touchscreen displays running Android, located in the entrance, study, and bedroom. Entities are prefixed `nspanel_*`. Each runs the HA companion app (device tracker, media control) plus [nspanel_pro_tools_apk](https://github.com/seaky/nspanel_pro_tools_apk) which exposes additional sensors (ambient light, proximity) and screen control to HA.
+
+**WLED** — Three WLED LED controllers:
+- Hall cabinet (`light.hall_cabinet`) — supports effects (Candle Multi, Twinklefox, etc.)
+- Lounge TV cabinet (`light.lounge_tv_cabinet`) — supports effects
+- Balcony lights (`light.balcony_lights`) — 30 individually addressable segments
