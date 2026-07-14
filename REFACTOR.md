@@ -265,9 +265,18 @@ Verified NOT dead (leave alone): `ip_bans.yaml` (runtime file),
 - `climate.bedroom_thermostat` unavailable → seasonal (unplugged for summer), daily
   set_temperature automations fail silently. Expected for now; consider a guard
   condition before autumn if the silent failures are noisy in logs.
-- Dashboard cards using `states('sensor.precipitation_next_hour') | float` without a
-  default throw template errors while the sensor is `unknown` at startup — add
-  `| float(0)` in those dashboard card templates (storage dashboards, not this repo).
+- ~~Dashboard cards using `states('sensor.precipitation_next_hour') | float` without a
+  default throw template errors while the sensor is `unknown` at startup~~ **Fixed** —
+  found both live instances (`custom:mushroom-template-card`'s `primary` + `icon_color`
+  templates, in both the `entrance-smart-switch` and `bedroom-smart-switch` storage
+  dashboards — 4 template strings total; no other dashboard references this sensor).
+  Changed `| float` → `| float(0)`: on `unknown`/`unavailable` the card now renders as
+  if precipitation were 0mm (grey icon, no "(X mm)" line) instead of throwing — same
+  fallback the card already used for a genuine 0mm forecast, so no new ambiguity.
+  Doesn't affect the `rainfall_alert_*` automations (they use `numeric_state above: 0`,
+  which already tolerates unknown/unavailable silently). Applied live via the Lovelace
+  API (`ha_config_set_dashboard` python_transform); not part of this git repo
+  (storage dashboards live in `.storage/`), so nothing to commit for this item.
 - ICA shopping list integration getting 403s / can't find list ID
   `669cfebb-5f5e-4178-88ac-2df6b6fdd18e`; the sync automation runs into this every
   10 minutes.
