@@ -50,11 +50,13 @@ verify behavior before moving on.
       `dale_apple_watch` entry (no MAC); no YAML tracker platforms exist. Dead. **Done** —
       confirmed no `device_tracker:` platform anywhere in YAML. File deleted.
 - [x] **A4. Remove `input_datetime.easy_wakeup`** (`configuration.yaml:56`) — nothing in
-      YAML references it; the easy-wakeup automation uses `dale_alarm_time`. Leftover from
-      an old voice-assistant project. **Done** — removed, `input_datetimes` reloaded,
-      entity confirmed gone.
-- [ ] **A5. Remove `timer.variable`** (`timer.yaml:7`) — zero YAML references. Possibly
-      an old dashboard/Siri target; verify first.
+      YAML references it; the easy-wakeup automation uses `dale_alarm_time`. Added
+      `0fd9f962b0` (Dec 2022) as the manually-set wakeup time; superseded `3d7f8cf`
+      (Jan 2024) when the automation switched to `dale_alarm_time` (fed from the phone's
+      actual alarm) — the old helper declaration was just never cleaned up. **Done** —
+      removed, `input_datetimes` reloaded, entity confirmed gone.
+- [ ] **A5. Remove `timer.variable`** (`timer.yaml:7`) — zero YAML references. Leftover
+      from an old voice-assistant project — confirmed removable.
 - [ ] **A6. Remove `binary_sensor.illuminance_bright`** (`template.yaml:104`) — no
       automation uses it; near-inverse duplicate of `illuminance_needs_light`. Verify no
       dashboard use first.
