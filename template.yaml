@@ -106,7 +106,6 @@
       {{ is_state('light.study_lights', 'on') and (state_attr('light.study_lights', 'brightness') | int(0) == 13) }}
 
   - name: "Fridge Too Warm"
-    unique_id: fridge_too_warm
     device_class: problem
     state: >
       {{ states('sensor.fridge_air_temperature') | float(0) > 8 }}

@@ -118,10 +118,25 @@ Verified NOT dead (leave alone): `ip_bans.yaml` (runtime file),
       entity with `media_player_entity_id`. The YAML `tts: platform: google_cloud` setup
       is also legacy (Google Cloud has a config flow now).
       Call sites: `automations.yaml:82, 115, 238, 293, 317, 715, 1128`.
-- [ ] **B13. Add `unique_id` to all template entities** — every template
-      sensor/binary_sensor and the `lounge_candles` template switch lack one (only
-      Fridge Too Warm has it). Doesn't change entity IDs; enables UI management
-      (area/icon/hide). Zero risk. (MQTT sensors already have unique_ids.)
+- [x] **B13. Add `unique_id` to all template entities** — **Decided against.**
+      Reframed the original "zero risk, enables UI management" pitch: registering a
+      template entity gives HA's entity registry a second place `name`/`icon`/`area`
+      can live, and a UI-set override there silently wins over YAML forever — exactly
+      what happened to 4 of the 9 Wunderground sensors in B14 (one, `wunderground_temperature`,
+      stayed stuck on a stale UI name through a YAML rename until manually cleared). User
+      prefers YAML as sole source of truth; the entity-registry side door that
+      `unique_id` opens is the opposite of that, so not worth it for entities that don't
+      have a concrete UI-feature need (voice exposure, area assignment) today.
+      Checked the one existing exception, `Fridge Too Warm` (`unique_id: fridge_too_warm`,
+      added `730df96`, Jan 2026, "for easier reuse") — its registry entry had zero
+      customization (no name/icon/area/voice-exposure override), so it wasn't actually
+      serving a UI-management purpose, just sitting there as a latent confusion risk.
+      Removed its `unique_id` for consistency. Doing so left an orphaned registry entry
+      behind (`template.reload` doesn't prune it automatically — same issue seen with
+      the B15 automation-id rename), which briefly caused the entity to show
+      `unavailable`/`restored: true`; removed the stale registry entry and reloaded
+      again, entity now back to a live computed state with the same entity_id, no
+      registry entry, matching every other template sensor.
 - [x] **B14. `mqtt.yaml` Wunderground sensors** — add `state_class: measurement` (enables
       long-term statistics); optionally a shared `device:` block to group as one device;
       prefer `suggested_display_precision` over `round()` in `value_template`. **Done**,
