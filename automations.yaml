@@ -954,26 +954,6 @@
       target:
         entity_id: switch.bathroom_towelrail
 
-- id: adaptive_lights_on_action
-  alias: iOS action to turn adaptive lighting on
-  triggers:
-    - trigger: event
-      event_type: ios.action_fired
-      event_data:
-        actionName: "Auto lights on"
-  actions:
-    - action: script.adaptive_lights_on
-
-- id: relax_scene_on_action
-  alias: iOS action to activate relax scene script
-  triggers:
-    - trigger: event
-      event_type: ios.action_fired
-      event_data:
-        actionName: "Activate relax script"
-  actions:
-    - action: script.relax_scene_on
-
 - id: hall_nightlight_on
   alias: Hall night lighting on
   triggers:
