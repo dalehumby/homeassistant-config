@@ -70,8 +70,13 @@ verify behavior before moving on.
 - [ ] **A8. Remove Google Assistant `entity_config` for `light.vindriktning_status`**
       (`configuration.yaml:108-110`) — **on hold**: Vindriktning is only unplugged for
       now, not retired. Revisit if/when it's actually decommissioned.
-- [ ] **A9. Remove empty `camera:` and `media_player:` keys** from `configuration.yaml`
-      — no YAML platforms use them; UI integrations don't need them.
+- [x] **A9. Remove empty `camera:` and `media_player:` keys** from `configuration.yaml`
+      — no YAML platforms use them; UI integrations don't need them. Verified all live
+      camera (`blitzortung`, `sto_yr_no`) and media_player (`all_speakers`,
+      `kitchen_display`, `lounge_speaker`) entities have a `config_entry_id` (UI-managed:
+      Generic Camera, Google Cast) — none depend on the bare key. No Spotify integration
+      currently configured either. **Done** — keys removed, `check_config` passes.
+      Pending a full restart to apply (structural `configuration.yaml` change).
       NOTE: the other bare keys (`person:`, `frontend:`, `history:`, `sun:`, `logbook:`,
       `mobile_app:`, `ios:`, `system_health:`, `media_source:`) ARE required because
       `default_config:` is not used — leave them. Switching to `default_config:` is a

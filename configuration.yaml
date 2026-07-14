@@ -46,8 +46,6 @@ zone:
     radius: 100
     icon: mdi:shopping
 
-camera:
-
 input_datetime:
   laundry_reminder:
     name: Laundry reminder
@@ -107,8 +105,6 @@ google_assistant:
       expose: false
 
 media_source:
-
-media_player:
 
 tts:
   - platform: google_cloud
