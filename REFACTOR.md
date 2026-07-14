@@ -49,8 +49,6 @@ verify behavior before moving on.
 - [x] **A2. Delete `known_devices.yaml`** — legacy device_tracker registry; one empty
       `dale_apple_watch` entry (no MAC); no YAML tracker platforms exist. Dead. **Done** —
       confirmed no `device_tracker:` platform anywhere in YAML. File deleted.
-- [ ] **A3. Delete `binary_sensor.yaml`** (comments only) + its include at
-      `configuration.yaml:140`.
 - [ ] **A4. Remove `input_datetime.easy_wakeup`** (`configuration.yaml:56`) — nothing in
       YAML references it; the easy-wakeup automation uses `dale_alarm_time`. Verify no
       dashboard use first.
@@ -144,6 +142,12 @@ Verified NOT dead (leave alone): `ip_bans.yaml` (runtime file),
 
 ## E. Deliberately leaving alone
 
+- **`binary_sensor.yaml`** (and its include at `configuration.yaml:140`) — comments-only
+  today, but kept intentionally: various old internet instructions/guides reference this
+  file, and it's the designated home for `trend`/`threshold` sensors per the header
+  comment. Not dead code to delete (was A3) — a placeholder to remember NOT to use unless
+  a trend/threshold sensor genuinely needs the legacy `binary_sensor:` platform (prefer
+  `template.yaml` otherwise).
 - Adaptive-lighting delay choreography in `scripts.yaml` (IKEA bulb workaround).
 - WLED double-turn-off (`hall_nightlight_off`) and NSPanel MQTT retry hacks — commented,
   deliberate workarounds for real hardware quirks.
@@ -157,7 +161,8 @@ Verified NOT dead (leave alone): `ip_bans.yaml` (runtime file),
 
 ## Suggested execution order (safest first)
 
-1. A1–A9 dead file/helper deletions (each gated on its consumer check)
+1. A1–A9 dead file/helper deletions (each gated on its consumer check; A3 excluded —
+   see section E)
 2. B10 + B11 syntax normalization
 3. B13 unique_ids
 4. B14 MQTT state_class/device
