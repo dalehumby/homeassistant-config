@@ -142,13 +142,7 @@
       entity_id: sensor.precipitation_next_hour
       above: 0
   actions:
-    - action: notify.mobile_app_dales_iphone
-      data:
-        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }}"
-        message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
-    - action: notify.mobile_app_dales_iphone
-      data:
-        message: update_complications
+    - action: script.rain_alert
 
 - id: rainfall_alert_afternoon
   alias: Rainfall on the way home
@@ -174,13 +168,7 @@
       entity_id: sensor.precipitation_next_hour
       above: 0
   actions:
-    - action: notify.mobile_app_dales_iphone
-      data:
-        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }}"
-        message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
-    - action: notify.mobile_app_dales_iphone
-      data:
-        message: update_complications
+    - action: script.rain_alert
 
 - id: rainfall_alert_away
   alias: Rain alert while outdoors
@@ -197,13 +185,7 @@
           entity_id: sensor.dales_iphone_connection_type
           state: "Wi-Fi"
   actions:
-    - action: notify.mobile_app_dales_iphone
-      data:
-        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }}"
-        message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
-    - action: notify.mobile_app_dales_iphone
-      data:
-        message: update_complications
+    - action: script.rain_alert
 
 - id: rainfall_alert_frontdoor
   alias: Rain alert at front door
@@ -342,6 +324,9 @@
     - condition: time
       after: "09:00:00"
       before: "20:00:00"
+    - condition: state
+      entity_id: input_boolean.guest_mode
+      state: "off"
   actions:
     - action: vacuum.start
       target:
@@ -535,31 +520,31 @@
   triggers:
     - trigger: device
       domain: mqtt
-      device_id: bc5b0d803604dafae7adb68072261271
+      device_id: bc5b0d803604dafae7adb68072261271  # Bedside Dale switch
       type: action
       subtype: single_left
       id: single_left
     - trigger: device
       domain: mqtt
-      device_id: bc5b0d803604dafae7adb68072261271
+      device_id: bc5b0d803604dafae7adb68072261271  # Bedside Dale switch
       type: action
       subtype: double_left
       id: double_left
     - trigger: device
       domain: mqtt
-      device_id: bc5b0d803604dafae7adb68072261271
+      device_id: bc5b0d803604dafae7adb68072261271  # Bedside Dale switch
       type: action
       subtype: single_right
       id: single_right
     - trigger: device
       domain: mqtt
-      device_id: bc5b0d803604dafae7adb68072261271
+      device_id: bc5b0d803604dafae7adb68072261271  # Bedside Dale switch
       type: action
       subtype: double_right
       id: double_right
     - trigger: device
       domain: mqtt
-      device_id: bc5b0d803604dafae7adb68072261271
+      device_id: bc5b0d803604dafae7adb68072261271  # Bedside Dale switch
       type: action
       subtype: single_both
       id: single_both
@@ -606,8 +591,10 @@
 - id: easy_wakeup
   alias: Easy wakeup
   triggers:
-    - trigger: template
-      value_template: "{{ (state_attr('input_datetime.dale_alarm_time', 'timestamp') - 10*60) | timestamp_custom('%H:%M', False) == states('sensor.time') }}"
+    - trigger: time
+      at:
+        entity_id: input_datetime.dale_alarm_time
+        offset: "-00:10:00"
   conditions:
     - condition: state
       entity_id: binary_sensor.vacation
@@ -734,8 +721,10 @@
 - id: bedroom_thermostat_day
   alias: Set bedroom day temperature
   triggers:
-    - trigger: template
-      value_template: "{{ (state_attr('input_datetime.dale_alarm_time', 'timestamp') - 60*60) | timestamp_custom('%H:%M', False) == states('sensor.time') }}"
+    - trigger: time
+      at:
+        entity_id: input_datetime.dale_alarm_time
+        offset: "-01:00:00"
   actions:
     - action: climate.set_temperature
       target:
@@ -749,6 +738,10 @@
     - trigger: numeric_state
       entity_id: zone.home
       below: 1  # Unfortunatley no '== 0' in HA
+  conditions:
+    - condition: state
+      entity_id: input_boolean.guest_mode
+      state: "off"
   actions:
     - action: light.turn_off
       target:
@@ -867,13 +860,13 @@
   triggers:
     - trigger: device
       domain: mqtt
-      device_id: 8858514f66d8e971f98241adfeec2c3f
+      device_id: 8858514f66d8e971f98241adfeec2c3f  # Bathroom switch
       type: action
       subtype: single_right
       id: single_right
     - trigger: device
       domain: mqtt
-      device_id: 8858514f66d8e971f98241adfeec2c3f
+      device_id: 8858514f66d8e971f98241adfeec2c3f  # Bathroom switch
       type: action
       subtype: double_right
       id: double_right
@@ -917,7 +910,7 @@
       to: "on"
     - trigger: device
       domain: mqtt
-      device_id: 627eeddb3ce73a0ec62112b47880a07f
+      device_id: 627eeddb3ce73a0ec62112b47880a07f  # Bathroom towelrail shortcut
       type: action
       subtype: "on"
   actions:
@@ -1014,7 +1007,7 @@
       below: 5  # Keep at almost dark, less than light_below value set on NSPanel
     - trigger: device  # Force screen off using bedside light switch, in case triggers misbehaving during night
       domain: mqtt
-      device_id: bc5b0d803604dafae7adb68072261271
+      device_id: bc5b0d803604dafae7adb68072261271  # Bedside Dale switch
       type: action
       subtype: double_both
       id: double_both
@@ -1076,7 +1069,7 @@
   triggers:
     - trigger: device
       domain: mqtt
-      device_id: 1fc5be6bfa2096e47274790a481f8b1a
+      device_id: 1fc5be6bfa2096e47274790a481f8b1a  # Cat doorbell
       type: action
       subtype: "on"
   actions:

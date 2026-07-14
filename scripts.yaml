@@ -109,6 +109,18 @@ all_lights_off_delayed:
       target:
         entity_id: all
 
+rain_alert:
+  alias: Rain alert
+  icon: mdi:weather-rainy
+  sequence:
+    - action: notify.mobile_app_dales_iphone
+      data:
+        title: "{{ state_attr('sensor.precipitation_next_hour', 'title') }}"
+        message: "{{ states('sensor.precipitation_next_hour') }} mm in next hour"
+    - action: notify.mobile_app_dales_iphone
+      data:
+        message: update_complications
+
 relax_scene_on:
   alias: Activate Relax scene
   icon: mdi:glass-cocktail

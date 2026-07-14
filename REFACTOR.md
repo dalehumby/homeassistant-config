@@ -182,25 +182,68 @@ Verified NOT dead (leave alone): `ip_bans.yaml` (runtime file),
 
 ## C. Structural improvements — discuss before doing
 
-- [ ] **C16. Deduplicate rain alerts** (`automations.yaml:123-206`) — three automations
+- [x] **C16. Deduplicate rain alerts** (`automations.yaml:123-206`) — three automations
       share an identical two-notification action block (title/mm message +
       `update_complications` push). Extract `script.rain_alert` or merge into one
-      automation with trigger IDs.
-- [ ] **C17. Replace `sensor.time` string-match triggers with native time trigger +
+      automation with trigger IDs. **Done** — went with the script (discussed with
+      user): the shared block is a pure, context-free side effect (no `trigger.*`
+      references, identical in all three), so extracting it doesn't split logic
+      that belongs together — the actual complexity (zones, time windows,
+      presence/Wi-Fi checks) stays untouched in each automation's
+      `triggers`/`conditions`. Merging into one automation with trigger IDs was
+      considered and rejected — it would force a `choose` block re-deriving each
+      automation's distinct condition set keyed to trigger id, which is more
+      YAML for no readability gain. Added `script.rain_alert` to `scripts.yaml`;
+      `rainfall_alert_morning`, `rainfall_alert_afternoon`, `rainfall_alert_away`
+      each now call it as their sole action. (`rainfall_alert_frontdoor`, just
+      past this block, flashes a light and was never part of the duplication —
+      correctly left alone.) `yamllint` + `script.reload` + `automation.reload`
+      all pass; script and all three automations fetched back via the config API
+      confirming triggers/conditions unchanged and actions collapsed to
+      `script.rain_alert`; no new errors in the log.
+- [x] **C17. Replace `sensor.time` string-match triggers with native time trigger +
       offset** (supported since 2024.10):
       `easy_wakeup` (`automations.yaml:610`) → `trigger: time / at:
       input_datetime.dale_alarm_time / offset: "-00:10:00"`;
       `bedroom_thermostat_day` (`automations.yaml:738`) → same with `-01:00:00`.
-      Validated at load; removes the `sensor.time` dependency.
-- [ ] **C18. Close the guest-mode gap** — `input_boolean.guest_mode` only guards the
+      Validated at load; removes the `sensor.time` dependency. **Done** — both
+      converted to `trigger: time` with the dict form of `at:`
+      (`entity_id`/`offset`), confirmed against the HA docs (`at:` supports a
+      fixed time, an entity_id, or `{entity_id, offset}`). `yamllint` passes,
+      `automation.reload` succeeded (schema validated at load), both automations
+      fetched back via the config API showing the new trigger, no new errors in
+      the log. The remaining `states('sensor.time')` at `automations.yaml:1099` is
+      an unrelated TTS message (not a trigger) — out of scope, left alone.
+- [x] **C18. Close the guest-mode gap** — `input_boolean.guest_mode` only guards the
       goodnight scene + vacuum-flag reset. But `all_lights_off` (line 746) and
       `start_robot_vacuum_when_away` (line 327) key off tracked-person count: untracked
       guests get lights-off and vacuum. Add `guest_mode = off` condition to both.
-      (Small behavior change, drama-prevention.)
-- [ ] **C19. Label the opaque Z2M device IDs** — device triggers are fine per best
+      (Small behavior change, drama-prevention.) **Done** — added
+      `condition: state, entity_id: input_boolean.guest_mode, state: "off"` to
+      `start_robot_vacuum_when_away`'s existing `conditions:` list, and a new
+      `conditions:` block (it had none) to `all_lights_off` with the same guard.
+      `yamllint` passes, `automation.reload` succeeded, both automations fetched
+      back via the config API showing the new condition, `guest_mode` currently
+      `off` so no behavior change today, no new errors in the log.
+- [x] **C19. Label the opaque Z2M device IDs** — device triggers are fine per best
       practice, but add a comment naming each device:
       `bc5b0d80…` = bedside switch, `8858514f…` = bathroom switch,
       `627eeddb…` = towel-rail switch, `1fc5be6b…` = cat doorbell. Zero risk.
+      **Done** — added a trailing `# <device name>` comment to all 9 occurrences
+      across 5 automations (`bc5b0d80…` ×6 in `bedroom_bedside_light_switch` and
+      `nspanel_bedroom_screen_dark`, `8858514f…` ×2 in `bathroom_light_switch`,
+      `627eeddb…` ×1 in `bathroom_towelrail_on`, `1fc5be6b…` ×1 in
+      `cat_doorbell`). Names verified against the live device registry
+      (`ha_get_device`) rather than trusted as-written — two of the four
+      original names in this task item were imprecise: `bc5b0d80…` is actually
+      registered as **"Bedside Dale switch"** (not just "bedside switch" — Dale
+      and Mark each have their own bedside switch, so the qualifier matters),
+      and `627eeddb…` is an IKEA TRADFRI shortcut *button*, registered as
+      **"Bathroom towelrail shortcut"** (not a "switch"). `8858514f…` and
+      `1fc5be6b…` matched as given ("Bathroom switch", "Cat doorbell").
+      Comments now use the exact registry `name` for all four. Comment-only
+      change; `yamllint` + `automation.reload` pass, diff confirmed to touch
+      only comments.
 - [ ] **C20. (Parked / future)** HA 2026.7 purpose-specific triggers
       (`motion.detected` with area targets) could simplify the motion-light automations.
       A rewrite, not a cleanup — revisit later.
