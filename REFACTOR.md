@@ -55,8 +55,9 @@ verify behavior before moving on.
       (Jan 2024) when the automation switched to `dale_alarm_time` (fed from the phone's
       actual alarm) — the old helper declaration was just never cleaned up. **Done** —
       removed, `input_datetimes` reloaded, entity confirmed gone.
-- [ ] **A5. Remove `timer.variable`** (`timer.yaml:7`) — zero YAML references. Leftover
-      from an old voice-assistant project — confirmed removable.
+- [x] **A5. Remove `timer.variable`** (`timer.yaml:7`) — zero YAML references. Leftover
+      from an old voice-assistant project. **Done** — removed, `timers` reloaded, entity
+      confirmed gone.
 - [ ] **A6. Remove `binary_sensor.illuminance_bright`** (`template.yaml:104`) — no
       automation uses it; near-inverse duplicate of `illuminance_needs_light`. Verify no
       dashboard use first.
