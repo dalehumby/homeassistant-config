@@ -119,12 +119,27 @@ Verified NOT dead (leave alone): `ip_bans.yaml` (runtime file),
 - [ ] **B14. `mqtt.yaml` Wunderground sensors** — add `state_class: measurement` (enables
       long-term statistics); optionally a shared `device:` block to group as one device;
       prefer `suggested_display_precision` over `round()` in `value_template`.
-- [ ] **B15. Typos** — "tomorrom" in lunch TTS message (`automations.yaml:241`) is safe.
-      ⚠️ Scene names "Bedroom lights **bight**" / "Study lights **bight**"
-      (`scenes.yaml:141, 171`): renaming changes entity IDs
-      (`scene.bedroom_lights_bight`, `scene.study_lights_bight`) — check NSPanel buttons
-      and Google Assistant routines first. Leave `lunch_reminer_*` automation IDs alone
-      (IDs invisible; changing churns traces/history) — fix aliases only if desired.
+- [x] **B15. Typos** — "tomorrom" → "tomorrow" in lunch TTS message
+      (`automations.yaml:241`). **Done.**
+      Scene names "Bedroom lights **bight**" / "Study lights **bight**"
+      (`scenes.yaml:141, 171`) → renamed to "...bright". User chose to fix the resulting
+      dashboard breakage rather than avoid it. Found 3 button cards referencing the old
+      entity IDs (`scene.bedroom_lights_bight`, `scene.study_lights_bight`) via
+      `ha_config_get_dashboard` search across all 7 storage dashboards — none on the
+      NSPanel dashboards specifically (`bedroom-smart-switch`, `dashboard-tablets`,
+      `lovelace-main` 2nd view) — and updated all 3 to the new entity IDs, verified live.
+      No Google Assistant routine references found. **Done.**
+      `lunch_reminer_on`/`lunch_reminer_off` automation `id:` fields → renamed to
+      `lunch_reminder_on`/`lunch_reminder_off` (typo fix; user said history/traces churn
+      is fine, not used often). Since automation entity_id is derived from `alias` (not
+      `id`) and the alias was already correct, this created orphaned duplicate entities
+      (`automation.turn_on_lunch_reminder_2`/`_2` off) rather than renaming in place —
+      the old `automation.turn_on_lunch_reminder`/`turn_off_lunch_reminder` entity
+      registrations became stale/unavailable, losing their assigned area + category.
+      Cleaned up: removed the two orphaned registry entries, renamed the `_2` entities
+      back to the original clean entity_ids, and restored area (`87cdccc600a3...`) +
+      category (`01HYQMX62C5...`) — net effect is zero change to entity_ids/organization,
+      only the internal `id:` typo is fixed. **Done.**
 
 ## C. Structural improvements — discuss before doing
 
