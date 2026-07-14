@@ -102,8 +102,11 @@ Verified NOT dead (leave alone): `ip_bans.yaml` (runtime file),
 
 ## B. Legacy syntax — mechanical modernization, no behavior change
 
-- [ ] **B10. `data_template:` → `data:`** (deprecated ~2020). Seven occurrences:
-      `automations.yaml:87, 120, 240, 298, 322, 717, 1130`.
+- [x] **B10. `data_template:` → `data:`** (deprecated ~2020). Seven occurrences:
+      `automations.yaml:87, 120, 240, 298, 322, 717, 1130`. **Done** — mechanical
+      replace_all, confirmed no site had a pre-existing sibling `data:` key
+      (yamllint's `key-duplicates` rule would have caught a conflict), `check_config`
+      passes, automations reloaded, no new errors in the log.
 - [ ] **B11. Normalize trigger syntax** — `platform: time_pattern` →
       `trigger: time_pattern` (`automations.yaml:1215`, last old-style trigger there);
       trigger-based template sensor uses `platform:` keys (`template.yaml:139-155`).

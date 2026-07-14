@@ -84,7 +84,7 @@
         - media_player.kitchen_display
         - media_player.bedroom_speaker
         - media_player.lounge_speaker
-      data_template:
+      data:
         message: "{{ states('sensor.greeting') }}. Don't forget about your laundry"
 
 - id: laundry_start
@@ -117,7 +117,7 @@
         - media_player.kitchen_display
         - media_player.bedroom_speaker
         - media_player.lounge_speaker
-      data_template:
+      data:
         message: "{{ states('sensor.greeting') }}. The laundry is done"
 
 - id: rainfall_alert_morning
@@ -237,7 +237,7 @@
         entity_id: automation.lunch_reminder
     - action: tts.google_cloud_say
       entity_id: media_player.kitchen_display
-      data_template:
+      data:
         message: "Okay, I'll remind you about your lunch tomorrow morning."
 
 - id: lunch_reminder_off
@@ -295,7 +295,7 @@
         - media_player.kitchen_display
         - media_player.bedroom_speaker
         - media_player.lounge_speaker
-      data_template:
+      data:
         message: >
           "{{ states('sensor.greeting') }}. Water has been detected under the dishwasher.
            Please check for leaks... The shutoff valve is on the kitchen sink tap"
@@ -319,7 +319,7 @@
         - media_player.kitchen_display
         - media_player.bedroom_speaker
         - media_player.lounge_speaker
-      data_template:
+      data:
         message: >
           "{{ states('sensor.greeting') }}. Water has been detected in the bathroom under the washing machine.
            Please check for leaks... The shutoff valve is on the bathroom ceiling, next to the basin."
@@ -714,7 +714,7 @@
             interruption-level: critical
     - action: tts.google_cloud_say
       entity_id: media_player.all_speakers
-      data_template:
+      data:
         message: >
           "{{ states('sensor.greeting') }}. The fridge is {{ states('sensor.fridge_air_temperature') | int }} degrees.
            Please check if the door is closed."
@@ -1127,7 +1127,7 @@
           - light.study_overhead
     - action: tts.google_cloud_say
       entity_id: media_player.all_speakers
-      data_template:
+      data:
         message: "{{ tigger_message }}"
     - delay: "00:00:15"
     - action: scene.turn_on
