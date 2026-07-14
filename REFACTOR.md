@@ -40,13 +40,15 @@ verify behavior before moving on.
 
 ## A. Dead code — safe deletions (after consumer check)
 
-- [ ] **A1. Delete `google_calendars.yaml`** — relic of pre-2022 YAML Google Calendar
+- [x] **A1. Delete `google_calendars.yaml`** — relic of pre-2022 YAML Google Calendar
       setup; NOT `!include`d by `configuration.yaml`; contains old-employer (Nomanini),
-      Spotify, SA/US holiday calendars. Already gitignored. ⚠️ The Google integration
-      historically still reads this file for calendar entity config — confirm calendars
-      are UI-managed first.
-- [ ] **A2. Delete `known_devices.yaml`** — legacy device_tracker registry; one empty
-      `dale_apple_watch` entry (no MAC); no YAML tracker platforms exist. Dead.
+      Spotify, SA/US holiday calendars. Already gitignored. **Done** — checked
+      `.storage/google.<entry_id>`, confirmed the config-entry-based Google integration
+      tracks calendars by real calendar ID in its own storage, not via this file (options
+      are just `{"calendar_access": "read_write"}`, no calendar list). File deleted.
+- [x] **A2. Delete `known_devices.yaml`** — legacy device_tracker registry; one empty
+      `dale_apple_watch` entry (no MAC); no YAML tracker platforms exist. Dead. **Done** —
+      confirmed no `device_tracker:` platform anywhere in YAML. File deleted.
 - [ ] **A3. Delete `binary_sensor.yaml`** (comments only) + its include at
       `configuration.yaml:140`.
 - [ ] **A4. Remove `input_datetime.easy_wakeup`** (`configuration.yaml:56`) — nothing in
