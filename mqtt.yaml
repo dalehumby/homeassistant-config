@@ -2,65 +2,95 @@ sensor:
 
   # Wunderground close to home
   - unique_id: "wunderground.home.temperature"
-    name: "wunderground temperature"
+    name: "Temperature"
     state_topic: "wunderground/home"
-    value_template: "{{ (value_json.observations[0].metric.temp) | round(1) }}"
+    value_template: "{{ value_json.observations[0].metric.temp }}"
     unit_of_measurement: "°C"
     device_class: temperature
+    state_class: measurement
+    suggested_display_precision: 1
     expire_after: 600
+    device: &wunderground_home_device
+      identifiers:
+        - wunderground_home
+      name: Wunderground Home
   - unique_id: "wunderground.home.humidity"
-    name: "wunderground humidity"
+    name: "Humidity"
     state_topic: "wunderground/home"
-    value_template: "{{ (value_json.observations[0].humidity) | round(0) }}"
+    value_template: "{{ value_json.observations[0].humidity }}"
     unit_of_measurement: "%"
     device_class: humidity
+    state_class: measurement
+    suggested_display_precision: 0
     expire_after: 600
+    device: *wunderground_home_device
   - unique_id: "wunderground.home.precipitation24"
-    name: "wunderground 24 hour rainfall"
+    name: "24 Hour Rainfall"
     state_topic: "wunderground/home"
-    value_template: "{{ (value_json.observations[0].metric.precipTotal) | round(1) }}"
+    value_template: "{{ value_json.observations[0].metric.precipTotal }}"
     unit_of_measurement: "mm"
     icon: mdi:weather-pouring
+    state_class: measurement
+    suggested_display_precision: 1
     expire_after: 600
+    device: *wunderground_home_device
   - unique_id: "wunderground.home.precipitation"
-    name: "wunderground rainfall"
+    name: "Rainfall Rate"
     state_topic: "wunderground/home"
-    value_template: "{{ (value_json.observations[0].metric.precipRate) | round(1) }}"
+    value_template: "{{ value_json.observations[0].metric.precipRate }}"
     unit_of_measurement: "mm/hr"
     icon: mdi:weather-pouring
+    state_class: measurement
+    suggested_display_precision: 1
     expire_after: 600
+    device: *wunderground_home_device
   - unique_id: "wunderground.home.pressure"
-    name: "wunderground pressure"
+    name: "Pressure"
     state_topic: "wunderground/home"
-    value_template: "{{ (value_json.observations[0].metric.pressure) | round(0) }}"
+    value_template: "{{ value_json.observations[0].metric.pressure }}"
     unit_of_measurement: "hPa"
     icon: mdi:speedometer
+    state_class: measurement
+    suggested_display_precision: 0
     expire_after: 600
+    device: *wunderground_home_device
   - unique_id: "wunderground.home.wind_speed"
-    name: "wunderground wind speed"
+    name: "Wind Speed"
     state_topic: "wunderground/home"
-    value_template: "{{ (value_json.observations[0].metric.windSpeed) | round(1) }}"
+    value_template: "{{ value_json.observations[0].metric.windSpeed }}"
     unit_of_measurement: "km/h"
     icon: mdi:weather-windy
+    state_class: measurement
+    suggested_display_precision: 1
     expire_after: 600
+    device: *wunderground_home_device
   - unique_id: "wunderground.home.wind_direction"
-    name: "wunderground direction"
+    name: "Direction"
     state_topic: "wunderground/home"
-    value_template: "{{ (value_json.observations[0].winddir) | round(0) }}"
+    value_template: "{{ value_json.observations[0].winddir }}"
     unit_of_measurement: "°"
     icon: mdi:arrow-top-right
+    state_class: measurement
+    suggested_display_precision: 0
     expire_after: 600
+    device: *wunderground_home_device
   - unique_id: "wunderground.home.wind_solar_radiation"
-    name: "wunderground solar radiation"
+    name: "Solar Radiation"
     state_topic: "wunderground/home"
-    value_template: "{{ (value_json.observations[0].solarRadiation) | round(0) }}"
+    value_template: "{{ value_json.observations[0].solarRadiation }}"
     unit_of_measurement: "W/m²"
     icon: mdi:weather-sunny
+    state_class: measurement
+    suggested_display_precision: 0
     expire_after: 600
+    device: *wunderground_home_device
   - unique_id: "wunderground.home.uv"
-    name: "wunderground uv"
+    name: "UV"
     state_topic: "wunderground/home"
-    value_template: "{{ (value_json.observations[0].uv) | round(0) }}"
+    value_template: "{{ value_json.observations[0].uv }}"
     unit_of_measurement: ""
     icon: mdi:emoticon-cool-outline
+    state_class: measurement
+    suggested_display_precision: 0
     expire_after: 600
+    device: *wunderground_home_device

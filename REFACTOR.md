@@ -122,9 +122,27 @@ Verified NOT dead (leave alone): `ip_bans.yaml` (runtime file),
       sensor/binary_sensor and the `lounge_candles` template switch lack one (only
       Fridge Too Warm has it). Doesn't change entity IDs; enables UI management
       (area/icon/hide). Zero risk. (MQTT sensors already have unique_ids.)
-- [ ] **B14. `mqtt.yaml` Wunderground sensors** — add `state_class: measurement` (enables
+- [x] **B14. `mqtt.yaml` Wunderground sensors** — add `state_class: measurement` (enables
       long-term statistics); optionally a shared `device:` block to group as one device;
-      prefer `suggested_display_precision` over `round()` in `value_template`.
+      prefer `suggested_display_precision` over `round()` in `value_template`. **Done**,
+      all three, all 9 sensors:
+      - `state_class: measurement` added to all.
+      - Shared `device:` block (YAML anchor/alias) groups all 9 under one "Wunderground
+        Home" device — confirmed via entity registry, all share one `device_id`.
+      - `round()` removed from `value_template`s; `suggested_display_precision` set per
+        sensor instead (raw precision now kept in the recorded state/statistics, only
+        display is rounded).
+      - Side effect caught and fixed: grouping under a device makes HA combine
+        "<device name> <entity name>" for any entity without its own registry name
+        override, which stuttered ("Wunderground Home wunderground humidity") for the 5
+        sensors that had never been manually renamed. Shortened those YAML `name:`
+        values (Humidity, UV, Wind Speed, Direction, Solar Radiation) to read cleanly
+        with the device-name prefix. The 4 sensors with pre-existing custom registry
+        names (Temperature, Pressure, 24 hour rainfall, Rainfall rate) were left as-is —
+        registry overrides always win over YAML `name:`, so they're unaffected either
+        way. `check_config` passes, `mqtt.reload` twice, all 9 entities confirmed live
+        with correct `friendly_name`/`state_class`/`suggested_display_precision`, zero
+        errors in the log.
 - [x] **B15. Typos** — "tomorrom" → "tomorrow" in lunch TTS message
       (`automations.yaml:241`). **Done.**
       Scene names "Bedroom lights **bight**" / "Study lights **bight**"
