@@ -119,10 +119,6 @@ tts:
     voice: en-GB-Wavenet-B
     profiles:
       - large-home-entertainment-class-device
-  - platform: marytts
-    host: home_mimic3
-    voice: en_US/ljspeech_low
-    language: en_US
 
 system_health:
 

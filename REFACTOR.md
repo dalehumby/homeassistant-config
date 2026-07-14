@@ -16,18 +16,25 @@ verify behavior before moving on.
 
 ## Open questions (blockers for specific items)
 
-- [ ] Is the **pn532 ESP (NFC tag reader)** at 10.0.0.126 still in service? It was
-      unreachable during review. If retired, the tag automations (`laundry_start`,
-      `lunch_reminer_on/off`) are dead code too.
-- [ ] Is the **mimic3/marytts container** (`home_mimic3`) still running? Decides A7.
-- [ ] Is the **Vindriktning ESP** (10.0.0.13) retired? It was offline and
-      `light.vindriktning_status` unavailable. Decides A8.
+- [x] Is the **pn532 ESP (NFC tag reader)** at 10.0.0.126 still in service? — **N/A.**
+      NFC tags are read via the phone (iOS NFC), not the pn532 hardware reader. The
+      reader being unreachable doesn't affect the tag automations either way; `laundry_start`
+      and `lunch_reminer_on/off` are NOT dead code. The pn532 ESP's fate is a separate,
+      lower-priority question (unrelated to these automations) — not pursued further here.
+- [x] Is the **mimic3/marytts container** (`home_mimic3`) still running? — **No, removed.**
+      A7 is confirmed safe to do.
+- [x] Is the **Vindriktning ESP** (10.0.0.13) retired? — **Not retired**, just unplugged
+      for now (may come back). A8 is **on hold** — leave the Google Assistant
+      `entity_config` in place until it's actually decommissioned.
 - [ ] What do the **NSPanel dashboards / Node-RED flows** reference? Decides the fate of
       `binary_sensor.entrance_hall_occupancy`, `binary_sensor.study_show_sleep_button`,
       `binary_sensor.illuminance_bright`, `input_datetime.easy_wakeup`, `timer.variable`,
       and whether the scene renames in B15 are safe.
-- [ ] Why is `climate.bedroom_thermostat` **unavailable**? (Battery / removed for
-      summer?) Two automations set it daily and currently fail silently.
+- [x] Why is `climate.bedroom_thermostat` **unavailable**? — **Seasonal**: it's offline
+      for summer (not a fault). The two daily `set_temperature` automations will keep
+      failing silently until it's reconnected in autumn — expected, not a bug. Worth a
+      guard condition (skip silently / notify once) if it bothers us, but not urgent;
+      see D.
 
 ---
 
@@ -50,10 +57,13 @@ verify behavior before moving on.
 - [ ] **A6. Remove `binary_sensor.illuminance_bright`** (`template.yaml:104`) — no
       automation uses it; near-inverse duplicate of `illuminance_needs_light`. Verify no
       dashboard use first.
-- [ ] **A7. Remove `tts: platform: marytts`** (`configuration.yaml:122`) — no YAML calls
-      `tts.marytts_say`. Only if mimic3 container is retired.
+- [x] **A7. Remove `tts: platform: marytts`** (`configuration.yaml:122`) — no YAML calls
+      `tts.marytts_say`. mimic3 container confirmed removed. **Done** — YAML edited,
+      `yamllint` + `check_config` both pass. Pending a full HA restart (not
+      hot-reloadable) to actually take effect — held off per user request.
 - [ ] **A8. Remove Google Assistant `entity_config` for `light.vindriktning_status`**
-      (`configuration.yaml:108-110`) — only if the Vindriktning is retired.
+      (`configuration.yaml:108-110`) — **on hold**: Vindriktning is only unplugged for
+      now, not retired. Revisit if/when it's actually decommissioned.
 - [ ] **A9. Remove empty `camera:` and `media_player:` keys** from `configuration.yaml`
       — no YAML platforms use them; UI integrations don't need them.
       NOTE: the other bare keys (`person:`, `frontend:`, `history:`, `sun:`, `logbook:`,
@@ -118,9 +128,11 @@ Verified NOT dead (leave alone): `ip_bans.yaml` (runtime file),
 
 ## D. Live issues noticed (not YAML cleanup)
 
-- pn532 ESP offline → tag automations possibly dead (see open questions).
-- `climate.bedroom_thermostat` unavailable → daily set_temperature automations fail
-  silently.
+- pn532 ESP offline — unrelated to the tag automations (those read NFC tags via phone,
+  not the hardware reader); reader's own status is a separate, non-blocking question.
+- `climate.bedroom_thermostat` unavailable → seasonal (unplugged for summer), daily
+  set_temperature automations fail silently. Expected for now; consider a guard
+  condition before autumn if the silent failures are noisy in logs.
 - Dashboard cards using `states('sensor.precipitation_next_hour') | float` without a
   default throw template errors while the sensor is `unknown` at startup — add
   `| float(0)` in those dashboard card templates (storage dashboards, not this repo).
