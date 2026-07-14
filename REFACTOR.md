@@ -189,6 +189,16 @@ Verified NOT dead (leave alone): `ip_bans.yaml` (runtime file),
 - [ ] **C20. (Parked / future)** HA 2026.7 purpose-specific triggers
       (`motion.detected` with area targets) could simplify the motion-light automations.
       A rewrite, not a cleanup — revisit later.
+- [ ] **C21. (Parked / future) `unique_id` naming convention** — `mqtt.yaml`'s
+      Wunderground sensors use dotted `unique_id`s (`wunderground.home.temperature`,
+      set 2022-06-25 in `c22080f`) that look like `entity_id`s (`domain.object_id`) but
+      aren't — `unique_id` is an opaque registry key with no format requirement, HA
+      never parses or splits on it. Still, the dotted style invites confusion with real
+      entity_ids. User's established convention going forward is underscores
+      (`wunderground_home_temperature`). Not applied retroactively here: changing a
+      `unique_id` re-keys the entity registry (equivalent to deleting and recreating the
+      entity — loses history/statistics continuity unless carefully migrated), so this
+      needs its own deliberate task, not a drive-by rename. TODO left in `mqtt.yaml`.
 
 ## D. Live issues noticed (not YAML cleanup)
 

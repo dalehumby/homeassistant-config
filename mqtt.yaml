@@ -1,6 +1,11 @@
 sensor:
 
   # Wunderground close to home
+  # TODO: these unique_ids use dots (wunderground.home.xxx), set 2022-06-25. The
+  # established convention going forward is underscores (wunderground_home_xxx) to
+  # avoid looking like an entity_id. Not renamed here - changing a unique_id re-keys
+  # the entity registry (loses history/statistics unless carefully migrated). See
+  # REFACTOR.md C21.
   - unique_id: "wunderground.home.temperature"
     name: "Temperature"
     state_topic: "wunderground/home"
