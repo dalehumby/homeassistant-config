@@ -105,12 +105,6 @@
     state: >
       {{ is_state('light.study_lights', 'on') and (state_attr('light.study_lights', 'brightness') | int(0) == 13) }}
 
-  - name: Entrance hall occupancy
-    device_class: motion
-    state: >
-      {{ is_state('binary_sensor.entrance_pir_occupancy', 'on') and
-         is_state('binary_sensor.hall_pir_occupancy', 'on') }}
-
   - name: "Fridge Too Warm"
     unique_id: fridge_too_warm
     device_class: problem

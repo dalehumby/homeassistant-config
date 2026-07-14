@@ -26,10 +26,16 @@ verify behavior before moving on.
 - [x] Is the **Vindriktning ESP** (10.0.0.13) retired? — **Not retired**, just unplugged
       for now (may come back). A8 is **on hold** — leave the Google Assistant
       `entity_config` in place until it's actually decommissioned.
-- [ ] What do the **NSPanel dashboards / Node-RED flows** reference? Decides the fate of
-      `binary_sensor.entrance_hall_occupancy`, `binary_sensor.study_show_sleep_button`,
-      `binary_sensor.illuminance_bright`, `input_datetime.easy_wakeup`, `timer.variable`,
-      and whether the scene renames in B15 are safe.
+- [x] What do the **NSPanel dashboards / Node-RED flows** reference? — Checked all 7
+      Lovelace storage dashboards (cards/badges/headers) and Node-RED's `flows.json`
+      directly. `binary_sensor.study_show_sleep_button` **is used on a dashboard** —
+      confirmed by user, keep. `binary_sensor.entrance_hall_occupancy` has zero
+      references anywhere inspectable (automations/scripts/scenes/dashboards/Node-RED);
+      confirmed obsolete by user (see A10). `illuminance_bright`/`easy_wakeup`/
+      `timer.variable` already resolved (A4-A6, done). Whether the B15 scene renames are
+      safe (NSPanel button/Google Assistant routine references) is still open — NSPanel's
+      own on-device dashboard config isn't visible from here, so that part needs a manual
+      check on the panel/routines before renaming.
 - [x] Why is `climate.bedroom_thermostat` **unavailable**? — **Seasonal**: it's offline
       for summer (not a fault). The two daily `set_temperature` automations will keep
       failing silently until it's reconnected in autumn — expected, not a bug. Worth a
@@ -80,10 +86,19 @@ verify behavior before moving on.
       `mobile_app:`, `ios:`, `system_health:`, `media_source:`) ARE required because
       `default_config:` is not used — leave them. Switching to `default_config:` is a
       separate discussion (pulls in cloud, conversation, energy, etc.; needs restart).
+- [x] **A10. Remove `binary_sensor.entrance_hall_occupancy`** (`template.yaml`) —
+      combined `entrance_pir_occupancy` + `hall_pir_occupancy` into one virtual sensor to
+      cut false triggers (phantom lights-on at night) on the old PIR hardware. Hardware
+      was since replaced and light automations now key off a single PIR directly
+      (`automations.yaml:39,60,212,260` use `entrance_pir_occupancy`;
+      `automations.yaml:448,632,961,984` use `hall_pir_occupancy` — never the combined
+      sensor). The false-trigger problem it was built to solve no longer happens.
+      Confirmed obsolete by user. Zero references in automations/scripts/scenes, all 7
+      Lovelace dashboards, and Node-RED's `flows.json`. **Done** — removed, `templates`
+      reloaded, entity confirmed gone.
 
 Verified NOT dead (leave alone): `ip_bans.yaml` (runtime file),
-`binary_sensor.entrance_hall_occupancy` / `binary_sensor.study_show_sleep_button`
-(no YAML consumers but almost certainly NSPanel/Node-RED — verify before touching).
+`binary_sensor.study_show_sleep_button` (confirmed used on a dashboard).
 
 ## B. Legacy syntax — mechanical modernization, no behavior change
 
