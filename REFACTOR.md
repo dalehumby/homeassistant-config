@@ -107,9 +107,12 @@ Verified NOT dead (leave alone): `ip_bans.yaml` (runtime file),
       replace_all, confirmed no site had a pre-existing sibling `data:` key
       (yamllint's `key-duplicates` rule would have caught a conflict), `check_config`
       passes, automations reloaded, no new errors in the log.
-- [ ] **B11. Normalize trigger syntax** — `platform: time_pattern` →
+- [x] **B11. Normalize trigger syntax** — `platform: time_pattern` →
       `trigger: time_pattern` (`automations.yaml:1215`, last old-style trigger there);
-      trigger-based template sensor uses `platform:` keys (`template.yaml:139-155`).
+      trigger-based template sensor's 4 `platform:` keys (`template.yaml`, the
+      `illuminance_needs_light` trigger block) → `trigger:`. **Done** — `yamllint` +
+      `check_config` pass, automations + templates reloaded, `illuminance_needs_light`
+      confirmed live and updating, no new errors in the log.
 - [ ] **B12. Migrate legacy TTS** ⚠️ family-facing, own task, test on one speaker first.
       `tts.google_cloud_say` + top-level `entity_id` → `tts.speak` targeting the TTS
       entity with `media_player_entity_id`. The YAML `tts: platform: google_cloud` setup

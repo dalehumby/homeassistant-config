@@ -114,21 +114,21 @@
       minutes: 15
 
 - trigger:
-  - platform: template
+  - trigger: template
     value_template: >
       {{ states('sensor.kitchen_illuminance_average') | float(0) >
          states('input_number.illuminance_upper') | float(0) }}
     for:
       minutes: 15
     id: 'is_bright'
-  - platform: template
+  - trigger: template
     value_template: >
       {{ states('sensor.kitchen_illuminance_average') | float(0) <
          states('input_number.illuminance_lower') | float(0) }}
     id: 'is_dark'
-  - platform: homeassistant
+  - trigger: homeassistant
     event: start
-  - platform: event
+  - trigger: event
     event_type: event_template_reloaded
   binary_sensor:
     name: "Illuminance needs light"

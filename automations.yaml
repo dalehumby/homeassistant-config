@@ -1212,7 +1212,7 @@
     - trigger: state
       entity_id: zone.mall
       to: "0"
-    - platform: time_pattern
+    - trigger: time_pattern
       minutes: "/10"
   actions:
     - action: google_keep_sync.request_sync
