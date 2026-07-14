@@ -49,9 +49,10 @@ verify behavior before moving on.
 - [x] **A2. Delete `known_devices.yaml`** — legacy device_tracker registry; one empty
       `dale_apple_watch` entry (no MAC); no YAML tracker platforms exist. Dead. **Done** —
       confirmed no `device_tracker:` platform anywhere in YAML. File deleted.
-- [ ] **A4. Remove `input_datetime.easy_wakeup`** (`configuration.yaml:56`) — nothing in
-      YAML references it; the easy-wakeup automation uses `dale_alarm_time`. Verify no
-      dashboard use first.
+- [x] **A4. Remove `input_datetime.easy_wakeup`** (`configuration.yaml:56`) — nothing in
+      YAML references it; the easy-wakeup automation uses `dale_alarm_time`. Leftover from
+      an old voice-assistant project. **Done** — removed, `input_datetimes` reloaded,
+      entity confirmed gone.
 - [ ] **A5. Remove `timer.variable`** (`timer.yaml:7`) — zero YAML references. Possibly
       an old dashboard/Siri target; verify first.
 - [ ] **A6. Remove `binary_sensor.illuminance_bright`** (`template.yaml:104`) — no

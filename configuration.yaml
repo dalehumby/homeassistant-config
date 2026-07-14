@@ -53,9 +53,6 @@ input_datetime:
     name: Laundry reminder
     has_date: true
     has_time: true
-  easy_wakeup:
-    name: Easy wakeup
-    has_time: true
   dale_alarm_time:
     name: Dale's alarm time
     has_time: true
