@@ -101,23 +101,6 @@
          and states('sensor.average_humidity') not in ['unknown', 'unavailable'] }}
     state: "{{ states('sensor.bathroom_air_humidity') | int >= states('sensor.average_humidity') | int + 10 }}"
 
-  - name: Illuminance bright
-    icon: "mdi:theme-light-dark"
-    state: >
-      {% set lux = states('sensor.kitchen_illuminance_average') %}
-      {% if lux in ['unavailable', 'unknown', 'none'] %}
-        {{ this.state }}
-      {% else %}
-        {% set lux = lux | int(0) %}
-        {% set upper = states('input_number.illuminance_upper') | int %}
-        {% set lower = states('input_number.illuminance_lower') | int %}
-        {{
-          'on' if lux >= upper
-          else 'off' if lux < lower
-          else this.state
-        }}
-      {% endif %}
-
   - name: Study show sleep button
     state: >
       {{ is_state('light.study_lights', 'on') and (state_attr('light.study_lights', 'brightness') | int(0) == 13) }}

@@ -58,9 +58,11 @@ verify behavior before moving on.
 - [x] **A5. Remove `timer.variable`** (`timer.yaml:7`) — zero YAML references. Leftover
       from an old voice-assistant project. **Done** — removed, `timers` reloaded, entity
       confirmed gone.
-- [ ] **A6. Remove `binary_sensor.illuminance_bright`** (`template.yaml:104`) — no
-      automation uses it; near-inverse duplicate of `illuminance_needs_light`. Verify no
-      dashboard use first.
+- [x] **A6. Remove `binary_sensor.illuminance_bright`** (`template.yaml:104`) — no
+      automation uses it; near-inverse duplicate of `illuminance_needs_light`. It was the
+      predecessor, kept around only to eyeball that `illuminance_needs_light`'s inverted
+      logic matched — never cleaned up. **Done** — removed, `templates` reloaded,
+      entity confirmed gone; `illuminance_needs_light` unaffected.
 - [x] **A7. Remove `tts: platform: marytts`** (`configuration.yaml:122`) — no YAML calls
       `tts.marytts_say`. mimic3 container confirmed removed. **Done** — YAML edited,
       `yamllint` + `check_config` both pass. Pending a full HA restart (not
