@@ -771,15 +771,6 @@
     - trigger: state
       entity_id: binary_sensor.illuminance_needs_light
       to: "on"
-    - trigger: time_pattern
-      minutes: "/15"
-      id: "periodic_recheck"
-      note: >-
-        Backstop for multi-day overcast spells: illuminance_needs_light only
-        re-fires "to: on" once (after a bright spell flips it off), so if it
-        stays cloudy enough that illuminance never climbs back above
-        illuminance_upper for 15 min, it can stay "on" for days and never
-        re-trigger this automation.
   conditions:
     - condition: numeric_state
       entity_id: zone.home
@@ -788,14 +779,6 @@
       entity_id: binary_sensor.illuminance_needs_light
       state: "on"
   actions:
-    - if:
-        - condition: trigger
-          id: "periodic_recheck"
-      then:
-        - condition: state
-          entity_id: light.adaptive_lighting_home
-          state: "off"
-          note: "Only act on the periodic recheck if nothing is lit yet, to avoid re-applying adaptive brightness every 15 min while lights are already on."
     - action: script.adaptive_lights_on
 
 - id: bathroom_light_on
