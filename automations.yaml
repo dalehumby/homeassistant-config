@@ -264,6 +264,8 @@
     - trigger: state
       entity_id: binary_sensor.dishwasher_leak_water_leak
       to: "on"
+      for:
+        seconds: 10
   actions:
     - action: notify.family
       data:
@@ -288,6 +290,8 @@
     - trigger: state
       entity_id: binary_sensor.bathroom_leak_water_leak
       to: "on"
+      for:
+        seconds: 10
   actions:
     - action: notify.family
       data:
