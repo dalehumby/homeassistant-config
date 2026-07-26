@@ -53,7 +53,7 @@ A pre-commit git hook (`.git/hooks/pre-commit`) automatically lints all staged `
 
 **Scene snapshots** — When a transient brightness change is needed (e.g., entrance PIR), a scene snapshot is created before the change and restored afterwards (see `entrance_lights_brighten` / `entrance_lights_restore` in `automations.yaml`).
 
-**Notification targets** — `notify.family` sends to all family members' phones. `notify.mobile_app_dales_iphone` is Dale's phone only. TTS announcements go to `media_player.kitchen_display`, `media_player.bedroom_speaker`, and `media_player.lounge_speaker`.
+**Notification targets** — `notify.family` sends to all family members' phones. `notify.mobile_app_dales_iphone` is Dale's phone only. Whole-house TTS announcements go to `media_player.all_speakers` (a Cast speaker group covering `media_player.kitchen_display`, `media_player.bedroom_speaker`, and `media_player.study_speaker`); target them individually only for room-specific announcements.
 
 **Secrets** — All credentials and location data are in `secrets.yaml` (git-ignored). Reference them with `!secret <key>`.
 

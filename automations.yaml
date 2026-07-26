@@ -80,10 +80,7 @@
       data:
         message: "Don't forget your laundry booking"
     - action: tts.google_cloud_say
-      entity_id:
-        - media_player.kitchen_display
-        - media_player.bedroom_speaker
-        - media_player.lounge_speaker
+      entity_id: media_player.all_speakers
       data:
         message: "{{ states('sensor.greeting') }}. Don't forget about your laundry"
 
@@ -113,10 +110,7 @@
       data:
         message: "Laundry done"
     - action: tts.google_cloud_say
-      entity_id:
-        - media_player.kitchen_display
-        - media_player.bedroom_speaker
-        - media_player.lounge_speaker
+      entity_id: media_player.all_speakers
       data:
         message: "{{ states('sensor.greeting') }}. The laundry is done"
 
@@ -275,10 +269,7 @@
           push:
             interruption-level: critical
     - action: tts.google_cloud_say
-      entity_id:
-        - media_player.kitchen_display
-        - media_player.bedroom_speaker
-        - media_player.lounge_speaker
+      entity_id: media_player.all_speakers
       data:
         message: >
           "{{ states('sensor.greeting') }}. Water has been detected under the dishwasher.
@@ -301,10 +292,7 @@
           push:
             interruption-level: critical
     - action: tts.google_cloud_say
-      entity_id:
-        - media_player.kitchen_display
-        - media_player.bedroom_speaker
-        - media_player.lounge_speaker
+      entity_id: media_player.all_speakers
       data:
         message: >
           "{{ states('sensor.greeting') }}. Water has been detected in the bathroom under the washing machine.
