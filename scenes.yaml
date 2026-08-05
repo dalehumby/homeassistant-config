@@ -56,7 +56,6 @@
     light.kitchen_overhead_5: off
     light.kitchen_overhead_6: off
     light.kitchen_counter: off
-    light.kitchen_lamp: off
     light.diningroom_overhead: off
     light.lounge_tree:
       state: on
@@ -231,10 +230,6 @@
     light.kitchen_overhead_5: off
     light.kitchen_overhead_6: off
     light.kitchen_counter: off
-    light.kitchen_lamp:
-      state: on
-      brightness: 3
-      rgb_color: [255, 0, 0]
     light.diningroom_overhead:
       state: on
       brightness: 51
