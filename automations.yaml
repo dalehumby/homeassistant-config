@@ -308,17 +308,11 @@
       at: "11:00:00"
   conditions:
     - condition: state
-      entity_id: input_boolean.run_vacuum_today
+      entity_id: binary_sensor.vacuum_allowed_today
       state: "on"
     - condition: state
-      entity_id: zone.home
-      state: "0"
-    - condition: time
-      after: "09:00:00"
-      before: "20:00:00"
-    - condition: state
-      entity_id: input_boolean.guest_mode
-      state: "off"
+      entity_id: binary_sensor.vacuum_away_trigger_is_active
+      state: "on"
   actions:
     - action: vacuum.start
       target:
@@ -331,15 +325,11 @@
       at: "17:00:00"
   conditions:
     - condition: state
-      entity_id: input_boolean.run_vacuum_today
+      entity_id: binary_sensor.vacuum_allowed_today
       state: "on"
     - condition: state
-      entity_id: binary_sensor.workday_sensor
+      entity_id: binary_sensor.vacuum_weekday_trigger_is_active
       state: "on"
-    - not:
-        - condition: zone
-          entity_id: person.dale
-          zone: zone.home
   actions:
     - action: vacuum.start
       target:

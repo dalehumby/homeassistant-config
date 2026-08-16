@@ -81,6 +81,77 @@
       {{ icons.get(icon, "?") }}
 
 - binary_sensor:
+  - name: Vacuum allowed today
+    icon: "{{ 'mdi:robot-vacuum' if this.state == 'on' else 'mdi:robot-vacuum-off' }}"
+    state: >
+      {{ is_state('input_boolean.run_vacuum_today', 'on')
+         and is_state('input_boolean.guest_mode', 'off') }}
+    attributes:
+      reason: >
+        {% if is_state('input_boolean.guest_mode', 'on') %}
+          Guest mode is on
+        {% elif is_state('input_boolean.run_vacuum_today', 'off') %}
+          Turned off for today
+        {% else %}
+          Vacuuming today
+        {% endif %}
+
+  - name: Vacuum weekday trigger is active
+    icon: "{{ 'mdi:calendar-check' if this.state == 'on' else 'mdi:calendar-remove' }}"
+    state: >
+      {{ is_state('binary_sensor.workday_sensor', 'on')
+         and not is_state('person.dale', 'home') }}
+    attributes:
+      reason: >
+        {% if not is_state('binary_sensor.workday_sensor', 'on') %}
+          Not a workday
+        {% elif is_state('person.dale', 'home') %}
+          Dale is home
+        {% else %}
+          Workday, Dale away
+        {% endif %}
+
+  - name: Vacuum away trigger is active
+    icon: "{{ 'mdi:home-export-outline' if this.state == 'on' else 'mdi:home-import-outline' }}"
+    state: >
+      {{ is_state('zone.home', '0')
+         and now().strftime('%H:%M:%S') >= '09:00:00'
+         and now().strftime('%H:%M:%S') < '20:00:00' }}
+    attributes:
+      reason: >
+        {% if now().strftime('%H:%M:%S') < '09:00:00' or now().strftime('%H:%M:%S') >= '20:00:00' %}
+          Outside the 09:00-20:00 window
+        {% elif not is_state('zone.home', '0') %}
+          Someone is home
+        {% else %}
+          Nobody home
+        {% endif %}
+
+  - name: Vacuum will run today
+    icon: "{{ 'mdi:robot-vacuum' if this.state == 'on' else 'mdi:robot-vacuum-off' }}"
+    state: >
+      {{ is_state('binary_sensor.vacuum_allowed_today', 'on') and (
+           (is_state('automation.start_robot_vacuum_when_away', 'on') and is_state('binary_sensor.vacuum_away_trigger_is_active', 'on'))
+           or
+           (is_state('automation.start_robot_vacuum_limited', 'on') and is_state('binary_sensor.vacuum_weekday_trigger_is_active', 'on'))
+         ) }}
+    attributes:
+      reason: >
+        {% if is_state('binary_sensor.vacuum_allowed_today', 'off') %}
+          {{ state_attr('binary_sensor.vacuum_allowed_today', 'reason') }}
+        {% elif is_state('automation.start_robot_vacuum_when_away', 'off') and is_state('automation.start_robot_vacuum_limited', 'off') %}
+          Vacuum automations are disabled
+        {% elif (is_state('automation.start_robot_vacuum_when_away', 'on') and is_state('binary_sensor.vacuum_away_trigger_is_active', 'on'))
+             or (is_state('automation.start_robot_vacuum_limited', 'on') and is_state('binary_sensor.vacuum_weekday_trigger_is_active', 'on')) %}
+          Vacuuming today
+        {% elif is_state('automation.start_robot_vacuum_when_away', 'on') %}
+          Will vacuum if everyone leaves before 20:00
+        {% elif is_state('automation.start_robot_vacuum_limited', 'on') and is_state('binary_sensor.workday_sensor', 'on') %}
+          Will vacuum at 17:00 if Dale leaves
+        {% else %}
+          Not vacuuming today
+        {% endif %}
+
   - name: Vacation
     state: "{{ distance(closest(states.person)) > 25 }}"
     icon: "{{ 'mdi:island' if this.state == 'on' else 'mdi:home' }}"
