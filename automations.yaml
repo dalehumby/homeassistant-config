@@ -6,7 +6,9 @@
       zone: zone.home
       event: enter
   actions:
-    - action: notify.dales_iphone
+    - action: notify.send_message
+      target:
+        entity_id: notify.dales_iphone
       data:
         message: "Welcome home"
 
@@ -17,7 +19,9 @@
       entity_id: binary_sensor.internet
       to: "off"
   actions:
-    - action: notify.dales_iphone
+    - action: notify.send_message
+      target:
+        entity_id: notify.dales_iphone
       data:
         message: "Internet is down"
 
@@ -28,7 +32,9 @@
       entity_id: binary_sensor.internet
       to: "on"
   actions:
-    - action: notify.dales_iphone
+    - action: notify.send_message
+      target:
+        entity_id: notify.dales_iphone
       data:
         message: "Internet is up"
 
@@ -245,7 +251,9 @@
         effect: okay
       target:
         entity_id: light.entrance_overhead
-    - action: notify.dales_iphone
+    - action: notify.send_message
+      target:
+        entity_id: notify.dales_iphone
       data:
         message: "Remember your lunch"
     - action: automation.turn_off
@@ -1081,7 +1089,9 @@
           {% else %}
             A demanding Tigger is at the door. Improvising without AI.
           {% endif %}
-    - action: notify.dales_iphone
+    - action: notify.send_message
+      target:
+        entity_id: notify.dales_iphone
       data:
         title: "Meow"
         message: "{{ tigger_message }}"
