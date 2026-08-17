@@ -12,6 +12,7 @@ HA runs as a Docker container (not HA OS) on the home server. Related services, 
 | `mosquitto` | MQTT broker (zigbee2mqtt, ESPHome, and MQTT sensors publish here) |
 | `esphome` | Firmware and dashboard for ESP32/ESP8266 devices  |
 | `node-red` | Supplementary automations and flows; companion integration exposed to HA |
+| `govee2mqtt` | Bridges Govee devices (LAN API + cloud API) to HA via MQTT |
 
 ## MCP server
 
@@ -88,7 +89,8 @@ Entrance, hall, bedroom, study, bathroom, kitchen (open to dining room), lounge,
 
 **NSPanels** — Three Sonoff NSPanel Pro touchscreen displays running Android, located in the entrance, study, and bedroom. Entities are prefixed `nspanel_*`. Each runs the HA companion app (device tracker, media control) plus [nspanel_pro_tools_apk](https://github.com/seaky/nspanel_pro_tools_apk) which exposes additional sensors (ambient light, proximity) and screen control to HA.
 
-**WLED** — Three WLED LED controllers:
+**WLED** — Two WLED LED controllers:
 - Hall cabinet (`light.hall_cabinet`) — supports effects (Candle Multi, Twinklefox, etc.)
 - Lounge TV cabinet (`light.lounge_tv_cabinet`) — supports effects
-- Balcony lights (`light.balcony_lights`) — 30 individually addressable segments
+
+**Govee** — Balcony lights (`light.balcony_lights`) is a Govee H7038 permanent outdoor RGBIC light strip (30 individually addressable segments, 2000–9000K), bridged via the `govee2mqtt` container's LAN API (static IP `10.0.0.24`, MAC `D0:C9:07:43:B1:9F`). Not WLED, despite the naming similarity to the other cabinet lights.
