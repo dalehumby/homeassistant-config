@@ -13,13 +13,6 @@ homeassistant:
     - type: homeassistant
   customize: !include customize.yaml
 
-http:
-  use_x_forwarded_for: true
-  trusted_proxies:
-    - 10.1.1.0/24  # Proxy network range
-  ip_ban_enabled: true
-  login_attempts_threshold: 5
-
 person:
 
 notify:
