@@ -1089,9 +1089,7 @@
           {% else %}
             A demanding Tigger is at the door. Improvising without AI.
           {% endif %}
-    - action: notify.send_message
-      target:
-        entity_id: notify.dales_iphone
+    - action: notify.mobile_app_dales_iphone  # legacy service; needed for data.image (notify.send_message has no data field)
       data:
         title: "Meow"
         message: "{{ tigger_message }}"
