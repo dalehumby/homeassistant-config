@@ -4,3 +4,15 @@
 # This is mostly used for trend, threshold sensors
 # https://www.home-assistant.io/integrations/statistics/
 # https://community.home-assistant.io/t/threshold-helper-right-upper-lower-and-hysteresis-bounds/633962/2
+
+- platform: trend
+  sensors:
+    bathroom_humidity_rising:
+      friendly_name: Bathroom humidity rising
+      unique_id: bathroom_humidity_rising
+      entity_id: sensor.bathroom_air_humidity
+      device_class: moisture
+      sample_duration: 600
+      min_samples: 5
+      max_samples: 20
+      min_gradient: 0.015

@@ -165,13 +165,6 @@
     icon: mdi:table-chair
     state: "{{ is_state('binary_sensor.diningroom_chair_contact', 'off') }}"
 
-  - name: Bathroom shower occupancy
-    device_class: moisture
-    availability: >
-      {{ states('sensor.bathroom_air_humidity') not in ['unknown', 'unavailable']
-         and states('sensor.average_humidity') not in ['unknown', 'unavailable'] }}
-    state: "{{ states('sensor.bathroom_air_humidity') | int >= states('sensor.average_humidity') | int + 10 }}"
-
   - name: Study show sleep button
     state: >
       {{ is_state('light.study_lights', 'on') and (state_attr('light.study_lights', 'brightness') | int(0) == 13) }}

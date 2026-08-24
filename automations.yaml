@@ -827,7 +827,7 @@
       for:
         minutes: 5
     - trigger: state
-      entity_id: binary_sensor.bathroom_shower_occupancy
+      entity_id: binary_sensor.bathroom_humidity_rising
       to: "off"
       for:
         minutes: 5
@@ -836,7 +836,7 @@
       entity_id: binary_sensor.bathroom_pir_occupancy
       state: "off"
     - condition: state
-      entity_id: binary_sensor.bathroom_shower_occupancy
+      entity_id: binary_sensor.bathroom_humidity_rising
       state: "off"
   actions:
     - action: light.turn_off
@@ -896,8 +896,10 @@
   alias: Bathroom towelrail when showering
   triggers:
     - trigger: state
-      entity_id: binary_sensor.bathroom_shower_occupancy
+      entity_id: binary_sensor.bathroom_humidity_rising
       to: "on"
+      for:
+        seconds: 60
     - trigger: device
       domain: mqtt
       device_id: 627eeddb3ce73a0ec62112b47880a07f  # Bathroom towelrail shortcut
