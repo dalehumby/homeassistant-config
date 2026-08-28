@@ -330,7 +330,7 @@
   alias: Start robot vacuum weekday
   triggers:
     - trigger: time
-      at: "17:00:00"
+      at: "16:00:00"
   conditions:
     - condition: state
       entity_id: binary_sensor.vacuum_allowed_today
