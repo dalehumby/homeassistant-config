@@ -111,6 +111,7 @@
       state: on
       brightness: 3
       rgb_color: [255, 112, 86]
+    light.study_lights: off
     light.kitchen_lights: off
     light.lounge_lights: off
     light.window_lights: off
