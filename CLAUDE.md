@@ -30,6 +30,12 @@ yamllint -c .yamllint <file>
 
 A pre-commit git hook (`.git/hooks/pre-commit`) automatically lints all staged `.yaml`/`.yml` files and then runs the Home Assistant config check inside the running Docker container (`home_homeassistant`). Both must pass or the commit is aborted.
 
+## Git workflow
+
+Never commit automatically. Make edits and leave them staged/unstaged as appropriate; only run `git commit` when the user explicitly asks for that commit, every time — a prior request to commit does not carry over to later changes in the same session.
+
+No feature branches — all work happens directly on `master`. Commit there; don't create or switch branches.
+
 ## File structure and where things go
 
 | File | Purpose |
