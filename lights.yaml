@@ -16,6 +16,7 @@
   entities:
     - light.study_overhead
     - light.study_dale_desk
+    - light.study_bedside
 
 - platform: group
   name: Bathroom lights
