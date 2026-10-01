@@ -1197,8 +1197,6 @@
     - trigger: state
       entity_id: zone.mall
       to: "0"
-    - trigger: time_pattern
-      minutes: "/10"
   actions:
     - action: google_keep_sync.request_sync
     - delay: 5
