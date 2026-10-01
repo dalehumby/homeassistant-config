@@ -131,7 +131,9 @@ relax_scene_on:
   sequence:
     - action: scene.turn_on
       data:
-        entity_id: scene.relax
+        entity_id:
+          - scene.relax
+          - scene.study_relax
         transition: 3
     - delay: 3
     - action: adaptive_lighting.set_manual_control
